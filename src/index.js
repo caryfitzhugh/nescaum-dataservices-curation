@@ -13,6 +13,9 @@ import {BrowserRouter} from 'react-router-dom'
 import { searchReducer } from './search/reducers';
 import { curateReducer } from './curate/reducers';
 
+import 'bootstrap/dist/css/bootstrap.css'
+import './index.css';
+
 const reducer = combineReducers({
   search: searchReducer,
   curate: curateReducer,

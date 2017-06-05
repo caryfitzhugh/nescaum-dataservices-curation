@@ -4,9 +4,6 @@ import {Switch, Route} from 'react-router-dom'
 import Search from './search/component';
 // Importing CSS
 import './App.css';
-import './index.css';
-import './bootstrap.scss';
-
 
 class App extends Component {
   render() {
