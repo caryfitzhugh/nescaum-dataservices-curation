@@ -1,10 +1,13 @@
+import 'babel-polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import {Provider} from 'react-redux';
 
 // Setup
-import { createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
 import registerServiceWorker from './registerServiceWorker';
+import thunk from 'redux-thunk';
 
 // Routing
 import {BrowserRouter} from 'react-router-dom'
@@ -21,9 +24,12 @@ const reducer = combineReducers({
   curate: curateReducer,
 });
 
-const store = createStore(reducer)
+const store = createStore(reducer,
+    applyMiddleware(thunk))
 
-ReactDOM.render(<BrowserRouter>
-                  <App/ >
-                </BrowserRouter>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}>
+                  <BrowserRouter>
+                    <App/ >
+                  </BrowserRouter>
+                </Provider>, document.getElementById('root'));
 registerServiceWorker();
