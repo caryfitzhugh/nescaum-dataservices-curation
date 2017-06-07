@@ -4,7 +4,19 @@ body {
   font-family: sans-serif;
 }
 
+body,html {
+  height:100%;
+}
+
+body {
+}
+
 .navbar {
   flex-direction: row;
   justify-content: space-between;
+}
+
+#sidebar {
+  min-height: calc(100vh);
+  border-right: 1px solid black;
 }

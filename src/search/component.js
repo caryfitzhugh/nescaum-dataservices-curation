@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import {performSearch} from "./actions";
 import { connect } from 'react-redux';
+import SearchFacets from './search_facets';
+import SearchBar from './search_bar';
+import SearchSpinner from './search_spinner';
+import SearchResults from './search_results';
 
 class Search extends Component {
   constructor(props) {
@@ -14,16 +18,24 @@ class Search extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <div className='btn btn-primary' onClick={this.debug}>Debug Search</div>
-        <span>{JSON.stringify(this.props.search)}</span>
+    <div className='container-fluid'>
+      <div className='row'>
+        <div className='col-2'>
+          <SearchFacets/>
+        </div>
+        <div className='col'>
+          <div className='row'>
+            <SearchBar/>
+            <SearchSpinner/>
+            <SearchResults/>
+          </div>
+        </div>
       </div>
+    </div>
     );
   }
 }
 
-//<Route path='/new' component={Create}/>
-//<Route path='/edit/:id' component={Edit}/>
 const mapStateToProps = (state) => {
   return {
     search: state.search

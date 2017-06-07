@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
-import Header from './Header';
+import Header from './header';
 import {Switch, Route} from 'react-router-dom'
 import Search from './search/component';
 import { connect } from 'react-redux';
 
 import {performSearch} from "./search/actions";
 // Importing CSS
-import './App.css';
+import './app.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     return (
-      <div className='container'>
+      <div >
         <Header />
         <Switch>
           <Route exact path='/' component={Search}/>

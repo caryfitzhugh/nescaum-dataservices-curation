@@ -111,6 +111,15 @@ export function performSearch({query, facets, page, per_page}) {
           throw "Error";
         }
       }).then(function(json) {
+        json.resources.forEach((resource) => {
+          if (resource.pubstart) {
+            resource.pubstart = new Date(resource.pubstart);
+          }
+          if (resource.pubend) {
+            resource.pubend = new Date(resource.pubend);
+          }
+        });
+
         dispatch(finishSearchRequest(request_id, json));
       })
       .catch(() => {

@@ -1,8 +1,8 @@
 import {START_SEARCH, FINISH_SEARCH, ERROR_SEARCH, CLEAR_SEARCH } from './actions';
 
 const INITIAL_SEARCH_STATE = {
-  isSearching: false,
-  isError: false,
+  is_searching: false,
+  is_error: false,
   request_id: null,
   parameters: {
     query: "",
@@ -17,21 +17,21 @@ function searchReducer(state = INITIAL_SEARCH_STATE, action) {
   switch (action.type) {
     case START_SEARCH:
       return Object.assign({}, state,
-                            {isSearching: true,
+                            {is_searching: true,
                              parameters:  action.parameters,
                              request_id:  action.request_id,
                              response:    {}});
 
     case ERROR_SEARCH:
       if (state.request_id === action.request_id) {
-        return Object.assign({}, state, {isSearching: false, isError: true, response: {}});
+        return Object.assign({}, state, {is_searching: false, is_error: true, response: {}});
       } else {
         return state;
       }
 
     case FINISH_SEARCH:
       if (state.request_id === action.request_id) {
-        return Object.assign({}, state, {isSearching: false, response: action.response});
+        return Object.assign({}, state, {is_searching: false, response: action.response});
       } else {
         return state;
       }
