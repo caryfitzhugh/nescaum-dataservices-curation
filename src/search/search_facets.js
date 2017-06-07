@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchFacet from './search_facet';
-import "./search_facets.css";
 
 class SearchFacets extends Component {
   constructor(props) {
@@ -18,11 +17,20 @@ class SearchFacets extends Component {
     if (this.props.response) {
       var facets = this.props.response.facets || {};
       return (
-        <div id='sidebar'>
-          <h3>Facets</h3>
-          <ul class="nav nav-pills nav-stacked">
+        <div>
+          <h3>Search Facets</h3>
+          <ul className="nav nav-pills nav-stacked">
             <li><SearchFacet title="Actions" facets={facets.actions}/></li>
-            <li><SearchFacet title="Actions" facets={facets.actions}/></li>
+            <li><SearchFacet title="Authors" facets={facets.authors}/></li>
+            <li><SearchFacet title="Climate Changes" facets={facets.climate_changes}/></li>
+            <li><SearchFacet title="Effects" facets={facets.effects}/></li>
+            <li><SearchFacet title="Formats" facets={facets.formats}/></li>
+            <li><SearchFacet title="GeoFocus" facets={facets.geofocus}/></li>
+            <li><SearchFacet title="Keywords" facets={facets.keywords}/></li>
+            <li><SearchFacet title="Publishers" facets={facets.publishers}/></li>
+            <li><SearchFacet title="Sectors" facets={facets.sectors}/></li>
+            <li><SearchFacet title="States" facets={facets.states}/></li>
+            <li><SearchFacet title="Strategies" facets={facets.strategies}/></li>
           </ul>
         </div>
       );
@@ -34,14 +42,13 @@ class SearchFacets extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    parameters: state.search.parameters,
     response: state.search.response
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: () => dispatch(performSearch({query: "hi", facets: {actions: [1,2,3]}, page: 1, per_page: 10}))
+    //performSearch: () => dispatch(performSearch({query: "hi", facets: {actions: [1,2,3]}, page: 1, per_page: 10}))
   }
 };
 

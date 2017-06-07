@@ -5,6 +5,9 @@ const INITIAL_SEARCH_STATE = {
   is_error: false,
   request_id: null,
   parameters: {
+    per_page: 50,
+  },
+  request: {
     query: "",
     facets: {},
     page: 1,
@@ -18,7 +21,7 @@ function searchReducer(state = INITIAL_SEARCH_STATE, action) {
     case START_SEARCH:
       return Object.assign({}, state,
                             {is_searching: true,
-                             parameters:  action.parameters,
+                             request:  action.request,
                              request_id:  action.request_id,
                              response:    {}});
 

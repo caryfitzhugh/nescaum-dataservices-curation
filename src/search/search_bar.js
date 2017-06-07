@@ -24,7 +24,7 @@ class SearchBar extends Component {
   }
 
   execute_search () {
-    this.props.performSearch(this.state.search_query);
+    this.props.performSearch(this.state.search_query, this.props.per_page);
   }
 
   render() {
@@ -42,14 +42,15 @@ class SearchBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    parameters: state.search.parameters
+    parameters: state.search.parameters,
+    per_page: state.search.per_page
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: (query) => dispatch(
-      performSearch({query: query, facets:{}, page: 1, per_page: 10}))
+    performSearch: (query, per_page) => dispatch(
+      performSearch({query: query, facets:{}, page: 1, per_page: per_page}))
   }
 };
 

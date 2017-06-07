@@ -17,6 +17,10 @@ body {
 }
 
 #sidebar {
-  min-height: calc(100vh);
-  border-right: 1px solid black;
+  background: rgba(0,0,0,0.2);
+  color: rgba(0,0,0,0.9);
+}
+#sidebar .nav-stacked {
+
+  flex-direction: column;
 }

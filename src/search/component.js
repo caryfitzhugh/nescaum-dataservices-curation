@@ -11,7 +11,9 @@ class Search extends Component {
     super(props);
     this.debug = this.debug.bind(this);
   }
-
+  componentDidMount() {
+    this.props.performBlankSearch() ;
+  }
   debug () {
     this.props.performSearch();
   }
@@ -20,7 +22,7 @@ class Search extends Component {
     return (
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-2'>
+        <div id='sidebar' className='col-2'>
           <SearchFacets/>
         </div>
         <div className='col'>
@@ -38,13 +40,14 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    search: state.search
+    search: state.search,
+    per_page: state.search.per_page,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: () => dispatch(performSearch({query: "hi", facets: {actions: [1,2,3]}, page: 1, per_page: 10}))
+    performBlankSearch: () => dispatch(performSearch({query: "", facets: {}, page: 1, per_page: 10}))
   }
 };
 

@@ -11,7 +11,7 @@ class SearchResultLink extends Component {
     var [type, link] = this.props.value.split("::");
 
     return (<div>
-      <label class='badge'>{type}</label>
+      <label className='badge badge-default'>{type}</label>
       <a href={link} target="_blank">{link}</a>
     </div>);
   }

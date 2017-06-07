@@ -66,7 +66,7 @@ function fetchSearchResults(parameters) {
 function startSearchRequest(rid, params) {
   return { type: START_SEARCH,
            request_id: rid,
-           parameters: params };
+           request: params };
 }
 
 /*

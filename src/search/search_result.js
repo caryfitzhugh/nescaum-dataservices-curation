@@ -45,7 +45,7 @@ class SearchResult extends Component {
     }
 
       return (
-        <div className='search-result'>
+        <div className='search-result' key={resource.docid}>
           <h3>{this.props.resource.title}</h3>
           <h5>{this.props.resource.subtitle}</h5>
 
@@ -54,19 +54,19 @@ class SearchResult extends Component {
             <span>{published_on}</span>
           </div>
           {(resource.links || []).map( (link) => {
-            return <SearchResultLink value={link}/>
+            return <SearchResultLink key={link} value={link}/>
           })}
           <SearchResultMultiAttribute title='Actions' values={resource.actions}/>
           <SearchResultMultiAttribute title='Authors' values={resource.authors}/>
-          <SearchResultMultiAttribute title='Effects' values={resource.effects}/>
-          <SearchResultMultiAttribute title='Sectors' values={resource.sectors}/>
-          <SearchResultMultiAttribute title='Formats' values={resource.formats}/>
-          <SearchResultMultiAttribute title='Strategies' values={resource.strategies}/>
-          <SearchResultMultiAttribute title='States' values={resource.states}/>
-          <SearchResultMultiAttribute title='Keywords' values={resource.keywords}/>
-          <SearchResultMultiAttribute title='GeoFocus' values={resource.geofocus}/>
           <SearchResultMultiAttribute title='Climate Changes' values={resource.climate_changes}/>
+          <SearchResultMultiAttribute title='Effects' values={resource.effects}/>
+          <SearchResultMultiAttribute title='Formats' values={resource.formats}/>
+          <SearchResultMultiAttribute title='GeoFocus' values={resource.geofocus}/>
+          <SearchResultMultiAttribute title='Keywords' values={resource.keywords}/>
           <SearchResultMultiAttribute title='Publishers' values={resource.publishers}/>
+          <SearchResultMultiAttribute title='Sectors' values={resource.sectors}/>
+          <SearchResultMultiAttribute title='States' values={resource.states}/>
+          <SearchResultMultiAttribute title='Strategies' values={resource.strategies}/>
         </div>
       );
   }
