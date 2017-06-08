@@ -14,14 +14,16 @@ import {BrowserRouter} from 'react-router-dom'
 
 // Features / Reducers
 import { searchReducer } from './search/reducers';
-import { curateReducer } from './curate/reducers';
+import { createReducer } from './create/reducers';
+import { editReducer } from './edit/reducers';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css';
 
 const reducer = combineReducers({
   search: searchReducer,
-  curate: curateReducer,
+  create: createReducer,
+  edit: editReducer,
 });
 
 const store = createStore(reducer,
