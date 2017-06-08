@@ -12,7 +12,7 @@ class SearchResultLink extends Component {
 
     return (<div>
       <label className='badge badge-default'>{type}</label>
-      <a href={link} target="_blank">{link}</a>
+      <a href={link} target="_blank" rel="noopener noreferrer">{link}</a>
     </div>);
   }
 }

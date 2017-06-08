@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 export const START_SEARCH = 'start-search';
 export const FINISH_SEARCH = 'finish-search';
 export const ERROR_SEARCH = 'error-search';
-export const CLEAR_SEARCH = 'clear-search';
+export const TOGGLE_FACET_SEARCH = 'toggle-facet-search';
 
 /*
   page
@@ -51,12 +51,12 @@ function fetchSearchResults(parameters) {
   }
   ["actions", "authors", "climate_changes", "effects", "formats", "geofocus",
     "keywords", "publishers", "sectors", "strategies", "states"].forEach((key) => {
-      if (parameters[key]) {
-        params[key] = parameters.actions.join(",");
+      if (parameters.facets[key]) {
+        params[key] = parameters.facets[key].join(",");
       }
     });
 
-  var qparams = '?' + Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(parameters[k]));return a},[]).join('&')
+  var qparams = '?' + Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(params[k]));return a},[]).join('&')
   return fetch(process.env.REACT_APP_API_HOST + "/resources" + qparams);
 }
 
@@ -86,11 +86,10 @@ function errorSearchRequest(rid) {
             request_id: rid};
 }
 
-/*
- *  Clear search parameters and facets
- */
-function clearSearch() {
-  return { type: CLEAR_SEARCH };
+export function toggleFacet(type, value, checked) {
+  return { type: TOGGLE_FACET_SEARCH,
+           toggle: { type: type, value: value, checked: checked}
+         }
 }
 
 /*  This will perform a search - triggering the fetch, along with dispatching
@@ -122,7 +121,8 @@ export function performSearch({query, facets, page, per_page}) {
 
         dispatch(finishSearchRequest(request_id, json));
       })
-      .catch(() => {
+      .catch((e) => {
+        console.warn(e);
         dispatch(errorSearchRequest(request_id));
       });
   };

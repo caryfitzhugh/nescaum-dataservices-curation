@@ -43,14 +43,13 @@ class SearchBar extends Component {
 const mapStateToProps = (state) => {
   return {
     parameters: state.search.parameters,
-    per_page: state.search.per_page
+    per_page: state.search.parameters.per_page
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: (query, per_page) => dispatch(
-      performSearch({query: query, facets:{}, page: 1, per_page: per_page}))
+    performSearch: (query, per_page) => dispatch(performSearch({query: query, facets:{}, page: 1, per_page: per_page}))
   }
 };
 

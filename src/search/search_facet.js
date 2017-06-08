@@ -1,20 +1,40 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
+import {toggleFacet, performSearch} from "./actions";
 import { connect } from 'react-redux';
+import SearchFacetGroup from './search_facet_group';
+import immutable from "object-path-immutable";
 
 class SearchFacet extends Component {
   constructor(props) {
     super(props);
+    this.toggle_facet = this.toggle_facet.bind(this);
+    this.is_checked = this.is_checked.bind(this);
+  }
+
+  toggle_facet(evt, value) {
+    this.props.toggleFacet(this.props.type, value, evt.target.checked);
+  }
+
+  is_checked(facet) {
+    return (
+      (this.props.parameter_facets || {})[this.props.type] || []).includes(facet.value);
   }
 
   render() {
-    var sorted = (this.props.facets || []).sort();
-console.log(sorted);
+    var facets = this.props.facets || [];
+
     return (<div>
               <label>{this.props.title}</label>
             <ul>
-              {sorted.map((facet) => {
-                return <li key={facet.value}>{facet.value} </li>
+              {facets.map((item, i) => {
+                var input_id = "input-"+ this.props.type + "-" + JSON.stringify(item.value) +'-'+ i;
+
+                return <li key={input_id}>
+                          <input id={input_id} type='checkbox'
+                                checked={this.is_checked(item)}
+                                onChange={(evt) => this.toggle_facet(evt, item.value)}/>
+                          <label htmlFor={input_id}>{item.value} <small> {item.count} </small> </label>
+                       </li>;
                 })}
             </ul>
             </div>);
@@ -23,13 +43,13 @@ console.log(sorted);
 
 const mapStateToProps = (state) => {
   return {
-    parameters: state.search.parameters
+    parameter_facets: state.search.parameters.facets
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: () => dispatch(performSearch({query: "hi", facets: {actions: [1,2,3]}, page: 1, per_page: 10}))
+   toggleFacet: (type, value, checked) => dispatch(toggleFacet(type, value, checked))
   }
 };
 
