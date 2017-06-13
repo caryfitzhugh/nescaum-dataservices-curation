@@ -2,6 +2,7 @@
   "name": "nescaum-dataservices-curation",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bootstrap": "^4.0.0-alpha.6",
