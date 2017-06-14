@@ -1,0 +1,47 @@
+ul {
+  margin: 0;
+  padding: 0;
+}
+.badge {
+  padding: 8px 10px !important;
+  font-size: 14px !important;
+  vertical-align: middle !important;
+}
+.badge .fa-times-circle-o {
+  font-size: 150%;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+li {
+  display: inline-block;
+  margin: 5px;
+}
+
+.autocomplete-root {
+  position: relative;
+}
+.autocomplete-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 35px;
+  background: white;
+  border: 1px solid black;
+  border-top: 0;
+  z-index: 10;
+}
+
+.autocomplete-results li {
+  display: block;
+
+}
+.autocomplete-results li:hover {
+  background: lightblue;
+  color: white;
+  cursor: pointer;
+}
+.autocomplete-results li.active {
+  background: blue;
+  color: white;
+}
