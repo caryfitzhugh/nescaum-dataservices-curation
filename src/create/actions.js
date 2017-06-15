@@ -15,7 +15,7 @@ export const ERROR_CREATE_RESOURCE = 'error-create-resource';
  * returns a promise
  */
 function fetchFacets(facets) {
-  return fetch(process.env.REACT_APP_API_HOST + "/resources/facets?names=" + encodeURIComponent(facets.join(",")) );
+  return fetch((process.env.REACT_APP_API_HOST || "") + "/resources/facets?names=" + encodeURIComponent(facets.join(",")) );
 }
 
 /*
@@ -72,7 +72,7 @@ export function facetQuery(facets) {
 }
 
 function sendCreateResource(resource) {
-  return fetch(process.env.REACT_APP_API_HOST + "/resources",
+  return fetch((process.env.REACT_APP_API_HOST || "") + "/resources",
             {
               method: "POST",
               body: JSON.stringify({resource: resource}),

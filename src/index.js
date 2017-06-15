@@ -10,7 +10,7 @@ import registerServiceWorker from './registerServiceWorker';
 import thunk from 'redux-thunk';
 
 // Routing
-import {BrowserRouter} from 'react-router-dom'
+import {HashRouter} from 'react-router-dom'
 
 // Features / Reducers
 import { searchReducer } from './search/reducers';
@@ -30,8 +30,8 @@ const store = createStore(reducer,
     applyMiddleware(thunk))
 
 ReactDOM.render(<Provider store={store}>
-                  <BrowserRouter>
+                  <HashRouter>
                     <App/ >
-                  </BrowserRouter>
+                  </HashRouter>
                 </Provider>, document.getElementById('root'));
 registerServiceWorker();

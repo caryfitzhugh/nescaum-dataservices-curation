@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import "./component.css";
 import CreateResourceFacet from './create_resource_facet';
 import CreateResourceWeblinks from './create_resource_weblinks';
+import {Link} from 'react-router-dom';
 import {merge, isEqual, without, uniq} from 'lodash';
-import {createResource, facetQuery} from './actions';
+import {resetCreateResource, createResource, facetQuery} from './actions';
 
 class Create extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class Create extends Component {
 
   componentDidMount() {
     // Want to fetch all facets
+    this.props.performReset();
     this.props.performFacetQuery();
   }
 
@@ -81,6 +83,13 @@ class Create extends Component {
           <span className='fa fa-spinner'></span>
         </div>;
     }
+
+    if (this.props.created_docid) {
+      overlay = <div className='loading-overlay'>
+          <Link href={"/resources/" + this.props.created_docid}> Go To Resource </Link>
+        </div>;
+    }
+
     return (
     <div className='container-fluid'>
 
@@ -162,13 +171,15 @@ class Create extends Component {
 const mapStateToProps = (state) => {
   return {
     facets: state.create.facets.available,
-    is_creating: !!state.create.request_id
+    is_creating: !!state.create.request_id,
+    created_docid: state.create.created_docid,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     performFacetQuery: () => dispatch(facetQuery(["actions", "authors", "climate_changes", "effects", "formats", "geofocus", "keywords", "publishers", "sectors", "strategies", "states"])),
+    performReset: () => dispatch(resetCreateResource()),
     performResourceCreate: (resource) => dispatch(createResource(resource))
   }
 };

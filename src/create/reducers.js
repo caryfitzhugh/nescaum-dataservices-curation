@@ -31,6 +31,7 @@ function createReducer(state = INITIAL_CREATE_STATE, action) {
       new_state = immutable.set(new_state, ["create", "request_id"], null);
       new_state = immutable.set(new_state, ["facets", "parameters"], null);
       new_state = immutable.set(new_state, ["facets", "response"], null);
+      new_state = immutable.set(new_state, ["create", "created_docid"], null);
       return new_state;
 
     case START_CREATE_RESOURCE:
