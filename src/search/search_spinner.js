@@ -15,7 +15,7 @@ class SearchSpinner extends Component {
   render() {
     if (this.props.is_searching) {
       return (
-        <div> Spinner </div>
+        <div className='spinner'> <span className='fa fa-spinner'></span> </div>
       );
     } else {
       return null;

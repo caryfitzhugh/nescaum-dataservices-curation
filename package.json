@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bootstrap": "^4.0.0-alpha.6",

@@ -15,7 +15,7 @@ export const ERROR_CREATE_RESOURCE = 'error-create-resource';
  * returns a promise
  */
 function fetchFacets(facets) {
-  return fetch((process.env.REACT_APP_API_HOST || "") + "/resources/facets?names=" + encodeURIComponent(facets.join(",")) );
+  return fetch("/resources/facets?names=" + encodeURIComponent(facets.join(",")) );
 }
 
 /*
@@ -72,7 +72,7 @@ export function facetQuery(facets) {
 }
 
 function sendCreateResource(resource) {
-  return fetch((process.env.REACT_APP_API_HOST || "") + "/resources",
+  return fetch("/resources",
             {
               method: "POST",
               body: JSON.stringify({resource: resource}),
@@ -118,8 +118,13 @@ export function createResource(resource) {
         dispatch(finishCreateResource(json));
       })
       .catch((e) => {
-        console.warn(e);
-        dispatch(errorCreateResource(e));
+        debugger;
+        var decoder = new TextDecoder();
+        var body = '';
+        e.body.getReader().read().then((res) => {
+          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          dispatch(errorCreateResource(body))
+        });
       });
   };
 }

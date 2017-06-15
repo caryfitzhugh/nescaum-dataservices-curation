@@ -8,17 +8,13 @@ const INITIAL_CREATE_STATE = {
 function createReducer(state = INITIAL_CREATE_STATE, action) {
   switch (action.type) {
     case START_FACET_QUERY:
-      var new_state = immutable.set(state, ["facets", "response"], {});
-      new_state = immutable.set(new_state, ["facets", "request_id"], action.request_id);
-      new_state = immutable.set(new_state, ["facets", "existing"], {});
-
+      var new_state = immutable.set(state, ["facets", "available"], {});
       return new_state;
     case FINISH_FACET_QUERY:
       var facets = action.response.reduce((memo, facet_data) => {
-        memo[facet_data.name] = facet_data.facets.map((fct) => {return fct.value});
+        memo[facet_data.name] = facet_data.facets.map((fct) => {return fct.name});
         return memo;
       }, {});
-
       return immutable.set(state, ["facets", "available"], facets);
 
     case ERROR_FACET_QUERY:
@@ -26,29 +22,31 @@ function createReducer(state = INITIAL_CREATE_STATE, action) {
       return new_state;
 
     case RESET_CREATE_RESOURCE:
-      var new_state = immutable.set(state, ["create", "response"], {});
-      new_state = immutable.set(new_state, ["create", "error"], null);
-      new_state = immutable.set(new_state, ["create", "request_id"], null);
+      var new_state = immutable.set(state, ["response"], {});
+      new_state = immutable.set(new_state, ["error"], null);
+      new_state = immutable.set(new_state, ["is_creating"], false);
       new_state = immutable.set(new_state, ["facets", "parameters"], null);
       new_state = immutable.set(new_state, ["facets", "response"], null);
-      new_state = immutable.set(new_state, ["create", "created_docid"], null);
+      new_state = immutable.set(new_state, ["created_docid"], null);
       return new_state;
 
     case START_CREATE_RESOURCE:
-      var new_state = immutable.set(state, ["create", "response"], {});
-      new_state = immutable.set(new_state, ["create", "error"], null);
+      var new_state = immutable.set(state, ["response"], {});
+      new_state = immutable.set(new_state, ["error"], null);
+      new_state = immutable.set(new_state, ["is_creating"], true);
       new_state = immutable.set(new_state, ["facets", "parameters"], action.resource);
       return new_state;
 
     case FINISH_CREATE_RESOURCE:
-      debugger;
-      var new_state = immutable.set(state, ["create", "response"], action.response);
+      var new_state = immutable.set(state, ["response"], action.response);
+      new_state = immutable.set(new_state, ["is_creating"], false);
       new_state = immutable.set(new_state, ["resources", action.response.docid], action.response);
-      new_state = immutable.set(new_state, ["create", "created_docid"], action.response.docid);
+      new_state = immutable.set(new_state, ["created_docid"], action.response.docid);
       return new_state;
 
     case ERROR_CREATE_RESOURCE:
-      var new_state = immutable.set(state, ["create", "error"], action.response);
+      var new_state = immutable.set(state, ["error"], action.response);
+      new_state = immutable.set(new_state, ["is_creating"], false);
       return new_state;
 
     default:

@@ -70,32 +70,45 @@ class Create extends Component {
     var safe_resource = Object.assign({}, this.state.resource);
     this.props.performResourceCreate(this.state.resource);
   }
-  prevent_submit(event) {
-    if (event.which === 13 /* Enter */) {
-      event.preventDefault();
-    }
-  }
-
   render() {
     var overlay = null;
     if (this.props.is_creating) {
       overlay = <div className='loading-overlay'>
-          <span className='fa fa-spinner'></span>
+          <div className='content'>
+            <span className='fa fa-spinner'></span>
+          </div>
         </div>;
+    }
+    if (this.props.error) {
+      overlay = <div className='loading-overlay'>
+          <div className='content'>
+            <h1> Error</h1>
+            <p> There was an error creating this record. </p>
+
+            <pre>
+              {JSON.stringify(this.props.error)}
+            </pre>
+
+            <a className='btn btn-primary' onClick={(evt) => { this.props.performReset() }}> Clear </a>
+          </div>
+        </div>;
+
     }
 
     if (this.props.created_docid) {
       overlay = <div className='loading-overlay'>
-          <Link href={"/resources/" + this.props.created_docid}> Go To Resource </Link>
+          <div className='content'>
+            <Link to={"/resources/" + this.props.created_docid}> Go To Resource </Link>
+          </div>
         </div>;
     }
 
     return (
     <div className='container-fluid'>
-
+      {overlay}
       <div className='row'>
         <h1>Create</h1>
-        <form className='col' onKeyPress={(evt) => this.prevent_submit(evt)} >
+        <div className='form col'>
           <div className="form-group">
             <label>Title</label>
             <input className='form-control' onChange={(evt) => this.update_field(evt, 'title')}/>
@@ -121,19 +134,19 @@ class Create extends Component {
               </div>
             </div>
           </div>
+          <CreateResourceFacet name='Formats' available={this.state.facets.formats} facets={this.state.resource.formats} onChange={(new_data) => this.update_facet('formats', new_data)} />
 
           <CreateResourceWeblinks available={this.state.weblink_types} links={this.state.resource.external_data_links} onChange={(new_data) => this.update_facet('external_data_links', new_data)} />
-          <CreateResourceFacet name='Actions' available={this.state.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
-          <CreateResourceFacet name='Authors' available={this.state.facets.authors} facets={this.state.resource.authors} onChange={(new_data) => this.update_facet('authors', new_data)} />
-          <CreateResourceFacet name='Climate Changes' available={this.state.facets.climate_changes} facets={this.state.resource.climate_changes} onChange={(new_data) => this.update_facet('climate_changes', new_data)} />
-          <CreateResourceFacet name='Formats' available={this.state.facets.formats} facets={this.state.resource.formats} onChange={(new_data) => this.update_facet('formats', new_data)} />
-          <CreateResourceFacet name='Effects' available={this.state.facets.effects} facets={this.state.resource.effects} onChange={(new_data) => this.update_facet('effects', new_data)} />
-          <CreateResourceFacet name='GeoFocus' available={this.state.facets.geofocus } facets={this.state.resource.geofocus} onChange={(new_data) => this.update_facet('geofocus', new_data)} />
-          <CreateResourceFacet name='Keywords' available={this.state.facets.keywords } facets={this.state.resource.keywords} onChange={(new_data) => this.update_facet('keywords', new_data)} />
-          <CreateResourceFacet name='Publishers' available={this.state.facets.publishers } facets={this.state.resource.publishers} onChange={(new_data) => this.update_facet('publishers', new_data)} />
-          <CreateResourceFacet name='Sectors' available={this.state.facets.sectors } facets={this.state.resource.sectors} onChange={(new_data) => this.update_facet('sectors', new_data)} />
-          <CreateResourceFacet name='Strategies' available={this.state.facets.strategies } facets={this.state.resource.strategies} onChange={(new_data) => this.update_facet('strategies', new_data)} />
-          <CreateResourceFacet name='States' available={this.state.facets.states } facets={this.state.resource.states} onChange={(new_data) => this.update_facet('states', new_data)} />
+          <CreateResourceFacet name='Actions' available={this.props.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
+          <CreateResourceFacet name='Authors' available={this.props.facets.authors} facets={this.state.resource.authors} onChange={(new_data) => this.update_facet('authors', new_data)} />
+          <CreateResourceFacet name='Climate Changes' available={this.props.facets.climate_changes} facets={this.state.resource.climate_changes} onChange={(new_data) => this.update_facet('climate_changes', new_data)} />
+          <CreateResourceFacet name='Effects' available={this.props.facets.effects} facets={this.state.resource.effects} onChange={(new_data) => this.update_facet('effects', new_data)} />
+          <CreateResourceFacet name='GeoFocus' available={this.props.facets.geofocus } facets={this.state.resource.geofocus} onChange={(new_data) => this.update_facet('geofocus', new_data)} />
+          <CreateResourceFacet name='Keywords' available={this.props.facets.keywords } facets={this.state.resource.keywords} onChange={(new_data) => this.update_facet('keywords', new_data)} />
+          <CreateResourceFacet name='Publishers' available={this.props.facets.publishers } facets={this.state.resource.publishers} onChange={(new_data) => this.update_facet('publishers', new_data)} />
+          <CreateResourceFacet name='Sectors' available={this.props.facets.sectors } facets={this.state.resource.sectors} onChange={(new_data) => this.update_facet('sectors', new_data)} />
+          <CreateResourceFacet name='Strategies' available={this.props.facets.strategies } facets={this.state.resource.strategies} onChange={(new_data) => this.update_facet('strategies', new_data)} />
+          <CreateResourceFacet name='States' available={this.props.facets.states } facets={this.state.resource.states} onChange={(new_data) => this.update_facet('states', new_data)} />
 
           <div className='form-group'>
             <div className='row'>
@@ -161,7 +174,7 @@ class Create extends Component {
           <div className="form-group">
             <button className='btn btn-primary' onClick={(evt) => this.submit(evt)}> Create </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
     );
@@ -170,9 +183,10 @@ class Create extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    facets: state.create.facets.available,
-    is_creating: !!state.create.request_id,
+    facets: state.create.facets.available || {},
+    is_creating: state.create.is_creating,
     created_docid: state.create.created_docid,
+    error: state.create.error
   }
 };
 

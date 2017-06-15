@@ -16,11 +16,13 @@ import {HashRouter} from 'react-router-dom'
 import { searchReducer } from './search/reducers';
 import { createReducer } from './create/reducers';
 import { editReducer } from './edit/reducers';
+import { resourcesReducer } from './resources/reducers';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css';
 
 const reducer = combineReducers({
+  resources: resourcesReducer,
   search: searchReducer,
   create: createReducer,
   edit: editReducer,
