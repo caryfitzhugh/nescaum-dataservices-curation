@@ -4,6 +4,7 @@ import md from 'marked';
 import { connect } from 'react-redux';
 import "./component.css";
 import CreateResourceFacet from './create_resource_facet';
+import CreateResourceWeblinks from './create_resource_weblinks';
 import {merge, isEqual, without, uniq} from 'lodash';
 import {createResource, facetQuery} from './actions';
 
@@ -11,6 +12,11 @@ class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      weblink_types: [
+        "pdf",
+        "web",
+        "map",
+      ],
       facets: {
       },
       resource: {
@@ -34,10 +40,12 @@ class Create extends Component {
       }
     };
   }
+
   componentDidMount() {
     // Want to fetch all facets
     this.props.performFacetQuery();
   }
+
   update_field(evt, field) {
     var val = evt.target.value;
     this.setState((old) => {
@@ -45,26 +53,6 @@ class Create extends Component {
       update[field] = val;
       return merge({}, old, {resource: update});
     });
-  }
-
-  strict_safify(htm) {
-    // this prevents possible HTML attacks using the absolutely bare-minimum
-    // essentials as specified by OWASP
-    // https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet
-    // this method of pure string replacements are much safer and faster than
-    // attempting to regex-match all tags
-
-    // See jQuery plugin at end for example usage
-    var htm = htm || "";
-    return htm
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;')
-        .replace(/\//g, '&#x2F;')
-        .replace(/\n/g, ' <br> ');
-
   }
 
   update_facet(field, new_values) {
@@ -80,13 +68,25 @@ class Create extends Component {
     var safe_resource = Object.assign({}, this.state.resource);
     this.props.performResourceCreate(this.state.resource);
   }
+  prevent_submit(event) {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+    }
+  }
 
   render() {
+    var overlay = null;
+    if (this.props.is_creating) {
+      overlay = <div className='loading-overlay'>
+          <span className='fa fa-spinner'></span>
+        </div>;
+    }
     return (
     <div className='container-fluid'>
+
       <div className='row'>
         <h1>Create</h1>
-        <form className='col' onSubmit={(evt) => evt.preventDefault()}>
+        <form className='col' onKeyPress={(evt) => this.prevent_submit(evt)} >
           <div className="form-group">
             <label>Title</label>
             <input className='form-control' onChange={(evt) => this.update_field(evt, 'title')}/>
@@ -113,6 +113,7 @@ class Create extends Component {
             </div>
           </div>
 
+          <CreateResourceWeblinks available={this.state.weblink_types} links={this.state.resource.external_data_links} onChange={(new_data) => this.update_facet('external_data_links', new_data)} />
           <CreateResourceFacet name='Actions' available={this.state.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
           <CreateResourceFacet name='Authors' available={this.state.facets.authors} facets={this.state.resource.authors} onChange={(new_data) => this.update_facet('authors', new_data)} />
           <CreateResourceFacet name='Climate Changes' available={this.state.facets.climate_changes} facets={this.state.resource.climate_changes} onChange={(new_data) => this.update_facet('climate_changes', new_data)} />
@@ -160,7 +161,8 @@ class Create extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    facets: state.create.facets.available
+    facets: state.create.facets.available,
+    is_creating: !!state.create.request_id
   }
 };
 

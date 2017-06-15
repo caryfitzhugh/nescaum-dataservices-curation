@@ -4,6 +4,7 @@ export const START_FACET_QUERY = 'start-facet-query';
 export const FINISH_FACET_QUERY = 'finish-facet-query';
 export const ERROR_FACET_QUERY = 'error-facet-query';
 
+export const RESET_CREATE_RESOURCE = 'reset-create-resource';
 export const START_CREATE_RESOURCE = 'start-create-resource';
 export const FINISH_CREATE_RESOURCE = 'finish-create-resource';
 export const ERROR_CREATE_RESOURCE = 'error-create-resource';
@@ -74,10 +75,17 @@ function sendCreateResource(resource) {
   return fetch(process.env.REACT_APP_API_HOST + "/resources",
             {
               method: "POST",
-              body: JSON.stringify({resource: resource})
+              body: JSON.stringify({resource: resource}),
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
             });
 }
 
+export function resetCreateResource() {
+  return { type: RESET_CREATE_RESOURCE };
+}
 function startCreateResource(resource) {
   return { type: START_CREATE_RESOURCE,
            resource: resource};

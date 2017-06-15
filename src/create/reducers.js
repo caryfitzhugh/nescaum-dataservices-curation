@@ -1,5 +1,5 @@
 import immutable from "object-path-immutable";
-import {START_CREATE_RESOURCE, FINISH_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, START_FACET_QUERY, FINISH_FACET_QUERY, ERROR_FACET_QUERY} from './actions'
+import {RESET_CREATE_RESOURCE, START_CREATE_RESOURCE, FINISH_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, START_FACET_QUERY, FINISH_FACET_QUERY, ERROR_FACET_QUERY} from './actions'
 
 const INITIAL_CREATE_STATE = {
   facets: {}
@@ -25,6 +25,14 @@ function createReducer(state = INITIAL_CREATE_STATE, action) {
       var new_state = immutable.set(state, ["facets", "request_id"], null);
       return new_state;
 
+    case RESET_CREATE_RESOURCE:
+      var new_state = immutable.set(state, ["create", "response"], {});
+      new_state = immutable.set(new_state, ["create", "error"], null);
+      new_state = immutable.set(new_state, ["create", "request_id"], null);
+      new_state = immutable.set(new_state, ["facets", "parameters"], null);
+      new_state = immutable.set(new_state, ["facets", "response"], null);
+      return new_state;
+
     case START_CREATE_RESOURCE:
       var new_state = immutable.set(state, ["create", "response"], {});
       new_state = immutable.set(new_state, ["create", "error"], null);
@@ -32,7 +40,10 @@ function createReducer(state = INITIAL_CREATE_STATE, action) {
       return new_state;
 
     case FINISH_CREATE_RESOURCE:
+      debugger;
       var new_state = immutable.set(state, ["create", "response"], action.response);
+      new_state = immutable.set(new_state, ["resources", action.response.docid], action.response);
+      new_state = immutable.set(new_state, ["create", "created_docid"], action.response.docid);
       return new_state;
 
     case ERROR_CREATE_RESOURCE:
