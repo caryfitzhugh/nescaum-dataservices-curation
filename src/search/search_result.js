@@ -3,6 +3,7 @@ import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchResultMultiAttribute from './search_result_multi_attribute';
 import SearchResultLink from './search_result_link';
+import {Link} from 'react-router-dom';
 
 class SearchResult extends Component {
   constructor(props) {
@@ -21,38 +22,48 @@ class SearchResult extends Component {
       "July", "August", "September", "October", "November", "December"
     ];
 
-    if (resource.pubstart == resource.pubend) {
-      published_on = resource.pubstart.split("T")[0];
-    } else {
-      // (Month) (Year)
-      if (resource.pubstart.getMonth() === resource.pubend.getMonth() &&
-          resource.pubstart.getYear() === resource.pubend.getYear()) {
-        published_on = monthNames[resource.pubstart.getMonth()] + " " + resource.pubstart.getFullYear();
+    try {
+      if (resource.pubstart == resource.pubend) {
+        published_on = resource.pubstart.split("T")[0];
+      } else {
+        // (Month) (Year)
+        if (resource.pubstart.getMonth() === resource.pubend.getMonth() &&
+            resource.pubstart.getYear() === resource.pubend.getYear()) {
+          published_on = monthNames[resource.pubstart.getMonth()] + " " + resource.pubstart.getFullYear();
+        }
+        // (MonthStart) - (MonthEnd) Year
+        else if (resource.pubstart.getYear() === resource.pubend.getYear()) {
+          published_on = monthNames[resource.pubstart.getMonth()] + " - "
+                        monthNames[resource.pubend.getMonth()] + " "
+                        + resource.pubstart.getFullYear();
+        }
+        // (MonthStart) (Year Start) - MEnd YearEnd
+        else {
+          published_on = monthNames[resource.pubstart.getMonth()] + " "
+                        + resource.pubstart.getFullYear() + ' - ' +
+                        monthNames[resource.pubend.getMonth()] + " "
+                        + resource.pubend.getFullYear();
+        }
       }
-      // (MonthStart) - (MonthEnd) Year
-      else if (resource.pubstart.getYear() === resource.pubend.getYear()) {
-        published_on = monthNames[resource.pubstart.getMonth()] + " - "
-                       monthNames[resource.pubend.getMonth()] + " "
-                       + resource.pubstart.getFullYear();
-      }
-      // (MonthStart) (Year Start) - MEnd YearEnd
-      else {
-        published_on = monthNames[resource.pubstart.getMonth()] + " "
-                      + resource.pubstart.getFullYear() + ' - ' +
-                       monthNames[resource.pubend.getMonth()] + " "
-                      + resource.pubend.getFullYear();
-      }
+    } catch (e) {
+      published_on = "";
+    }
+    var published = <div className='date'>
+            <label>Published:</label>
+            <span>{published_on}</span>
+          </div>
+    if (published_on === "") {
+      published = null;
     }
 
       return (
         <div className='search-result' key={resource.docid}>
-          <h3>{this.props.resource.title}</h3>
+          <h3>
+            <Link to={"/resources/" + this.props.resource.docid}> {this.props.resource.title} </Link>
+          </h3>
           <h5>{this.props.resource.subtitle}</h5>
+          {published}
 
-          <div className='date'>
-            <label>Published:</label>
-            <span>{published_on}</span>
-          </div>
           {(resource.links || []).map( (link) => {
             return <SearchResultLink key={link} value={link}/>
           })}

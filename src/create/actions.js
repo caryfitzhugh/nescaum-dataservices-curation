@@ -118,7 +118,6 @@ export function createResource(resource) {
         dispatch(finishCreateResource(json));
       })
       .catch((e) => {
-        debugger;
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {

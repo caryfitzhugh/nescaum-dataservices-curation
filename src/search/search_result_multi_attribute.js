@@ -5,14 +5,10 @@ import { connect } from 'react-redux';
 class SearchResultMultiAttribute extends Component {
   constructor(props) {
     super(props);
-    this.debug = this.debug.bind(this);
-  }
-
-  debug () {
-    this.props.performSearch();
   }
 
   render() {
+    if (this.props.values) {
       return (
         <div className='search-result-multi-attribute'>
           <label>{this.props.title}</label>
@@ -21,6 +17,12 @@ class SearchResultMultiAttribute extends Component {
           })}
         </div>
       );
+    } else {
+      return (
+        <div className='search-result-multi-attribute'>
+        </div>
+      );
+    }
   }
 }
 

@@ -118,7 +118,6 @@ export function performSearch({query, facets, page, per_page}) {
             resource.pubend = new Date(resource.pubend);
           }
         });
-
         dispatch(finishSearchRequest(request_id, json));
       })
       .catch((e) => {

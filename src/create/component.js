@@ -29,6 +29,7 @@ class Create extends Component {
         "effects": [],
         "formats": [],
         "geofocus": [],
+        "image": "",
         "keywords": [],
         "publishers": [],
         "published_on_start": null,
@@ -119,6 +120,12 @@ class Create extends Component {
             <input className='form-control' value={this.state.resource.subtitle} onChange={(evt) => this.update_field(evt, 'subtitle')}/>
           </div>
 
+          <div className="form-group">
+            <label>Image</label>
+            <input className='form-control' onChange={(evt) => this.update_field(evt, 'image')}/>
+            <img src={this.state.resource.image}/>
+          </div>
+
           <div className="form-group content-split-view">
             <label>Content</label>
             <div className='container-fluid'>
@@ -134,7 +141,27 @@ class Create extends Component {
               </div>
             </div>
           </div>
-          <CreateResourceFacet name='Formats' available={this.state.facets.formats} facets={this.state.resource.formats} onChange={(new_data) => this.update_facet('formats', new_data)} />
+          <CreateResourceFacet name='Formats' available={this.props.facets.formats} facets={this.state.resource.formats} onChange={(new_data) => this.update_facet('formats', new_data)} />
+          <div className='form-group'>
+            <div className='row'>
+              <div className='col-3'>
+                <div className=''>
+                  <div className='col-6'>
+                    <label> Publish Start Date</label>
+                  </div>
+                  <input type='date' onChange={(new_data) => this.update_facet('published_on_start', new_data)}/>
+                </div>
+              </div>
+              <div className='col-3'>
+                <div className=''>
+                  <div className='col-6'>
+                    <label> Publish End Date</label>
+                  </div>
+                  <input type='date' onChange={(new_data) => this.update_facet('published_on_end', new_data)}/>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <CreateResourceWeblinks available={this.state.weblink_types} links={this.state.resource.external_data_links} onChange={(new_data) => this.update_facet('external_data_links', new_data)} />
           <CreateResourceFacet name='Actions' available={this.props.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
@@ -147,27 +174,6 @@ class Create extends Component {
           <CreateResourceFacet name='Sectors' available={this.props.facets.sectors } facets={this.state.resource.sectors} onChange={(new_data) => this.update_facet('sectors', new_data)} />
           <CreateResourceFacet name='Strategies' available={this.props.facets.strategies } facets={this.state.resource.strategies} onChange={(new_data) => this.update_facet('strategies', new_data)} />
           <CreateResourceFacet name='States' available={this.props.facets.states } facets={this.state.resource.states} onChange={(new_data) => this.update_facet('states', new_data)} />
-
-          <div className='form-group'>
-            <div className='row'>
-              <div className='col-3'>
-                <div className=''>
-                  <div className='col-6'>
-                    <label> Publish Start Date</label>
-                  </div>
-                  <input type='date' />
-                </div>
-              </div>
-              <div className='col-3'>
-                <div className=''>
-                  <div className='col-6'>
-                    <label> Publish End Date</label>
-                  </div>
-                  <input type='date' />
-                </div>
-              </div>
-            </div>
-          </div>
 
           <hr/>
 
