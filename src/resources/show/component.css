@@ -1,0 +1,30 @@
+.show-indexed-button {
+  float: right;
+}
+h6 {
+  color: #aaa;
+}
+h2 .btn {
+  margin-left: 1em;
+}
+.resource-image {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.publication {
+  display: inline;
+  font-size: 80%;
+  color: #888;
+  float: right;
+}
+.publication span {
+  font-weight: bold;
+  margin: 0 0.5em;
+}
+
+label.field-name {
+  font-weight: bold;
+  font-size: 110%;
+}

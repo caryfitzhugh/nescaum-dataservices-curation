@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import md from 'marked';
 import { connect } from 'react-redux';
 import { getResource } from './../actions';
+import {Link} from 'react-router-dom';
 import "./component.css";
 import ShowFacetArray from './show_facet_array';
 import ShowIndexedButton from './show_indexed_button';
@@ -22,154 +23,41 @@ class Show extends Component {
 
   render() {
     if (this.props.resource) {
+      let img = this.props.resource.image || 'http://placehold.it/300';
       return (
         <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Title </label>
-              </div>
-              <div className='col'>
-                { this.props.resource.title}
-              </div>
+          <ShowIndexedButton resource={this.props.resource} />
+
+          <h2>{this.props.resource.title}
+            <Link className='btn btn-secondary' to={'/resources/' + this.props.resource.docid +'/edit'}> Edit Resource </Link>
+          </h2>
+
+          <h6> {this.props.resource.subtitle}
+            <small className='publication'>
+              <span>{ this.props.resource.published_on_start}</span>
+              /
+              <span>{ this.props.resource.published_on_end}</span>
+            </small>
+          </h6>
+
+          <div className='resource-image'>
+            <img src={img}/>
+            <label>{img }</label>
           </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Indexed </label>
-              </div>
-              <div className='col'>
-                <ShowIndexedButton resource={this.props.resource} />
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> SubTitle </label>
-              </div>
-              <div className='col'>
-                { this.props.resource.subtitle}
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Image </label>
-              </div>
-              <div className='col'>
-                { this.props.resource.image}
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Published On Start  /  End</label>
-              </div>
-              <div className='col'>
-                { this.props.resource.published_on_start}
-                /
-                { this.props.resource.published_on_end}
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Content </label>
-              </div>
-              <div className='col'>
-                <div dangerouslySetInnerHTML={{__html: md(this.props.resource.content || "")}}></div>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Formats </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.formats}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> WebLinks </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.external_data_links}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Actions </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.actions}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Authors </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.authors}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Climate Change </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.climate_change}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Effects </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.effects}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> GeoFocus </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.geofocus}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Keywords </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.keywords}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Publishers </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.publishers}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Sectors </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.sectors}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> Strategies </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.strategies}/>
-              </div>
-          </div>
-          <div className='row'>
-            <div className='col-2'>
-              <label> States </label>
-              </div>
-              <div className='col'>
-                <ShowFacetArray values={this.props.resource.states}/>
-              </div>
-          </div>
+
+          <div dangerouslySetInnerHTML={{__html: md(this.props.resource.content || "")}}></div>
+
+          <ShowFacetArray name='Content Types' values={this.props.resource.content_types}/>
+          <ShowFacetArray name='Weblinks' values={this.props.resource.external_data_links}/>
+          <ShowFacetArray name='Actions' values={this.props.resource.actions}/>
+          <ShowFacetArray name='Authors' values={this.props.resource.authors}/>
+          <ShowFacetArray name='Climate Changes' values={this.props.resource.climate_changes}/>
+          <ShowFacetArray name='Effects' values={this.props.resource.effects}/>
+          <ShowFacetArray name='Keywords' values={this.props.resource.keywords}/>
+          <ShowFacetArray name='Publishers' values={this.props.resource.publishers}/>
+          <ShowFacetArray name='Sectors' values={this.props.resource.sectors}/>
+          <ShowFacetArray name='Strategies' values={this.props.resource.strategies}/>
+          <ShowFacetArray name='States' values={this.props.resource.states}/>
         </div>);
 
     } else if (this.props.error ) {

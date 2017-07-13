@@ -1,0 +1,12 @@
+.show-facet-array {
+  display: flex;
+  flex-direction: column;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+li {
+  flex: 1;
+  display: list-item;
+}

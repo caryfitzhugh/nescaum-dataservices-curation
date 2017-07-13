@@ -15,16 +15,16 @@ class ShowIndexedButton extends Component {
   render() {
     if (this.props.resource.indexed) {
     return (
-            <div >
-              <label> Is PUBLIC </label>
-              <button className='btn btn-primary' onClick={(evt) => this.make_private()}>Make Private</button>
-            </div>);
+      <div className='show-indexed-button btn-group' >
+        <button className='btn btn-sm btn-secondary disabled'> Is PUBLIC </button>
+        <button className='btn btn-sm btn-primary' onClick={(evt) => this.make_private()}>Make Private</button>
+      </div>);
     } else {
     return (
-            <div>
-              <label>Is PRIVATE </label>
-              <button className='btn btn-primary' onClick={(evt) => this.make_public()}>Make Public</button>
-            </div>);
+      <div className='show-indexed-button btn-group'>
+        <button className='btn btn-sm btn-primary' onClick={(evt) => this.make_public()}>Make Public</button>
+        <button className='btn btn-sm btn-secondary disabled'> Is PRIVATE </button>
+      </div>);
     }
   }
 }

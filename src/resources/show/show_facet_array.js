@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './show_facet_array.css';
 
 class ShowFacetArray extends Component {
   constructor(props) {
@@ -10,13 +11,16 @@ class ShowFacetArray extends Component {
     var facets = this.props.values || [];
 
     return (
-            <ul>
-              {facets.map((item, i) => {
-                return <li key={item}>
-                        {item}
-                       </li>;
-                })}
-            </ul>);
+      <div className='show-facet-array'>
+        <label className='field-name'>{this.props.name}</label>
+        <ul>
+          {facets.map((item, i) => {
+            return <li key={item}>
+                    {item}
+                    </li>;
+            })}
+        </ul>
+    </div>);
   }
 }
 
