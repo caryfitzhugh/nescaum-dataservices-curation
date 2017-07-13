@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {performSearch} from "./actions";
 import { connect } from 'react-redux';
+import './search_result_multi_attribute.css';
 
 class SearchResultMultiAttribute extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (this.props.values) {
       return (
@@ -28,7 +25,6 @@ class SearchResultMultiAttribute extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    is_searching: state.search.is_searching,
   }
 };
 

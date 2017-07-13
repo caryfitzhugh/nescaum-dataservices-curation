@@ -1,0 +1,13 @@
+.search-result {
+  border-top: 1px solid #ddd;
+  width: 100%;
+  padding: 0.5em;
+}
+
+.search-result:hover {
+  background: #efefef;
+}
+
+.search-result:last-child {
+  border-bottom: 1px solid #ddd;
+}

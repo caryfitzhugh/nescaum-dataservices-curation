@@ -118,6 +118,7 @@ export function performSearch({query, facets, page, per_page}) {
             resource.pubend = new Date(resource.pubend);
           }
         });
+        json.total_pages = Math.ceil(json.total / json.per_page);
         dispatch(finishSearchRequest(request_id, json));
       })
       .catch((e) => {

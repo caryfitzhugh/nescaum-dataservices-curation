@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {performSearch} from "./actions";
 import { connect } from 'react-redux';
-import SearchResultMultiAttribute from './search_result_multi_attribute';
 import SearchResultLink from './search_result_link';
 import {Link} from 'react-router-dom';
-
+import './search_result.css';
 class SearchResult extends Component {
   render() {
     var resource = this.props.resource;
@@ -58,17 +57,6 @@ class SearchResult extends Component {
           {(resource.links || []).map( (link) => {
             return <SearchResultLink key={link} value={link}/>
           })}
-          <SearchResultMultiAttribute title='Actions' values={resource.actions}/>
-          <SearchResultMultiAttribute title='Authors' values={resource.authors}/>
-          <SearchResultMultiAttribute title='Climate Changes' values={resource.climate_changes}/>
-          <SearchResultMultiAttribute title='Effects' values={resource.effects}/>
-          <SearchResultMultiAttribute title='Formats' values={resource.formats}/>
-          <SearchResultMultiAttribute title='GeoFocus' values={resource.geofocus}/>
-          <SearchResultMultiAttribute title='Keywords' values={resource.keywords}/>
-          <SearchResultMultiAttribute title='Publishers' values={resource.publishers}/>
-          <SearchResultMultiAttribute title='Sectors' values={resource.sectors}/>
-          <SearchResultMultiAttribute title='States' values={resource.states}/>
-          <SearchResultMultiAttribute title='Strategies' values={resource.strategies}/>
         </div>
       );
   }
@@ -76,7 +64,6 @@ class SearchResult extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    is_searching: state.search.is_searching,
   }
 };
 

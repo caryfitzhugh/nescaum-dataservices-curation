@@ -20,7 +20,8 @@ class Search extends Component {
         <div className='col'>
           <div className='row'>
             <SearchSpinner is_searching={this.props.is_searching}/>
-            <SearchResults is_searching={this.props.is_searching} response={this.props.response}/>
+            <SearchResults is_searching={this.props.is_searching} response={this.props.response}
+                           onChangePage={(new_p) => { this.props.performSearch(new_p, this.props.per_page) }}/>
           </div>
         </div>
       </div>
@@ -30,7 +31,8 @@ class Search extends Component {
 }
 
 const mapStateToProps = (state) => {
-console.log(state);
+  console.log("DB", state);
+
   return {
     is_searching: state.resources_unindexed.is_searching,
     per_page: state.resources_unindexed.per_page,

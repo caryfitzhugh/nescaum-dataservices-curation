@@ -1,0 +1,10 @@
+.search-pagination {
+  justify-content: flex-end;
+  margin-right: auto;
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+}
+.search-pagination .btn {
+  margin: 0 1em;
+}

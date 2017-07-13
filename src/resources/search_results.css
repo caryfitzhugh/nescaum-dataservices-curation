@@ -1,0 +1,11 @@
+.no-results {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.search-results {
+
+}
+.search-results, ul.results {
+  width: 100%;
+}

@@ -3,10 +3,6 @@ import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 
 class SearchResultLink extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     var [type, link] = this.props.value.split("::");
 
@@ -18,13 +14,11 @@ class SearchResultLink extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    //parameters: state.search.parameters
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //performSearch: () => dispatch(performSearch({query: "hi", facets: {actions: [1,2,3]}, page: 1, per_page: 10}))
   }
 };
 

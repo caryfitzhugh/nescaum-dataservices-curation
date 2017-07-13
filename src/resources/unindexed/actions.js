@@ -64,6 +64,7 @@ export function performUnindexedSearch(opts) {
           throw response;
         }
       }).then(function(json) {
+        json.total_pages = Math.ceil(json.total / json.per_page);
         dispatch(finishResourcesUnindexed(opts.page, opts.per_page, json));
       })
       .catch((e) => {
