@@ -4,6 +4,10 @@ export const START_RESOURCE_GET = 'start-resource-get';
 export const FINISH_RESOURCE_GET = 'finish-resource-get';
 export const ERROR_RESOURCE_GET = 'error-resource-get';
 
+export const START_RESOURCE_DELETE = 'start-resource-delete';
+export const FINISH_RESOURCE_DELETE = 'finish-resource-delete';
+export const ERROR_RESOURCE_DELETE = 'error-resource-delete';
+
 export const START_RESOURCE_INDEX = 'start-resource-index';
 export const FINISH_RESOURCE_INDEX = 'finish-resource-index';
 export const ERROR_RESOURCE_INDEX = 'error-resource-index';
@@ -139,6 +143,73 @@ export function indexResource(docid, indexed) {
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
           dispatch(errorResourceIndex(docid, body))
+        });
+      });
+  };
+}
+
+/*
+ * Delete against the API
+ *
+ * returns a promise
+ */
+function deleteResourceDo(docid) {
+  return fetch("/resources/" + docid,
+          { method: "DELETE",
+           'Accept': 'application/json'});
+}
+
+/*
+ *  Start a resource request action
+ */
+function startResourceDelete(docid) {
+  return { type: START_RESOURCE_DELETE,
+           docid: docid};
+}
+
+/*
+ *  Finish a doc request successfully.
+ */
+function finishResourceDelete(docid, response) {
+  return { type: FINISH_RESOURCE_DELETE,
+            docid: docid,
+            response: response};
+}
+
+/*
+ *  Finish a resource request with an error.
+ */
+function errorResourceDelete(docid, error) {
+  return { type: ERROR_RESOURCE_DELETE,
+    docid: docid,
+    error: error};
+}
+
+/*  This will perform a delete - triggering the fetch, along with dispatching
+*   the appropriate actions.
+*   This should be dispatched, and uses redux-thunk to process
+*/
+export function deleteResource(docid) {
+  return function (dispatch) {
+    // Dispatch that we are starting a search request
+    dispatch(startResourceDelete(docid));
+
+    return deleteResourceDo(docid).then(
+      function(response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      }).then(function(json) {
+        dispatch(finishResourceDelete(docid, json));
+      })
+      .catch((e) => {
+        var decoder = new TextDecoder();
+        var body = '';
+        e.body.getReader().read().then((res) => {
+          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          dispatch(errorResourceDelete(docid, body))
         });
       });
   };

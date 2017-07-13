@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import md from 'marked';
 import { connect } from 'react-redux';
-import { getResource } from './../actions';
+import { getResource, deleteResource } from './../actions';
 import {Link} from 'react-router-dom';
 import "./component.css";
 import ShowFacetArray from './show_facet_array';
@@ -19,18 +19,27 @@ class Show extends Component {
     // Want to fetch the details
     this.props.performResourceGet(this.props.match.params.id);
   }
-
+  delete_resource (evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    if (window.confirm("Delete Resource?\n\nThis will permanently delete the record!")) {
+      this.props.performResourceDelete(this.props.resource.docid);
+      // Send yourself "back" in the browser
+    }
+  }
 
   render() {
     if (this.props.resource) {
       let img = this.props.resource.image || 'http://placehold.it/300';
       return (
         <div className='container-fluid'>
-          <ShowIndexedButton resource={this.props.resource} />
 
+          <ShowIndexedButton resource={this.props.resource} />
           <h2>{this.props.resource.title}
             <Link className='btn btn-secondary' to={'/resources/' + this.props.resource.docid +'/edit'}> Edit Resource </Link>
+            <button onClick={(evt) => this.delete_resource(evt)} className='btn btn-danger'> Delete Resource </button>
           </h2>
+          <hr/>
 
           <h6> {this.props.resource.subtitle}
             <small className='publication'>
@@ -83,6 +92,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     performResourceGet: (docid) => dispatch(getResource(docid)),
+    performResourceDelete: (docid) => dispatch(deleteResource(docid)),
   }
 };
 
