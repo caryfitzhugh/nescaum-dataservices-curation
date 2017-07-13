@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchResult from './search_result';
 
 class SearchResults extends Component {
-  constructor(props) {
-    super(props);
-    this.debug = this.debug.bind(this);
-  }
-
-  debug () { }
-
   render() {
+    console.log(this.props.response);
       if (!this.props.is_searching) {
-        if (this.props.response.hits === 0) {
+        if (this.props.response.total === 0) {
          // Searched, found nothing
           return (<div className='no-results'>
                     <div className='jumbotron'>
@@ -38,8 +31,6 @@ class SearchResults extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    is_searching: state.search.is_searching,
-    response: state.search.response,
   }
 };
 

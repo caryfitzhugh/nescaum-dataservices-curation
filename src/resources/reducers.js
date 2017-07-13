@@ -1,7 +1,8 @@
 import immutable from "object-path-immutable";
-import {FINISH_CREATE_RESOURCE} from '../create/actions';
+import {FINISH_CREATE_RESOURCE} from './create/actions';
 import { START_RESOURCE_INDEX, FINISH_RESOURCE_INDEX, ERROR_RESOURCE_INDEX,
   START_RESOURCE_GET, FINISH_RESOURCE_GET, ERROR_RESOURCE_GET} from './actions';
+
 const INITIAL_RESOURCES_STATE = {
   errors: {
 

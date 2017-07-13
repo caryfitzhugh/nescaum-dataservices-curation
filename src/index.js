@@ -13,19 +13,21 @@ import thunk from 'redux-thunk';
 import {HashRouter} from 'react-router-dom'
 
 // Features / Reducers
-import { searchReducer } from './search/reducers';
-import { createReducer } from './create/reducers';
-import { editReducer } from './edit/reducers';
+import { searchReducer } from './resources/search/reducers';
+import { createReducer } from './resources/create/reducers';
+import { editReducer } from './resources/edit/reducers';
 import { resourcesReducer } from './resources/reducers';
+import { unindexedReducer } from './resources/unindexed/reducers';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css';
 
 const reducer = combineReducers({
   resources: resourcesReducer,
-  search: searchReducer,
-  create: createReducer,
-  edit: editReducer,
+  resources_unindexed: unindexedReducer,
+  resources_search: searchReducer,
+  resources_create: createReducer,
+  resources_edit: editReducer,
 });
 
 const store = createStore(reducer,

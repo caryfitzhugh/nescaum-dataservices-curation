@@ -6,15 +6,6 @@ import SearchResultLink from './search_result_link';
 import {Link} from 'react-router-dom';
 
 class SearchResult extends Component {
-  constructor(props) {
-    super(props);
-    this.debug = this.debug.bind(this);
-  }
-
-  debug () {
-    this.props.performSearch();
-  }
-
   render() {
     var resource = this.props.resource;
     var published_on = null;

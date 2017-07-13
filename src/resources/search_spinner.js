@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 
 class SearchSpinner extends Component {
-  constructor(props) {
-    super(props);
-    this.debug = this.debug.bind(this);
-  }
-
-  debug () {
-    this.props.performSearch();
-  }
 
   render() {
     if (this.props.is_searching) {
@@ -25,7 +16,6 @@ class SearchSpinner extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    is_searching: state.search.is_searching,
   }
 };
 

@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
+import {performUnindexedSearch} from "./actions";
 import { connect } from 'react-redux';
-import SearchFacets from './search_facets';
-import SearchBar from './search_bar';
 import SearchSpinner from './../search_spinner';
 import SearchResults from './../search_results';
 
 class Search extends Component {
   componentDidMount() {
-    this.props.performBlankSearch() ;
+    this.props.performSearch(1, this.props.per_page) ;
   }
 
   render() {
     return (
-    <div className='container-fluid'>
+    <div className='container'>
       <div className='row'>
         <div id='sidebar' className='col-2'>
-          <SearchFacets/>
+          <h3>Unindexed Resources</h3>
+          <p> These resources are not in the search index</p>
         </div>
         <div className='col'>
           <div className='row'>
-            <SearchBar/>
             <SearchSpinner is_searching={this.props.is_searching}/>
             <SearchResults is_searching={this.props.is_searching} response={this.props.response}/>
           </div>
@@ -32,17 +30,18 @@ class Search extends Component {
 }
 
 const mapStateToProps = (state) => {
+console.log(state);
   return {
-    search: state.search,
-    per_page: state.search.per_page,
-    is_searching: state.search.is_searching,
-    response: state.search.response,
+    is_searching: state.resources_unindexed.is_searching,
+    per_page: state.resources_unindexed.per_page,
+    page: state.resources_unindexed.page,
+    response: state.resources_unindexed.response,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performBlankSearch: () => dispatch(performSearch({query: "", facets: {}, page: 1, per_page: 10}))
+    performSearch: (p, pp) => dispatch(performUnindexedSearch({page: p, per_page: pp}))
   }
 };
 
