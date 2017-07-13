@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { indexResource } from './../resources/actions';
+import { indexResource } from './../actions';
 
 class ShowIndexedButton extends Component {
   constructor(props) {

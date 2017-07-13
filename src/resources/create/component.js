@@ -105,7 +105,7 @@ class Create extends Component {
     }
 
     return (
-    <div className='container-fluid'>
+    <div className='container'>
       {overlay}
       <div className='row'>
         <h1>Create</h1>

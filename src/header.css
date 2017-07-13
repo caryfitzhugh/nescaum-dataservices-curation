@@ -1,0 +1,44 @@
+nav.navbar {
+  padding: 0 10px;
+}
+
+.navbar-nav > li {
+  margin: 0 5px;
+}
+
+.navbar-nav > li.active {
+  box-sizing: border-box;
+  border-bottom: 5px solid white;
+}
+
+.subnav {
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: space-between;
+  background: white;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.subnav .nav-item {
+  padding: 0;
+  margin: 0.1em 0.1em;
+}
+
+.subnav .nav-item .nav-link {
+  padding: 0;
+  margin: 0 1em;
+  border-bottom: 2px solid transparent;
+}
+.subnav .nav-item.active .nav-link{
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+
+.subnav .btn {
+  border-radius: 0;
+}
+
+.subnav > div{
+  display: flex;
+}

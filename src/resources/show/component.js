@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import md from 'marked';
 import { connect } from 'react-redux';
-import { getResource } from './../resources/actions';
+import { getResource } from './../actions';
 import "./component.css";
 import ShowFacetArray from './show_facet_array';
 import ShowIndexedButton from './show_indexed_button';
