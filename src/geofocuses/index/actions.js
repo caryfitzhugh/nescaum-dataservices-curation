@@ -85,7 +85,7 @@ export function performIndexSearch(opts) {
 export function performCompleteIndexSearch(page) {
   page = page || 1;
   return function (dispatch) {
-    dispatch(performIndexSearch({page: page, per_page: 1, callback: (json) => {
+    dispatch(performIndexSearch({page: page, per_page: 100, callback: (json) => {
       if (json.total_pages > json.page) {
         dispatch(performCompleteIndexSearch(json.page + 1));
       }
