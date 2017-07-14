@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchFacet from './search_facet';
+import {isEmpty } from 'lodash';
 import SearchFacetNested from './search_facet_nested';
 import deep_equal from 'deep-equal';
+import './search_facets.css';
 
 class SearchFacets extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class SearchFacets extends Component {
     this.clear_search = this.clear_search.bind(this);
     this.apply_filters = this.apply_filters.bind(this);
   }
+
   clear_search() {
     this.props.performSearch("", {}, this.props.per_page);
   }
@@ -23,15 +26,18 @@ class SearchFacets extends Component {
   apply_filters () {
     this.props.performSearch(this.props.query, this.props.facets, this.props.per_page);
   }
+  active_filters() {
+    return !isEmpty(this.props.request.facets);
+  }
 
   render() {
     if (this.props.response) {
       var facets = this.props.response.facets || {};
       return (
-        <div>
+        <div className='search-facets'>
           <h3>Search Facets</h3>
-          {this.pending_search() ? <button onClick={this.apply_filters} className='btn btn-primary'> Apply Filters</button> : null}
-          <button onClick={this.clear_search} className='btn btn-secondary'> Clear Filters</button>
+          {this.pending_search() ? <button onClick={this.apply_filters} className='btn btn-sm btn-block btn-primary'> Apply Filters</button> : null}
+          {this.active_filters() ? <button onClick={this.clear_search} className='btn btn-sm btn-block btn-secondary'> Clear Filters</button> : null}
 
           <ul className="nav nav-pills nav-stacked">
             <li><SearchFacetNested type="actions" title="Actions" facets={facets.actions}/></li>
@@ -56,12 +62,12 @@ class SearchFacets extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    per_page: state.search.parameters.per_page,
-    query: state.search.parameters.query,
-    facets: state.search.parameters.facets,
-    response: state.search.response,
-    parameters: state.search.parameters,
-    request: state.search.request,
+    per_page: state.resources_search.parameters.per_page,
+    query: state.resources_search.parameters.query,
+    facets: state.resources_search.parameters.facets,
+    response: state.resources_search.response,
+    parameters: state.resources_search.parameters,
+    request: state.resources_search.request,
   }
 };
 

@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+.spin-me {
+  animation: App-logo-spin infinite 4s linear;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

@@ -1,0 +1,12 @@
+.search-facet-group {
+  font-size: 90%;
+}
+
+.search-facet-group ul {
+  padding-left: 1em;
+}
+
+.search-facet-group label {
+  display: inline;
+  margin-left: 0.5em;
+}

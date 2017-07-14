@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {toggleFacet} from "./actions";
 import { connect } from 'react-redux';
+import './search_facet_group.css';
 
 class SearchFacetGroupInt extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class SearchFacetGroupInt extends Component {
     var leaves = this.props.group[1] || [];
     var input_id = "input-"+ this.props.type + "-" + JSON.stringify(this.props.group[0]);
 
-    return (<div>
+    return (<div className='search-facet-group'>
               <input id={input_id} type='checkbox' disabled={this.props.parent_checked}
                      checked={this.is_checked(val)} onChange={(evt) => this.toggle_facet(evt, val)}/>
               <label htmlFor={input_id}>{title} <small> {count} </small> </label>
@@ -54,7 +55,7 @@ class SearchFacetGroupInt extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    parameter_facets: state.search.parameters.facets
+    parameter_facets: state.resources_search.parameters.facets
   }
 };
 

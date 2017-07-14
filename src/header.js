@@ -20,10 +20,10 @@ class Header extends Component {
         <Link to="/" className='navbar-brand'> NDS</Link>
         <div className='collapse navbar-collapse' id='navbarNav'>
           <ul className="navbar-nav mr-auto">
-            <HeaderLink path='/resources' title='Resources' />
-            <HeaderLink path='/collections' title='Collections' />
-            <HeaderLink path='/geofocuses' title='Geofocuses' />
-            <HeaderLink path='/history' title='History' />
+            <HeaderLink path_prefix='/resources' path='/resources' title='Resources' />
+            <HeaderLink path_prefix='/collections' path='/collections' title='Collections' />
+            <HeaderLink path_prefix='/geofocuses' path='/geofocuses' title='Geofocuses' />
+            <HeaderLink path_prefix='/history' path='/history' title='History' />
           </ul>
         </div>
       </nav>

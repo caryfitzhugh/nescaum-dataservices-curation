@@ -1,0 +1,14 @@
+.search-facet-nested {
+  font-size: 90%;
+}
+.search-facet-nested > label {
+  border-bottom: 1px solid black;
+}
+.search-facet-nested label {
+  margin-bottom: 0;
+}
+
+.search-facet-nested small {
+  color: #bbb;
+  font-style: italic;
+}

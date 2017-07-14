@@ -1,0 +1,9 @@
+.search-spinner {
+  text-align: center;
+  width: 100%;
+  padding: 10em;
+}
+
+.search-spinner .fa-spinner {
+  font-size: 10em;
+}

@@ -15,7 +15,7 @@ class Search extends Component {
     return (
     <div className='container-fluid'>
       <div className='row'>
-        <div id='sidebar' className='col-2'>
+        <div id='sidebar' >
           <SearchFacets/>
         </div>
         <div className='col'>
@@ -33,10 +33,10 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    search: state.search,
-    per_page: state.search.per_page,
-    is_searching: state.search.is_searching,
-    response: state.search.response,
+    search: state.resources_search,
+    per_page: state.resources_search.per_page,
+    is_searching: state.resources_search.is_searching,
+    response: state.resources_search.response,
   }
 };
 

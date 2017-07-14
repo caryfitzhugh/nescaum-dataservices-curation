@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
 }
-ul {
+.show-facet-array ul {
   display: flex;
   flex-wrap: wrap;
 }
-li {
+.show-facet-array li {
   flex: 1;
   display: list-item;
 }

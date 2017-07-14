@@ -13,7 +13,7 @@ class Search extends Component {
     return (
     <div className='container'>
       <div className='row'>
-        <div id='sidebar' className='col-2'>
+        <div id='sidebar' >
           <h3>Unindexed Resources</h3>
           <p> These resources are not in the search index</p>
         </div>

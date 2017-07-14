@@ -1,0 +1,19 @@
+.search-facet {
+  font-size: 90%;
+}
+.search-facet ul {
+  display: flex;
+  flex-direction: column;
+}
+.search-facet small {
+  color: #bbb;
+  font-style: italic;
+}
+.search-facet > label {
+  border-bottom: 1px solid black;
+}
+.search-facet li > label {
+  margin-bottom: 0;
+  display: inline;
+  margin-left: 0.5em;
+}

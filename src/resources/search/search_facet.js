@@ -3,6 +3,7 @@ import {toggleFacet, performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchFacetGroup from './search_facet_group';
 import immutable from "object-path-immutable";
+import './search_facet.css';
 
 class SearchFacet extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SearchFacet extends Component {
   render() {
     var facets = this.props.facets || [];
 
-    return (<div>
+    return (<div className='search-facet'>
               <label>{this.props.title}</label>
             <ul>
               {facets.map((item, i) => {
@@ -43,7 +44,7 @@ class SearchFacet extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    parameter_facets: state.search.parameters.facets
+    parameter_facets: state.resources_search.parameters.facets
   }
 };
 

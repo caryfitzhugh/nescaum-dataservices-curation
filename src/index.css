@@ -17,7 +17,9 @@ body {
 }
 
 #sidebar {
-
+  flex: 0 0 20.666667%;
+  max-width: 20.666667%;
+  padding-right: 1em;
 }
 
 #sidebar .nav-stacked {
@@ -25,5 +27,4 @@ body {
 }
 #sidebar h3 {
   margin-top: 0.5em;
-
 }
