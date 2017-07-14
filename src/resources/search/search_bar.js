@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {performSearch} from "./actions";
 import { connect } from 'react-redux';
+import './search_bar.css';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-          <div className='input-group'>
+          <div className='input-group search-bar'>
             <input value={this.state.search_query}
                    onChange={this.update_query}
                    onKeyDown={this.handle_key_press}

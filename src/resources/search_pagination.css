@@ -4,7 +4,11 @@
   align-items: baseline;
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 0.1em;
 }
 .search-pagination .btn {
   margin: 0 1em;
+}
+.search-pagination .btn:last-child {
+  margin-right: 0;
 }
