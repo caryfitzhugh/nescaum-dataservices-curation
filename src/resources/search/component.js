@@ -3,7 +3,7 @@ import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchFacets from './search_facets';
 import SearchBar from './search_bar';
-import SearchSpinner from './../search_spinner';
+import SearchSpinner from './../../search_spinner';
 import SearchResults from './../search_results';
 
 class Search extends Component {

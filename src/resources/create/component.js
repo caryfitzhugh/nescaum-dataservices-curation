@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import md from 'marked';
-//import {performCreate} from "./actions";
 import { connect } from 'react-redux';
 import "./component.css";
 import CreateResourceFacet from './create_resource_facet';
@@ -8,6 +7,7 @@ import CreateResourceWeblinks from './create_resource_weblinks';
 import {Link} from 'react-router-dom';
 import {merge, isEqual, without, uniq} from 'lodash';
 import {resetCreateResource, createResource, facetQuery} from './actions';
+import {performCompleteIndexSearch} from './../../geofocuses/index/actions';
 
 class Create extends Component {
   constructor(props) {
@@ -27,8 +27,8 @@ class Create extends Component {
         "climate_changes": [],
         "external_data_links": [],
         "effects": [],
-        "formats": [],
-        "geofocus": [],
+        "content_types": [],
+        "geofocuses": [],
         "image": "",
         "keywords": [],
         "publishers": [],
@@ -46,6 +46,7 @@ class Create extends Component {
   componentDidMount() {
     // Want to fetch all facets
     this.props.performReset();
+    this.props.performGeofocusQuery();
     this.props.performFacetQuery();
   }
 
@@ -105,11 +106,12 @@ class Create extends Component {
     }
 
     return (
-    <div className='container'>
+    <div className='container create-component'>
       {overlay}
+      {JSON.stringify(this.props)}
       <div className='row'>
-        <h1>Create</h1>
         <div className='form col'>
+          <h1>Create New Resource</h1>
           <div className="form-group">
             <label>Title</label>
             <input className='form-control' onChange={(evt) => this.update_field(evt, 'title')}/>
@@ -120,10 +122,10 @@ class Create extends Component {
             <input className='form-control' value={this.state.resource.subtitle} onChange={(evt) => this.update_field(evt, 'subtitle')}/>
           </div>
 
-          <div className="form-group">
+          <div className="form-group img-edit">
             <label>Image</label>
-            <input className='form-control' onChange={(evt) => this.update_field(evt, 'image')}/>
-            <img src={this.state.resource.image}/>
+            <img src={this.state.resource.image || "http://placehold.it/300&text=no_image"}/>
+            <input className='form-control col-10' onChange={(evt) => this.update_field(evt, 'image')}/>
           </div>
 
           <div className="form-group content-split-view">
@@ -131,23 +133,26 @@ class Create extends Component {
             <div className='container-fluid'>
               <div className='row'>
                 <div className='col'>
-                  <label>Markdown</label>
-                  <textarea className='form-control' value={this.state.resource.content} onChange={(evt) => this.update_field(evt, 'content')}/>
+                  <label>Content</label>
+                  <textarea className='md-input form-control' value={this.state.resource.content} onChange={(evt) => this.update_field(evt, 'content')}/>
                 </div>
                 <div className='col' >
                   <label>Output</label>
-                  <div dangerouslySetInnerHTML={{__html: md(this.state.resource.content || "")}}></div>
+                  <div className='md-preview' dangerouslySetInnerHTML={{__html: md(this.state.resource.content || "")}}></div>
                 </div>
               </div>
             </div>
           </div>
-          <CreateResourceFacet name='Formats' available={this.props.facets.formats} facets={this.state.resource.formats} onChange={(new_data) => this.update_facet('formats', new_data)} />
+
+          <CreateResourceFacet name='Content Types' available={this.props.facets.content_types} facets={this.state.resource.content_types} onChange={(new_data) => this.update_facet('content_types', new_data)} />
+
           <div className='form-group'>
+            <label> Publication </label>
             <div className='row'>
               <div className='col-3'>
                 <div className=''>
                   <div className='col-6'>
-                    <label> Publish Start Date</label>
+                    <label> Start Date</label>
                   </div>
                   <input type='date' onChange={(new_data) => this.update_facet('published_on_start', new_data)}/>
                 </div>
@@ -155,7 +160,7 @@ class Create extends Component {
               <div className='col-3'>
                 <div className=''>
                   <div className='col-6'>
-                    <label> Publish End Date</label>
+                    <label> End Date</label>
                   </div>
                   <input type='date' onChange={(new_data) => this.update_facet('published_on_end', new_data)}/>
                 </div>
@@ -163,12 +168,12 @@ class Create extends Component {
             </div>
           </div>
 
-          <CreateResourceWeblinks available={this.state.weblink_types} links={this.state.resource.external_data_links} onChange={(new_data) => this.update_facet('external_data_links', new_data)} />
+          <CreateResourceWeblinks name="WebLinks" available={this.state.weblink_types} links={this.state.resource.external_data_links} onChange={(new_data) => this.update_facet('external_data_links', new_data)} />
           <CreateResourceFacet name='Actions' available={this.props.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
           <CreateResourceFacet name='Authors' available={this.props.facets.authors} facets={this.state.resource.authors} onChange={(new_data) => this.update_facet('authors', new_data)} />
           <CreateResourceFacet name='Climate Changes' available={this.props.facets.climate_changes} facets={this.state.resource.climate_changes} onChange={(new_data) => this.update_facet('climate_changes', new_data)} />
           <CreateResourceFacet name='Effects' available={this.props.facets.effects} facets={this.state.resource.effects} onChange={(new_data) => this.update_facet('effects', new_data)} />
-          <CreateResourceFacet name='GeoFocus' available={this.props.facets.geofocus } facets={this.state.resource.geofocus} onChange={(new_data) => this.update_facet('geofocus', new_data)} />
+          <CreateResourceFacet name='GeoFocus' available={this.props.facets.geofocuses } facets={this.state.resource.geofocuses} onChange={(new_data) => this.update_facet('geofocuses', new_data)} />
           <CreateResourceFacet name='Keywords' available={this.props.facets.keywords } facets={this.state.resource.keywords} onChange={(new_data) => this.update_facet('keywords', new_data)} />
           <CreateResourceFacet name='Publishers' available={this.props.facets.publishers } facets={this.state.resource.publishers} onChange={(new_data) => this.update_facet('publishers', new_data)} />
           <CreateResourceFacet name='Sectors' available={this.props.facets.sectors } facets={this.state.resource.sectors} onChange={(new_data) => this.update_facet('sectors', new_data)} />
@@ -189,16 +194,18 @@ class Create extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    facets: state.create.facets.available || {},
-    is_creating: state.create.is_creating,
-    created_docid: state.create.created_docid,
-    error: state.create.error
+    geofocuses: state.geofocuses || {},
+    facets: state.resources_create.facets.available || {},
+    is_creating: state.resources_create.is_creating,
+    created_docid: state.resources_create.created_docid,
+    error: state.resources_create.error
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performFacetQuery: () => dispatch(facetQuery(["actions", "authors", "climate_changes", "effects", "formats", "geofocus", "keywords", "publishers", "sectors", "strategies", "states"])),
+    performFacetQuery: () => dispatch(facetQuery(["actions", "authors", "climate_changes", "effects", "content_types",  "keywords", "publishers", "sectors", "strategies", "states"])),
+    performGeofocusQuery: () => dispatch(performCompleteIndexSearch()),
     performReset: () => dispatch(resetCreateResource()),
     performResourceCreate: (resource) => dispatch(createResource(resource))
   }

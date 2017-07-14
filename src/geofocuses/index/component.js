@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {performUnindexedSearch} from "./actions";
+import {performIndexSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchSpinner from './../../search_spinner';
-import SearchResults from './../search_results';
+import SearchResults from './search_results';
 
 class Search extends Component {
   componentDidMount() {
@@ -14,9 +14,10 @@ class Search extends Component {
     <div className='container'>
       <div className='row'>
         <div id='sidebar' >
-          <h3>Unindexed Resources</h3>
-          <p> These resources are not in the search index</p>
+          <h3>Geofocuses</h3>
+          <p> These geofocuses are a list of all geofocuses in the system</p>
         </div>
+
         <div className='col'>
           <div className='row'>
             <SearchSpinner is_searching={this.props.is_searching}/>
@@ -31,19 +32,17 @@ class Search extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("DB", state);
-
   return {
-    is_searching: state.resources_unindexed.is_searching,
-    per_page: state.resources_unindexed.per_page,
-    page: state.resources_unindexed.page,
-    response: state.resources_unindexed.response,
+    is_searching: state.geofocuses_index.is_searching,
+    per_page: state.geofocuses_index.per_page,
+    page: state.geofocuses_index.page,
+    response: state.geofocuses_index.response
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: (p, pp) => dispatch(performUnindexedSearch({page: p, per_page: pp}))
+    performSearch: (p, pp) => dispatch(performIndexSearch({page: p, per_page: pp}))
   }
 };
 

@@ -1,0 +1,7 @@
+.search-bar {
+  margin: 0.5em 0 ;
+}
+.search-bar input,
+.search-bar .btn {
+  border-radius: 0;
+}

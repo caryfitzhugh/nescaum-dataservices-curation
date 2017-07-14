@@ -41,16 +41,16 @@ class SearchFacets extends Component {
 
           <ul className="nav nav-pills nav-stacked">
             <li><SearchFacetNested type="actions" title="Actions" facets={facets.actions}/></li>
+            <li><SearchFacet type="authors" title="Authors" facets={facets.authors}/></li>
             <li><SearchFacetNested type="climate_changes" title="Climate Changes" facets={facets.climate_changes}/></li>
             <li><SearchFacetNested type="effects" title="Effects" facets={facets.effects}/></li>
             <li><SearchFacetNested type="formats" title="Formats" facets={facets.formats}/></li>
             <li><SearchFacetNested type="geofocus" title="GeoFocus" facets={facets.geofocus}/></li>
-            <li><SearchFacet type="authors" title="Authors" facets={facets.authors}/></li>
-            <li><SearchFacet type="keywords" title="Keywords" no_expansion={true} facets={facets.keywords}/></li>
+            <li><SearchFacetNested type="keywords" title="Keywords" no_expansion={true} facets={facets.keywords}/></li>
             <li><SearchFacet type="publishers" title="Publishers" facets={facets.publishers}/></li>
-            <li><SearchFacet type="sectors" title="Sectors" facets={facets.sectors}/></li>
+            <li><SearchFacetNested type="sectors" title="Sectors" facets={facets.sectors}/></li>
             <li><SearchFacet type="states" title="States" facets={facets.states}/></li>
-            <li><SearchFacet type="strategies" title="Strategies" facets={facets.strategies}/></li>
+            <li><SearchFacetNested type="strategies" title="Strategies" facets={facets.strategies}/></li>
           </ul>
         </div>
       );

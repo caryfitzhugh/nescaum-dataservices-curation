@@ -9,7 +9,7 @@ class GeofocusesSubnav extends Component {
   return (
     <div className='subnav'>
       <div>
-        <SubnavLink path='/geofocuses' title='Search' />
+        <SubnavLink path='/geofocuses' title='Index' />
       </div>
       <div>
         <Link className='btn btn-primary create-btn btn-sm' to="/geofocuses/create">Create Geofocus</Link>

@@ -1,7 +1,19 @@
+.content-split-view.form-group  {
+  margin-bottom: 2em;
+}
 .content-split-view .container-fluid {
   padding: 10px 0;
 }
 
+.create-component .md-input {
+  height: 100%;
+  display: flex;
+}
+
+.create-component .md-preview li {
+  display: list-item;
+
+}
 .loading-overlay {
   position: fixed;
   z-index: 100;
@@ -18,4 +30,19 @@
   padding: 40px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
   text-align: left;
+}
+
+.create-component .img-edit img {
+  float: right;
+  max-height: 5em;
+}
+
+.create-component .resource-facet {
+  margin-bottom: 1em;
+}
+
+.create-component .form-group > label ,
+.create-component .resource-facet > label {
+  font-style: italic;
+  font-size: 110%;
 }
