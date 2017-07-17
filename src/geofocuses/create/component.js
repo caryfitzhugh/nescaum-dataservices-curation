@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {resetCreateGeofocus, createGeofocus} from './actions';
+import ActionOverlay from '../../action_overlay';
 //import {Link} from 'react-router-dom';
 import Form from '../form';
 
@@ -14,33 +15,11 @@ class Create extends Component {
   }
 
   render() {
-    var overlay = null;
-    if (this.props.is_creating) {
-      overlay = <div className='loading-overlay'>
-          <div className='content'>
-            <span className='fa fa-spinner'></span>
-          </div>
-        </div>;
-    }
-    if (this.props.error) {
-      overlay = <div className='loading-overlay'>
-          <div className='content'>
-            <h1> Error</h1>
-            <p> There was an error creating this record. </p>
-
-            <pre>
-              {JSON.stringify(this.props.error)}
-            </pre>
-
-            <a className='btn btn-primary' onClick={(evt) => { this.props.performReset() }}> Clear </a>
-          </div>
-        </div>;
-
-    }
-
     return (
     <div className='container create-component'>
-      {overlay}
+      <ActionOverlay busy={this.props.is_creating}
+                     onErrorPerformReset={() => this.props.performReset()}
+                     error={this.props.error}/>
       <Form onSubmit={(data) => this.submit(data)}
             geofocus={{}}
             submit_name="Create Geofocus"

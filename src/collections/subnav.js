@@ -11,7 +11,7 @@ class CollectionsSubnav extends Component {
         <SubnavLink path='/collections' title='Search' />
       </div>
       <div>
-        <Link className='btn btn-primary create-btn btn-sm' to="/resources/create">Create Collection</Link>
+        <Link className='btn btn-primary create-btn btn-sm' to="/collections/create">Create Collection</Link>
       </div>
     </div>
   );

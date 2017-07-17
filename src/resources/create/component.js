@@ -108,7 +108,6 @@ class Create extends Component {
     return (
     <div className='container create-component'>
       {overlay}
-      {JSON.stringify(this.props)}
       <div className='row'>
         <div className='form col'>
           <h1>Create New Resource</h1>

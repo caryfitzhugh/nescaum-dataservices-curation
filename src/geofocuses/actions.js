@@ -12,6 +12,12 @@ export const START_GEOFOCUS_UPDATE = 'start-geofocus-update';
 export const FINISH_GEOFOCUS_UPDATE = 'finish-geofocus-update';
 export const ERROR_GEOFOCUS_UPDATE = 'error-geofocus-update';
 
+export const RESET_GEOFOCUS_ERRORS = 'reset-geofocus-errors';
+
+export function resetGeofocusError(geofocus) {
+  return {type: RESET_GEOFOCUS_ERRORS,
+          geofocus: geofocus};
+}
 /*
  * Fetch against the API, the search parameters are serialized into the query param.
  *
@@ -83,8 +89,8 @@ export function getGeofocus(id) {
  *
  * returns a promise
  */
-function deleteGeofocusDo(id) {
-  return fetch("/geofocuses/" + id,
+function deleteGeofocusDo(geofocus) {
+  return fetch("/geofocuses/" + geofocus.id,
           { method: "DELETE",
            'Accept': 'application/json'});
 }
@@ -92,26 +98,26 @@ function deleteGeofocusDo(id) {
 /*
  *  Start a geofocus request action
  */
-function startGeofocusDelete(id) {
+function startGeofocusDelete(geofocus) {
   return { type: START_GEOFOCUS_DELETE,
-           id: id};
+           geofocus: geofocus};
 }
 
 /*
  *  Finish a doc request successfully.
  */
-function finishGeofocusDelete(id, response) {
+function finishGeofocusDelete(geofocus, response) {
   return { type: FINISH_GEOFOCUS_DELETE,
-            id: id,
+            geofocus: geofocus,
             response: response};
 }
 
 /*
  *  Finish a geofocus request with an error.
  */
-function errorGeofocusDelete(id, error) {
+function errorGeofocusDelete(geofocus, error) {
   return { type: ERROR_GEOFOCUS_DELETE,
-    id: id,
+    geofocus: geofocus,
     error: error};
 }
 
@@ -119,12 +125,12 @@ function errorGeofocusDelete(id, error) {
 *   the appropriate actions.
 *   This should be dispatched, and uses redux-thunk to process
 */
-export function deleteGeofocus(id) {
+export function deleteGeofocus(geofocus, history, destination) {
   return function (dispatch) {
     // Dispatch that we are starting a search request
-    dispatch(startGeofocusDelete(id));
+    dispatch(startGeofocusDelete(geofocus));
 
-    return deleteGeofocusDo(id).then(
+    return deleteGeofocusDo(geofocus).then(
       function(response) {
         if (response.ok) {
           return response.json();
@@ -132,14 +138,17 @@ export function deleteGeofocus(id) {
           throw response;
         }
       }).then(function(json) {
-        dispatch(finishGeofocusDelete(id, json));
+        dispatch(finishGeofocusDelete(geofocus, json));
+      })
+      .then(function() {
+        history.push(destination || "/geofocuses");
       })
       .catch((e) => {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
-          dispatch(errorGeofocusDelete(id, body))
+          dispatch(errorGeofocusDelete(geofocus, body))
         });
       });
   };

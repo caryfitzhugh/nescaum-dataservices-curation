@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ActionOverlay from '../../action_overlay';
 import { getGeofocus, deleteGeofocus } from './../actions';
 import {Link} from 'react-router-dom';
 import "./component.css";
@@ -20,7 +21,7 @@ class Show extends Component {
     evt.stopPropagation();
     evt.preventDefault();
     if (window.confirm("Delete Geofocus?\n\nThis will permanently delete the record!")) {
-      this.props.performGeofocusDelete(this.props.geofocus.id);
+      this.props.performGeofocusDelete(this.props.geofocus, this.props.history);
       // Send yourself "back" in the browser
     }
   }
@@ -29,6 +30,9 @@ class Show extends Component {
     if (this.props.geofocus) {
       return (
         <div className='container-fluid'>
+        <ActionOverlay busy={this.props.is_deleting}
+                       onErrorPerformReset={() => this.props.performReset(this.props.geofocus)}
+                       error={this.props.error} />
           <h2>
             {this.props.geofocus.name}
             <Link className='btn btn-secondary' to={'/geofocuses/' + this.props.geofocus.id +'/edit'}> Edit Geofocus </Link>
@@ -51,6 +55,7 @@ class Show extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     geofocus: state.geofocuses[ownProps.match.params.id],
+    is_deleting: (state.geofocuses[ownProps.match.params.id] || {}).is_deleting,
     error: state.geofocuses.errors[ownProps.match.params.id],
   }
 };
@@ -58,7 +63,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     performGeofocusGet: (id) => dispatch(getGeofocus(id)),
-    performGeofocusDelete: (id) => dispatch(deleteGeofocus(id)),
+    performGeofocusDelete: (geofocus, history) => dispatch(deleteGeofocus(geofocus, history)),
   }
 };
 

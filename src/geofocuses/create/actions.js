@@ -20,6 +20,7 @@ function sendCreateGeofocus(geofocus) {
 export function resetCreateGeofocus() {
   return { type: RESET_CREATE_GEOFOCUS };
 }
+
 function startCreateGeofocus(geofocus) {
   return { type: START_CREATE_GEOFOCUS,
            geofocus: geofocus};

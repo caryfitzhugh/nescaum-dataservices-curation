@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import ActionOverlay from '../../action_overlay';
 import { connect } from 'react-redux';
-import { getGeofocus, updateGeofocus} from './../actions';
-import {Link} from 'react-router-dom';
+import { resetGeofocusError, getGeofocus, updateGeofocus} from './../actions';
 import Form from '../form';
 
 class Edit extends Component {
@@ -15,42 +15,12 @@ class Edit extends Component {
   }
 
   render() {
-    var overlay = null;
-    if (this.props.is_creating) {
-      overlay = <div className='loading-overlay'>
-          <div className='content'>
-            <span className='fa fa-spinner'></span>
-          </div>
-        </div>;
-    }
-    if (this.props.error) {
-      overlay = <div className='loading-overlay'>
-          <div className='content'>
-            <h1> Error</h1>
-            <p> There was an error creating this record. </p>
-
-            <pre>
-              {JSON.stringify(this.props.error)}
-            </pre>
-
-            <a className='btn btn-primary' onClick={(evt) => { this.props.performReset() }}> Clear </a>
-          </div>
-        </div>;
-
-    }
-
-    if (this.props.created_id) {
-      overlay = <div className='loading-overlay'>
-          <div className='content'>
-            <Link to={"/geofocuses/" + this.props.created_id}> Go To Geofocus </Link>
-          </div>
-        </div>;
-    }
-
     return (
     <div className='container create-component'>
-      {overlay}
-      {JSON.stringify(this.props)}
+      <ActionOverlay busy={this.props.is_updating || this.props.is_deleting}
+                     onPerformReset={() => this.performErrorReset(this.props.geofocus)}
+                     error={this.props.error} />
+
       <Form onSubmit={(data) => this.submit(data)}
             geofocus={this.props.geofocus}
             submit_name="Update"
@@ -62,6 +32,7 @@ class Edit extends Component {
 
 const mapStateToProps = (state,ownProps) => {
   return {
+    is_updating: (state.geofocuses[ownProps.match.params.id] || {}).is_updating,
     geofocus: state.geofocuses[ownProps.match.params.id],
     error: state.geofocuses.errors[ownProps.match.params.id],
   };
@@ -69,6 +40,7 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    performErrorReset: (geofocus) => dispatch(resetGeofocusError(geofocus)),
     performGeofocusGet: (id) => dispatch(getGeofocus(id)),
     performGeofocusUpdate: (geofocus,history) => dispatch(updateGeofocus(geofocus, history))
   }

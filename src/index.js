@@ -22,6 +22,10 @@ import { geofocusesReducer } from './geofocuses/reducers';
 import { geofocusesIndexReducer } from './geofocuses/index/reducers';
 import { geofocusesCreateReducer } from './geofocuses/create/reducers';
 
+import { collectionsCreateReducer } from './collections/create/reducers';
+import { collectionsReducer } from './collections/reducers';
+import { collectionsIndexReducer } from './collections/index/reducers';
+
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css';
 
@@ -31,9 +35,14 @@ const reducer = combineReducers({
   resources_search: searchReducer,
   resources_create: createReducer,
   resources_edit: editReducer,
+
   geofocuses: geofocusesReducer,
   geofocuses_index: geofocusesIndexReducer,
   geofocuses_create: geofocusesCreateReducer,
+
+  collections: collectionsReducer,
+  collections_create: collectionsCreateReducer,
+  collections_index: collectionsIndexReducer,
 });
 
 const store = createStore(reducer,
