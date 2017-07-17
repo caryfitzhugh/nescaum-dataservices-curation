@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchResultLink from './search_result_link';
 import {Link} from 'react-router-dom';
@@ -13,7 +12,7 @@ class SearchResult extends Component {
     ];
 
     try {
-      if (resource.pubstart == resource.pubend) {
+      if (resource.pubstart === resource.pubend) {
         published_on = resource.pubstart.split("T")[0];
       } else {
         // (Month) (Year)
@@ -24,14 +23,14 @@ class SearchResult extends Component {
         // (MonthStart) - (MonthEnd) Year
         else if (resource.pubstart.getYear() === resource.pubend.getYear()) {
           published_on = monthNames[resource.pubstart.getMonth()] + " - "
-                        monthNames[resource.pubend.getMonth()] + " "
+                        + monthNames[resource.pubend.getMonth()] + " "
                         + resource.pubstart.getFullYear();
         }
         // (MonthStart) (Year Start) - MEnd YearEnd
         else {
           published_on = monthNames[resource.pubstart.getMonth()] + " "
                         + resource.pubstart.getFullYear() + ' - ' +
-                        monthNames[resource.pubend.getMonth()] + " "
+                        + monthNames[resource.pubend.getMonth()] + " "
                         + resource.pubend.getFullYear();
         }
       }

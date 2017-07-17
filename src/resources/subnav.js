@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { withRouter } from 'react-router'
-import {Route} from 'react-router-dom'
 import SubnavLink from './../subnav_link';
 
 class ResourcesSubnav extends Component {

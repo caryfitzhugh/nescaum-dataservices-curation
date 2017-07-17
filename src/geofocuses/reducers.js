@@ -11,37 +11,38 @@ const INITIAL_GEOFOCUSES_STATE = {
 };
 
 function geofocusesReducer(state = INITIAL_GEOFOCUSES_STATE, action) {
+  let new_state;
   switch (action.type) {
     case START_GEOFOCUS_UPDATE:
       return state;
     case FINISH_GEOFOCUS_UPDATE:
-      var new_state = immutable.set(state, [action.geofocus.id], action.geofocus);
+      new_state = immutable.set(state, [action.geofocus.id], action.geofocus);
       return new_state;
     case ERROR_GEOFOCUS_UPDATE:
-      var new_state = immutable.set(new_state, ["errors", action.geofocus.id], action.error);
+      new_state = immutable.set(new_state, ["errors", action.geofocus.id], action.error);
       return new_state;
 
     case START_GEOFOCUS_DELETE:
       return state;
     case FINISH_GEOFOCUS_DELETE:
-      var new_state = immutable.set(state, [action.id], null);
+      new_state = immutable.set(state, [action.id], null);
       return new_state;
     case ERROR_GEOFOCUS_DELETE:
-      var new_state = immutable.set(new_state, ["errors", action.id], action.error);
+      new_state = immutable.set(new_state, ["errors", action.id], action.error);
       return new_state;
 
     case START_GEOFOCUS_GET:
       return state;
     case FINISH_GEOFOCUS_GET:
-      var new_state = immutable.set(state, [action.id], action.response);
+      new_state = immutable.set(state, [action.id], action.response);
       return new_state;
     case ERROR_GEOFOCUS_GET:
-      var new_state = immutable.set(state, [action.id], null);
+      new_state = immutable.set(state, [action.id], null);
       new_state = immutable.set(new_state, ["errors", action.id], action.error);
       return new_state;
 
     case FINISH_CREATE_GEOFOCUS:
-      var new_state = immutable.set(state, [action.response.id], action.response);
+      new_state = immutable.set(state, [action.response.id], action.response);
       new_state = immutable.set(new_state, ["errors", action.response.id], null);
       return new_state;
 

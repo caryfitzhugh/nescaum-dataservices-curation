@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import './show_facet_array.css';
 
 class ShowFacetArray extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     var facets = this.props.values || [];
 

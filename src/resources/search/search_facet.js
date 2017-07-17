@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {toggleFacet, performSearch} from "./actions";
+import {toggleFacet} from "./actions";
 import { connect } from 'react-redux';
-import SearchFacetGroup from './search_facet_group';
-import immutable from "object-path-immutable";
 import './search_facet.css';
 
 class SearchFacet extends Component {

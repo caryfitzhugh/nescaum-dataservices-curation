@@ -38,7 +38,6 @@ function errorCreateGeofocus(response) {
 export function createGeofocus(geofocus, history) {
   return function (dispatch) {
     // Dispatch that we are starting a search request
-    var request_id = performance.now();
     dispatch(startCreateGeofocus(geofocus));
 
     return sendCreateGeofocus(geofocus).then(
@@ -61,7 +60,7 @@ export function createGeofocus(geofocus, history) {
         var body = '';
         console.warn(e);
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorCreateGeofocus(body))
         });
       });

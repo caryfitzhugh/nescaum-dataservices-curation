@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from './header';
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import ResourcesSearch from './resources/search/component';
 import ResourcesCreate from './resources/create/component';
 import ResourcesShow from   './resources/show/component';
@@ -9,8 +9,6 @@ import GeofocusesIndex from './geofocuses/index/component';
 import GeofocusesShow from './geofocuses/show/component';
 import GeofocusesCreate from './geofocuses/create/component';
 import GeofocusesEdit from './geofocuses/edit/component';
-
-import { connect } from 'react-redux';
 
 // Importing CSS
 import './app.css';
@@ -21,6 +19,7 @@ class App extends Component {
       <div className='container'>
         <Header location={this.props.location}/>
         <Switch>
+          <Route exact path='/' render={() => <Redirect to="/resources" /> }/>
           <Route exact path='/resources' component={ResourcesSearch}/>
           <Route exact path='/resources/unindexed' component={ResourcesUnindexed}/>
           <Route exact path='/resources/create' component={ResourcesCreate}/>

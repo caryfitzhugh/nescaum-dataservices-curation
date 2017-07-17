@@ -59,7 +59,7 @@ export function facetQuery(facets) {
         if (response.ok) {
           return response.json();
         } else {
-          throw "Error";
+          throw new Error("Error Requesting Resources Facet Query");
         }
       }).then(function(json) {
         dispatch(finishFacetQuery(request_id, json));
@@ -103,8 +103,6 @@ function errorCreateResource(response) {
 
 export function createResource(resource) {
   return function (dispatch) {
-    // Dispatch that we are starting a search request
-    var request_id = performance.now();
     dispatch(startCreateResource(resource));
 
     return sendCreateResource(resource).then(
@@ -121,7 +119,7 @@ export function createResource(resource) {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorCreateResource(body))
         });
       });

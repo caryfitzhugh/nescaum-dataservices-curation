@@ -71,7 +71,7 @@ export function getGeofocus(id) {
         var body = '';
         console.warn(e);
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorGeofocusGet(id, body))
         });
       });
@@ -138,7 +138,7 @@ export function deleteGeofocus(id) {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorGeofocusDelete(id, body))
         });
       });
@@ -213,7 +213,7 @@ export function updateGeofocus(geofocus, history) {
         var body = '';
         console.warn(e);
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorGeofocusUpdate(geofocus, body))
         });
       });

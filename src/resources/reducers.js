@@ -10,28 +10,29 @@ const INITIAL_RESOURCES_STATE = {
 };
 
 function resourcesReducer(state = INITIAL_RESOURCES_STATE, action) {
+  let new_state;
   switch (action.type) {
     case START_RESOURCE_INDEX:
-      var new_state = immutable.set(state, [action.docid, 'indexed'], action.indexed);
+      new_state = immutable.set(state, [action.docid, 'indexed'], action.indexed);
       return new_state;
 
     case FINISH_RESOURCE_INDEX:
-      var new_state = immutable.set(state, [action.docid], action.response);
+      new_state = immutable.set(state, [action.docid], action.response);
       return new_state;
 
     case ERROR_RESOURCE_INDEX:
-      var new_state = immutable.set(state, [action.docid], null);
+      new_state = immutable.set(state, [action.docid], null);
       new_state = immutable.set(new_state, ["errors", action.docid], action.error);
       return new_state;
 
     case START_RESOURCE_GET:
       return state;
     case FINISH_RESOURCE_GET:
-      var new_state = immutable.set(state, [action.docid], action.response);
+      new_state = immutable.set(state, [action.docid], action.response);
       return new_state;
 
     case ERROR_RESOURCE_GET:
-      var new_state = immutable.set(state, [action.docid], null);
+      new_state = immutable.set(state, [action.docid], null);
       new_state = immutable.set(new_state, ["errors", action.docid], action.error);
       return new_state;
 

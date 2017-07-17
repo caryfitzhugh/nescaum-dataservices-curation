@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 import SearchFacetNestedGroup from './search_facet_group';
 import immutable from "object-path-immutable";
@@ -22,12 +21,7 @@ function hash_to_nested_array(tree) {
 }
 
 class SearchFacetNested extends Component {
-  constructor(props) {
-    super(props);
-  }
   facet_list_to_tree(facet_list) {
-    var sorted = facet_list.sort();
-
     var tree_hash = facet_list.reduce((memo, facet) => {
       return immutable.set(memo, facet.value.split("::"), facet);
     }, {});
@@ -36,7 +30,6 @@ class SearchFacetNested extends Component {
   }
   render() {
     var tree = this.facet_list_to_tree(this.props.facets || []);
-
     return (<div className='search-facet-nested'>
               <label>{this.props.title}</label>
             <ul>

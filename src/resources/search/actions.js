@@ -107,7 +107,7 @@ export function performSearch({query, facets, page, per_page}) {
         if (response.ok) {
           return response.json();
         } else {
-          throw "Error";
+          throw new Error("Error Performing Resoruces Search");
         }
       }).then(function(json) {
         json.resources.forEach((resource) => {

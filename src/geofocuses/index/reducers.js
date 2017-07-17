@@ -1,4 +1,4 @@
-import immutable from "object-path-immutable";
+//import immutable from "object-path-immutable";
 import {  START_INDEX_GEOFOCUSES_REQUEST, FINISH_INDEX_GEOFOCUSES_REQUEST, ERROR_INDEX_GEOFOCUSES_REQUEST} from './actions';
 
 const INITIAL_INDEX_STATE = {

@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import { indexResource } from './../actions';
 
 class ShowIndexedButton extends Component {
-  constructor(props) {
-    super(props);
-  }
   make_public () {
     this.props.indexResource(this.props.resource.docid, true);
   }

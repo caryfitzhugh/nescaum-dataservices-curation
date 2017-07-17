@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {performSearch} from "./actions";
 import { connect } from 'react-redux';
 
 class SearchResultLink extends Component {

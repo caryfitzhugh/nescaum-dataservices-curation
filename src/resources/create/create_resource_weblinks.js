@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './create_resource_weblinks.css';
-import {filter, isEqual, without, uniq} from 'lodash';
+import {without, uniq} from 'lodash';
 
 class CreateResourceWeblinks extends Component {
   constructor(props) {

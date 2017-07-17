@@ -5,7 +5,7 @@ import "./component.css";
 import CreateResourceFacet from './create_resource_facet';
 import CreateResourceWeblinks from './create_resource_weblinks';
 import {Link} from 'react-router-dom';
-import {merge, isEqual, without, uniq} from 'lodash';
+import {merge} from 'lodash';
 import {resetCreateResource, createResource, facetQuery} from './actions';
 import {performCompleteIndexSearch} from './../../geofocuses/index/actions';
 
@@ -70,7 +70,7 @@ class Create extends Component {
   submit(evt) {
     evt.preventDefault();
     var safe_resource = Object.assign({}, this.state.resource);
-    this.props.performResourceCreate(this.state.resource);
+    this.props.performResourceCreate(safe_resource);
   }
   render() {
     var overlay = null;
@@ -124,7 +124,7 @@ class Create extends Component {
 
           <div className="form-group img-edit">
             <label>Image</label>
-            <img src={this.state.resource.image || "http://placehold.it/300&text=no_image"}/>
+            <img alt='resource thumbnail' src={this.state.resource.image || "http://placehold.it/300&text=no_image"}/>
             <input className='form-control col-10' onChange={(evt) => this.update_field(evt, 'image')}/>
           </div>
 

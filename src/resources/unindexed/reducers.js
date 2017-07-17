@@ -1,4 +1,4 @@
-import immutable from "object-path-immutable";
+//import immutable from "object-path-immutable";
 import {  START_UNINDEXED_RESOURCES_REQUEST, FINISH_UNINDEXED_RESOURCES_REQUEST, ERROR_UNINDEXED_RESOURCES_REQUEST} from './actions';
 
 const INITIAL_UNINDEXED_STATE = {

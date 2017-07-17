@@ -72,7 +72,7 @@ export function performUnindexedSearch(opts) {
         var body = '';
         console.error(e);
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorResourcesUnindexed(opts.page, opts.per_page, body))
         });
       });

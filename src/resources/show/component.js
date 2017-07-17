@@ -50,7 +50,7 @@ class Show extends Component {
           </h6>
 
           <div className='resource-image'>
-            <img src={img}/>
+            <img alt='resource thumbnail' src={img}/>
             <label>{img }</label>
           </div>
 

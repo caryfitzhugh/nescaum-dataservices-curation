@@ -70,7 +70,7 @@ export function getResource(docid) {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorResourceGet(docid, body))
         });
       });
@@ -141,7 +141,7 @@ export function indexResource(docid, indexed) {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorResourceIndex(docid, body))
         });
       });
@@ -208,7 +208,7 @@ export function deleteResource(docid) {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
-          body += decoder.decode(res.value || new Uint8Array, { stream: !res.done });
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorResourceDelete(docid, body))
         });
       });

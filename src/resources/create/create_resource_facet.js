@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './create_resource_facet.css';
-import {filter, isEqual, without, uniq} from 'lodash';
+import {without, uniq} from 'lodash';
 import fuzzy from 'fuzzy';
 
 class CreateResourceFacet extends Component {
@@ -102,7 +102,7 @@ class CreateResourceFacet extends Component {
 
     if (this.state.focus && matches.length > 0) {
       autocomplete_results = <ul className='autocomplete-results'>
-        {matches.map((res, i) => {return <li key={res} onClick={(evt) => this.create_new_match_facet(evt, res)} className={i == this.state.selected.index ? 'active' : ''}>{res}</li>})}
+        {matches.map((res, i) => {return <li key={res} onClick={(evt) => this.create_new_match_facet(evt, res)} className={i === this.state.selected.index ? 'active' : ''}>{res}</li>})}
       </ul>
     }
 

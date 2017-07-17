@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import md from 'marked';
 import { connect } from 'react-redux';
 import { getGeofocus, deleteGeofocus } from './../actions';
 import {Link} from 'react-router-dom';

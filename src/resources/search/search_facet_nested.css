@@ -12,3 +12,7 @@
   color: #bbb;
   font-style: italic;
 }
+
+.search-facet-nested > ul > li {
+  display: block;
+}
