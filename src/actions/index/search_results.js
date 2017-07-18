@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SearchResult from './search_result';
 import SearchPagination from './../../search_pagination';
+import SearchResult from './search_result';
 import "./search_results.css";
 
 class SearchResults extends Component {
@@ -15,14 +15,14 @@ class SearchResults extends Component {
                     </div>
                   </div>);
         } else {
-          var geofocuses = ((this.props.response || {}).geofocuses || [])
+          var history = ((this.props.response || {}).actions || [])
           return (
             <div className='search-results'>
               <SearchPagination response={this.props.response} onChangePage={(new_page) => this.props.onChangePage(new_page)}/>
               <ul className='results'>
-                {geofocuses.map(geofocus => {
-                  return <SearchResult key={geofocus.id}
-                                geofocus={geofocus}/>
+                {history.map(action => {
+                  return <SearchResult key={action.id}
+                                action={action}/>
                 })}
               </ul>
             </div>);

@@ -61,8 +61,7 @@ class Edit extends Component {
 
 const mapStateToProps = (state,ownProps) => {
   return {
-    is_updating: state.collections[ownProps.match.params.id].is_updating,
-    is_deleting: state.collections[ownProps.match.params.id].is_deleting,
+    is_updating: (state.collections[ownProps.match.params.id] || {}).is_updating,
     collection: state.collections[ownProps.match.params.id],
     error: state.collections.errors[ownProps.match.params.id],
   };

@@ -5,7 +5,7 @@ import HeaderLink from './header_link';
 import ResourcesSubnav from './resources/subnav.js';
 import CollectionsSubnav from './collections/subnav.js';
 import GeofocusesSubnav from './geofocuses/subnav.js';
-import HistorySubnav from './history/subnav.js';
+import ActionsSubnav from './actions/subnav.js';
 
 import "./header.css";
 
@@ -31,7 +31,7 @@ class Header extends Component {
         <Route path='/resources' component={ResourcesSubnav}/>
         <Route path='/collections' component={CollectionsSubnav}/>
         <Route path='/geofocuses' component={GeofocusesSubnav}/>
-        <Route path='/history' component={HistorySubnav}/>
+        <Route path='/history' component={ActionsSubnav}/>
       </Switch>
     </div>
   );

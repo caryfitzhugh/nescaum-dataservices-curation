@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+//import {without, uniq} from 'lodash';
 
 class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = {collection: {}};
+    this.state = {
+      pending_resource: "",
+      collection: {
+        name: '',
+        resources: [],
+      }};
   }
 
   update_field(evt, field) {
     var val = evt.target.value;
     this.setState((old) => {
-      var update = Object.assign({}, old.collection);
+      let update = Object.assign({}, old.collection);
       update[field] = val;
+      return Object.assign({}, old, {collection: update});
+    });
+  }
+
+  update_resources(evt) {
+    var val = evt.target.value;
+    this.setState((old) => {
+      var update = Object.assign({}, old.collection);
+      update.resources = val.split('\n').map((v) => {
+        return v.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+      });
       return Object.assign({}, old, {collection: update});
     });
   }
@@ -23,14 +40,19 @@ class Form extends Component {
   }
 
   render() {
+    console.log({name: '', resources: []}, this.props.collection, this.state.collection);
+    var model = Object.assign({name: '', resources: []}, this.props.collection, this.state.collection);
+    let resources_text = model.resources.join("\n");
     return (
       <div className='row'>
         <div className='form col'>
           <h1>{this.props.header_name}</h1>
           <div className="form-group">
             <label>Name</label>
-            <input value={this.state.collection.name || ((this.props.collection || {}).name) || ""} className='form-control' onChange={(evt) => this.update_field(evt, 'name')}/>
+            <input value={model.name || ""} className='form-control' onChange={(evt) => this.update_field(evt, 'name')}/>
           </div>
+
+          <textarea value={resources_text} onChange={(evt) => this.update_resources(evt)} ></textarea>
 
           <hr/>
           <div className="form-group">

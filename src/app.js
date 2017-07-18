@@ -17,6 +17,9 @@ import CollectionsShow from './collections/show/component';
 import CollectionsEdit from './collections/edit/component';
 import CollectionsIndex from './collections/index/component';
 
+import ActionsIndex from './actions/index/component';
+
+
 // Importing CSS
 import './app.css';
 
@@ -41,6 +44,8 @@ class App extends Component {
           <Route exact path='/collections/:id/edit' component={CollectionsEdit}/>
           <Route exact path='/collections/:id' component={CollectionsShow}/>
           <Route exect path='/collections' component={CollectionsIndex}/>
+
+          <Route exect path='/history' component={ActionsIndex}/>
         </Switch>
       </div>
     );

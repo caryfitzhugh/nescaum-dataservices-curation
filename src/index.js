@@ -18,6 +18,7 @@ import { createReducer } from './resources/create/reducers';
 import { editReducer } from './resources/edit/reducers';
 import { resourcesReducer } from './resources/reducers';
 import { unindexedReducer } from './resources/unindexed/reducers';
+
 import { geofocusesReducer } from './geofocuses/reducers';
 import { geofocusesIndexReducer } from './geofocuses/index/reducers';
 import { geofocusesCreateReducer } from './geofocuses/create/reducers';
@@ -25,6 +26,12 @@ import { geofocusesCreateReducer } from './geofocuses/create/reducers';
 import { collectionsCreateReducer } from './collections/create/reducers';
 import { collectionsReducer } from './collections/reducers';
 import { collectionsIndexReducer } from './collections/index/reducers';
+
+import { usersReducer } from './users/reducers';
+import { usersIndexReducer } from './users/index/reducers';
+//import { usersCreateReducer } from './users/create/reducers';
+
+import { actionsIndexReducer } from './actions/index/reducers';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css';
@@ -40,9 +47,15 @@ const reducer = combineReducers({
   geofocuses_index: geofocusesIndexReducer,
   geofocuses_create: geofocusesCreateReducer,
 
+  users: usersReducer,
+  users_index: usersIndexReducer,
+  //users_create: usersCreateReducer,
+
   collections: collectionsReducer,
   collections_create: collectionsCreateReducer,
   collections_index: collectionsIndexReducer,
+
+  actions_index: actionsIndexReducer,
 });
 
 const store = createStore(reducer,
