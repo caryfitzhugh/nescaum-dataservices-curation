@@ -43,6 +43,7 @@ class Search extends Component {
         <div id='sidebar' >
           <h3>History</h3>
           <p> Reports on user activity </p>
+
           <h5> Users </h5>
           <ul className='actions-users nav nav-pills nav-stacked'>
             <li className='nav-item' key='all'
@@ -59,7 +60,6 @@ class Search extends Component {
                 </li>
             })}
           </ul>
-
         </div>
 
         <div className='col'>

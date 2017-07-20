@@ -69,6 +69,7 @@ export function getResource(docid) {
       .catch((e) => {
         var decoder = new TextDecoder();
         var body = '';
+        console.warn(e);
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorResourceGet(docid, body))

@@ -1,0 +1,16 @@
+.edit-collection-resource-list {
+
+}
+.edit-collection-resource-list .btn-group {
+  margin-right: 1em;
+}
+
+.edit-collection-resource-list .resource {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit-collection-resource-list .resource label {
+  margin-right: auto;
+}

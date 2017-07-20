@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCollection, updateCollection} from './../actions';
+import { getResource } from './../../resources/actions';
 import {Link} from 'react-router-dom';
 import Form from '../form';
 
@@ -39,14 +40,6 @@ class Edit extends Component {
 
     }
 
-    if (this.props.created_id) {
-      overlay = <div className='loading-overlay'>
-          <div className='content'>
-            <Link to={"/collections/" + this.props.created_id}> Go To Collection </Link>
-          </div>
-        </div>;
-    }
-
     return (
     <div className='container create-component'>
       {overlay}
@@ -62,7 +55,7 @@ class Edit extends Component {
 const mapStateToProps = (state,ownProps) => {
   return {
     is_updating: (state.collections[ownProps.match.params.id] || {}).is_updating,
-    collection: state.collections[ownProps.match.params.id],
+    collection: state.collections[ownProps.match.params.id] || {},
     error: state.collections.errors[ownProps.match.params.id],
   };
 };

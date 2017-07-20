@@ -10,11 +10,13 @@ class SearchResult extends Component {
       return (
         <div className='search-result' key={action.id}>
           <h3>
-            <Link to={"/"+action.table +"/" + action.id}> {action.identifier} </Link>
+            <Link to={"/"+action.table +"/" + action.id}> {action.identifier || (action.table + "::" + action.record_id)} </Link>
           </h3>
+
           <span>
             {(this.props.users[action.user_id] || {}).name}
           </span>
+
           <span>  {action.description} </span>
           <span>  at </span>
           <span> {action.at} </span>

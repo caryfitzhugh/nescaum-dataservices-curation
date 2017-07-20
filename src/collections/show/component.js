@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ActionOverlay from '../../action_overlay';
 import { connect } from 'react-redux';
+import CollectionList from './../collection_list';
 import { resetCollectionError, getCollection, deleteCollection } from './../actions';
 import {Link} from 'react-router-dom';
 import "./component.css";
@@ -17,16 +18,17 @@ class Show extends Component {
     // Want to fetch the details
     this.props.performCollectionGet(this.props.match.params.id);
   }
+
   delete_collection (evt) {
     evt.stopPropagation();
     evt.preventDefault();
     if (window.confirm("Delete Collection?\n\nThis will permanently delete the record!")) {
-      this.props.performCollectionDelete(this.props.collection, this.props.history);
       // Send yourself "back" in the browser
+      this.props.performCollectionDelete(this.props.collection, this.props.history);
     }
   }
-
   render() {
+
     if (this.props.collection) {
       return (
         <div className='container-fluid'>
@@ -38,6 +40,7 @@ class Show extends Component {
             <Link className='btn btn-secondary' to={'/collections/' + this.props.collection.id +'/edit'}> Edit Collection </Link>
             <button onClick={(evt) => this.delete_collection(evt)} className='btn btn-danger'> Delete Collection </button>
           </h2>
+          <CollectionList docids={this.props.collection.resources} />
         </div>);
     } else if (this.props.error ) {
       return (
