@@ -43,10 +43,12 @@ class Edit extends Component {
     return (
     <div className='container create-component'>
       {overlay}
-      <Form onSubmit={(data) => this.submit(data)}
-            collection={this.props.collection}
-            submit_name="Update"
-            header_name="Update Collection"/>
+      <Form
+        cancel_destination={"/collections/"+this.props.match.params.id}
+        onSubmit={(data) => this.submit(data)}
+        collection={this.props.collection}
+        submit_name="Update"
+        header_name="Update Collection"/>
     </div>
     );
   }

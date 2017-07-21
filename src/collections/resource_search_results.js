@@ -24,6 +24,7 @@ class ResourceSearchResults extends Component {
                 {resources.map(resource => {
                   return <ResourceSearchResult key={resource.docid}
                                 skip_docids={this.props.docids}
+                                onAdd={(docid) => {this.props.onAdd(docid)}}
                                 resource={resource}/>
                 })}
               </ul>

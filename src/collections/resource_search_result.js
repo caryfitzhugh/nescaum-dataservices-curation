@@ -6,7 +6,8 @@ import './resource_search_result.css';
 class ResourceSearchResult extends Component {
   render() {
     var resource = this.props.resource;
-      let present = this.props.skip_docids.includes(resource.docid);
+    let skip_docids = this.props.skip_docids || [];
+    let present = skip_docids.includes(resource.docid);
 
       return (
         <div className='resource-search-result search-result' key={resource.docid}>
@@ -15,7 +16,8 @@ class ResourceSearchResult extends Component {
             <small><em>{this.props.resource.docid}</em></small>
           </h3>
 
-          <a className={ ('btn btn-sm btn-primary ') + (present ? 'disabled' : '')}> Add To Collection </a>
+          <a onClick={(evt) => { !present && this.props.onAdd(this.props.resource.docid)}}
+             className={ ('btn btn-sm btn-primary ') + (present ? 'disabled' : '')}> Add To Collection </a>
         </div>
       );
   }

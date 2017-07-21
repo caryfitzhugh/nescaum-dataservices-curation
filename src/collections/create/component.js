@@ -42,6 +42,7 @@ class Create extends Component {
     <div className='container create-component'>
       {overlay}
       <Form onSubmit={(data) => this.submit(data)}
+            cancel_destination={"/collections/"}
             collection={{}}
             submit_name="Create Collection"
             header_name="Create New Collection"/>
