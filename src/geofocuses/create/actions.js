@@ -53,8 +53,9 @@ export function createGeofocus(geofocus, history) {
         return json;
       })
       .then(function(json) {
-        console.log(json);
-        history.push("/geofocuses/"+json.id);
+        if (history) {
+          history.push("/geofocuses/"+json.id);
+        }
       })
       .catch((e) => {
         var decoder = new TextDecoder();

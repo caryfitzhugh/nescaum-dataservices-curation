@@ -18,7 +18,7 @@ class Create extends Component {
     return (
     <div className='container create-component'>
       <ActionOverlay busy={this.props.is_creating}
-                     onErrorPerformReset={() => this.props.performReset()}
+                     onPerformErrorReset={() => this.props.performReset()}
                      error={this.props.error}/>
       <Form onSubmit={(data) => this.submit(data)}
             geofocus={{}}

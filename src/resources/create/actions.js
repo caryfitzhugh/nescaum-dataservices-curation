@@ -101,7 +101,7 @@ function errorCreateResource(response) {
             response: response};
 }
 
-export function createResource(resource) {
+export function createResource(resource, history) {
   return function (dispatch) {
     dispatch(startCreateResource(resource));
 
@@ -115,12 +115,17 @@ export function createResource(resource) {
       }).then(function(json) {
         dispatch(finishCreateResource(json));
       })
+      .then(function(json) {
+        if (history) {
+          history.push("/resources/"+json.docid);
+        }
+      })
       .catch((e) => {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
-          dispatch(errorCreateResource(body))
+          dispatch(errorCreateResource(JSON.parse(body).message))
         });
       });
   };

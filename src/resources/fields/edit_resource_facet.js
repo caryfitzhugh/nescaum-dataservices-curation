@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './create_resource_facet.css';
+import './edit_resource_facet.css';
 import {without, uniq} from 'lodash';
+import MultiSelect from '../../multi_select';
+
 import fuzzy from 'fuzzy';
 
-class CreateResourceFacet extends Component {
+class EditResourceFacet extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +16,7 @@ class CreateResourceFacet extends Component {
       selected: {
         pending: "",
         index: -1,
-      }
+      },
     };
   }
   has_focus(evt) {
@@ -30,7 +32,7 @@ class CreateResourceFacet extends Component {
     });
   }
   create_new_match_facet(evt, new_value) {
-    this.props.onChange(uniq(this.props.facets.concat([new_value])));
+    this.props.onChange(uniq(this.props.values.concat([new_value])));
     this.setState({pending_value: "", matches: [], selected: { index: -1, pending_value: ""}});
 
   }
@@ -40,12 +42,12 @@ class CreateResourceFacet extends Component {
       var matches = this.matches.bind(this)();
       new_value = matches[this.state.selected.index];
     }
-    this.props.onChange(uniq(this.props.facets.concat([new_value])));
+    this.props.onChange(uniq(this.props.values.concat([new_value])));
     this.setState({pending_value: "", matches: [], selected: { index: -1, pending_value: ""}});
   }
 
   remove_facet(facet) {
-    this.props.onChange(without(this.props.facets, facet))
+    this.props.onChange(without(this.props.values, facet))
   }
 
   matches() {
@@ -57,7 +59,7 @@ class CreateResourceFacet extends Component {
     }
 
     // Remove already there.
-    return without(matches, ...this.props.facets);
+    return without(matches, ...this.props.values);
   }
 
   handle_key_press(evt) {
@@ -107,11 +109,12 @@ class CreateResourceFacet extends Component {
     }
 
     return (
+
       <div className='resource-facet'>
         <label>{this.props.name}</label>
         <div>
           <ul>
-          { (this.props.facets || []).map( (facet) => {
+          { (this.props.values || []).map( (facet) => {
               return <li key={facet}>
                 <span className='badge badge-primary'>
                   {facet}
@@ -145,4 +148,4 @@ const mapDispatchToProps = (dispatch) => {
   return { }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateResourceFacet);
+export default connect(mapStateToProps, mapDispatchToProps)(EditResourceFacet);

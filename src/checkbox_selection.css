@@ -1,0 +1,10 @@
+.checkbox-selection .form-input {
+  padding: 0.5em 1em;
+}
+.checkbox-selection-wrapper> label{
+  font-weight: 700;
+  font-size: 1.2em;
+}
+.checkbox-selection .form-input input {
+  margin-right: 0.5em;
+}

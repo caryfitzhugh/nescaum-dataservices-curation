@@ -38,6 +38,17 @@ class Show extends Component {
             <Link className='btn btn-secondary' to={'/geofocuses/' + this.props.geofocus.id +'/edit'}> Edit Geofocus </Link>
             <button onClick={(evt) => this.delete_geofocus(evt)} className='btn btn-danger'> Delete Geofocus </button>
           </h2>
+          <div className='form-group'>
+            <label>Type</label>
+            <span>{this.props.geofocus.type}</span>
+          </div>
+          <div className='form-group'>
+            <label>UID</label>
+            <span>{this.props.geofocus.uid}</span>
+          </div>
+          <pre>
+            {JSON.stringify(this.props.geofocus.geom, null, 2)}
+          </pre>
         </div>);
     } else if (this.props.error ) {
       return (

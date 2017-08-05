@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './create_resource_weblinks.css';
+import './edit_resource_weblinks.css';
 import {without, uniq} from 'lodash';
 
-class CreateResourceWeblinks extends Component {
+class EditResourceWeblinks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "",
+      available: ["PDF", "Weblink", "Data", "MetaData"],
+      type: null,
       link: "",
       link_valid: false,
     };
@@ -20,8 +21,8 @@ class CreateResourceWeblinks extends Component {
   }
   create_new_weblink(evt) {
     if (this.state.link_valid) {
-      this.props.onChange(uniq(this.props.links.concat([this.state.type + "::" + this.state.link])));
-      this.setState({type: "", link: "", link_valid: false});
+      this.props.onChange(uniq(this.props.links.concat([(this.state.type  || this.state.available[0])+ "::" + this.state.link])));
+      this.setState({link: "", link_valid: false});
     }
   }
 
@@ -41,9 +42,13 @@ class CreateResourceWeblinks extends Component {
       <div className='resource-facet'>
         <label>{this.props.name}</label>
         <div className='input-group autocomplete-root'>
-          <input value={this.state.type}
+          <select value={this.state.type || this.state.available[0]}
                  onChange={(evt) => this.update_type(evt)}
-                 className='form-control' type='text' placeholder="Link type (pdf, weblink, etc)"/>
+                 className='form-control'>
+            {this.state.available.map((avail) => {
+              return <option key={avail} value={avail}>{avail}</option>
+            })}
+          </select>
 
           <input value={this.state.link}
                  onChange={(evt) => this.update_link(evt)}
@@ -79,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
   return { }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateResourceWeblinks);
+export default connect(mapStateToProps, mapDispatchToProps)(EditResourceWeblinks);

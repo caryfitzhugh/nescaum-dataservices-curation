@@ -1,0 +1,8 @@
+.resources-form {
+
+}
+
+.resources-form .checkbox-selection {
+  display: flex;
+  flex-wrap: wrap;
+}

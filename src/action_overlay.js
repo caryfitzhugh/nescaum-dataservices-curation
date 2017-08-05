@@ -10,7 +10,7 @@ class ActionOverlay extends Component {
             <p> There was an error performing this action. </p>
 
             <pre>
-              {JSON.stringify(this.props.error)}
+              {this.props.error}
             </pre>
 
             <a className='btn btn-primary' onClick={(evt) => { this.props.onPerformErrorReset() }}> Clear </a>
