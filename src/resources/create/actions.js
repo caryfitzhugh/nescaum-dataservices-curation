@@ -15,7 +15,9 @@ export const ERROR_CREATE_RESOURCE = 'error-create-resource';
  * returns a promise
  */
 function fetchFacets(facets) {
-  return fetch("/resources/facets?names=" + encodeURIComponent(facets.join(",")) );
+  return fetch("/resources/facets?names=" + encodeURIComponent(facets.join(",")), {
+    credentials: 'same-origin'
+  });
 }
 
 /*
@@ -76,6 +78,7 @@ function sendCreateResource(resource) {
             {
               method: "POST",
               body: JSON.stringify({resource: resource}),
+              credentials: 'same-origin'
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

@@ -28,6 +28,7 @@ function fetchActionsIndex(user_id, startdate, enddate, page, per_page) {
 
   return fetch("/actions/?" + query,
           {
+            credentials: 'same-origin',
             method: "GET",
             headers: {
               'Accept': 'application/json'

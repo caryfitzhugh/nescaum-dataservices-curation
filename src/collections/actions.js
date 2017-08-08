@@ -24,7 +24,9 @@ export function resetCollectionError(collection) {
  * returns a promise
  */
 function fetchCollection(id) {
-  return fetch("/collections/" + id);
+  return fetch("/collections/" + id, {
+        credentials: 'same-origin'
+  });
 }
 
 /*
@@ -92,6 +94,7 @@ export function getCollection(id) {
 function deleteCollectionDo(collection) {
   return fetch("/collections/" + collection.id,
           { method: "DELETE",
+            credentials: 'same-origin',
            'Accept': 'application/json'});
 }
 
@@ -163,6 +166,7 @@ function updateCollectionDo(collection) {
   return fetch("/collections/" + collection.id,
           { method: "PUT",
             body: JSON.stringify({collection: collection}),
+            credentials: 'same-origin',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'

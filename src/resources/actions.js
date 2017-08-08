@@ -18,7 +18,9 @@ export const ERROR_RESOURCE_INDEX = 'error-resource-index';
  * returns a promise
  */
 function fetchResource(docid) {
-  return fetch("/resources/" + docid);
+  return fetch("/resources/" + docid, {
+            credentials: 'same-origin'
+          });
 }
 
 /*
@@ -85,6 +87,7 @@ function fetchResourceIndex(docid, indexed) {
   return fetch("/resources/" + docid + "/index",
           {
             method: indexed ? "POST" : "DELETE",
+            credentials: 'same-origin'
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
@@ -157,6 +160,7 @@ export function indexResource(docid, indexed) {
 function deleteResourceDo(docid) {
   return fetch("/resources/" + docid,
           { method: "DELETE",
+            credentials: 'same-origin'
            'Accept': 'application/json'});
 }
 

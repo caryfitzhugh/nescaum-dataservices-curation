@@ -8,6 +8,7 @@ export const ERROR_CREATE_GEOFOCUS = 'error-create-geofocus';
 function sendCreateGeofocus(geofocus) {
   return fetch("/geofocuses",
             {
+              credentials: 'same-origin',
               method: "POST",
               body: JSON.stringify({geofocus: geofocus}),
               headers: {

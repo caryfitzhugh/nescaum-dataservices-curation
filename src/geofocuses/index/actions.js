@@ -11,6 +11,7 @@ function fetchGeofocusesIndex(page, per_page) {
 
   return fetch("/geofocuses/?page="+page+"&per_page="+ per_page,
           {
+            credentials: 'same-origin',
             method: "GET",
             headers: {
               'Accept': 'application/json'

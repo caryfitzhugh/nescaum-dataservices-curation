@@ -57,7 +57,9 @@ function fetchSearchResults(parameters) {
     });
 
   var qparams = '?' + Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(params[k]));return a},[]).join('&')
-  return fetch("/resources" + qparams);
+  return fetch("/resources" + qparams, {
+    credentials: 'same-origin'
+  });
 }
 
 /*

@@ -24,7 +24,9 @@ export function resetGeofocusError(geofocus) {
  * returns a promise
  */
 function fetchGeofocus(id) {
-  return fetch("/geofocuses/" + id);
+  return fetch("/geofocuses/" + id, {
+    credentials: 'same-origin'
+  });
 }
 
 /*
@@ -92,6 +94,7 @@ export function getGeofocus(id) {
 function deleteGeofocusDo(geofocus) {
   return fetch("/geofocuses/" + geofocus.id,
           { method: "DELETE",
+            credentials: 'same-origin',
            'Accept': 'application/json'});
 }
 
@@ -163,6 +166,7 @@ function updateGeofocusDo(geofocus) {
   return fetch("/geofocuses/" + geofocus.id,
           { method: "PUT",
             body: JSON.stringify({geofocus: geofocus}),
+            credentials: 'same-origin',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'

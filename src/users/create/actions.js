@@ -8,6 +8,7 @@ export const ERROR_CREATE_USER = 'error-create-user';
 function sendCreateUser(user) {
   return fetch("/users",
             {
+              credentials: 'same-origin',
               method: "POST",
               body: JSON.stringify({user: user}),
               headers: {

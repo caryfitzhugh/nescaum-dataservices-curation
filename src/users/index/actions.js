@@ -10,6 +10,7 @@ export const ERROR_INDEX_USERS_REQUEST = 'error-index-users-request';
 function fetchUsersIndex(page, per_page) {
   return fetch("/users/?page="+page+"&per_page="+ per_page,
           {
+            credentials: 'same-origin',
             method: "GET",
             headers: {
               'Accept': 'application/json'

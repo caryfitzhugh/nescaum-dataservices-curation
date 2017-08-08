@@ -8,6 +8,7 @@ export const ERROR_CREATE_COLLECTION = 'error-create-collection';
 function sendCreateCollection(collection) {
   return fetch("/collections",
     {
+      credentials: 'same-origin',
       method: "POST",
       body: JSON.stringify({collection: collection}),
       headers: {

@@ -24,7 +24,9 @@ export function resetUserError(user) {
  * returns a promise
  */
 function fetchUser(id) {
-  return fetch("/users/" + id);
+  return fetch("/users/" + id, {
+    credentials: 'same-origin'
+  });
 }
 
 /*
@@ -92,6 +94,7 @@ export function getUser(id) {
 function deleteUserDo(user) {
   return fetch("/users/" + user.id,
           { method: "DELETE",
+            credentials: 'same-origin',
            'Accept': 'application/json'});
 }
 
@@ -163,6 +166,7 @@ function updateUserDo(user) {
   return fetch("/users/" + user.id,
           { method: "PUT",
             body: JSON.stringify({user: user}),
+            credentials: 'same-origin',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
