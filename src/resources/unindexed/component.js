@@ -31,8 +31,6 @@ class Search extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("DB", state);
-
   return {
     is_searching: state.resources_unindexed.is_searching,
     per_page: state.resources_unindexed.per_page,

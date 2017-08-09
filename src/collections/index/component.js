@@ -6,7 +6,6 @@ import SearchResults from './search_results';
 
 class Search extends Component {
   componentDidMount() {
-    console.log('wha?', this.props.history);
     this.props.performSearch(1, this.props.per_page) ;
   }
 

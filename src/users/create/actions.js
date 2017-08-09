@@ -54,7 +54,6 @@ export function createUser(user, history) {
         return json;
       })
       .then(function(json) {
-        console.log(json);
         history.push("/users/"+json.id);
       })
       .catch((e) => {

@@ -15,7 +15,6 @@ class SearchResults extends Component {
                     </div>
                   </div>);
         } else {
-          console.log(this.props.response);
           var collections = ((this.props.response || {}).collections || [])
           return (
             <div className='search-results'>

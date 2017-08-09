@@ -40,7 +40,8 @@ function geofocusesReducer(state = INITIAL_GEOFOCUSES_STATE, action) {
       return new_state;
 
     case START_GEOFOCUS_GET:
-      return state;
+      new_state = immutable.set(state, [action.id], {});
+      return new_state;
     case FINISH_GEOFOCUS_GET:
       new_state = immutable.set(state, [action.id], action.response);
       return new_state;

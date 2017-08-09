@@ -13,7 +13,6 @@ const INITIAL_RESOURCES_STATE = {
 
 function resourcesReducer(state = INITIAL_RESOURCES_STATE, action) {
   let new_state;
-  console.log(action);
   switch (action.type) {
     case START_RESOURCE_INDEX:
       new_state = immutable.set(state, [action.id, 'indexed'], action.indexed);

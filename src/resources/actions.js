@@ -64,7 +64,6 @@ function errorResourceGet(id, error) {
 *   This should be dispatched, and uses redux-thunk to process
 */
 export function getResource(id) {
-  console.log("Get Resuorce: " + id);
   return function (dispatch) {
     // Dispatch that we are starting a search request
     dispatch(startResourceGet(id));

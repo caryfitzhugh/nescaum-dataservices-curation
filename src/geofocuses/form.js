@@ -28,6 +28,11 @@ class Form extends Component {
   }
 
   render() {
+   let geom = this.state.geofocus.geom || ((this.props.geofocus || {}).geom);
+   if ((typeof geom === 'object') && (geom !== null)) {
+      geom = JSON.stringify(geom);
+   }
+
     return (
       <div className='row'>
         <div className='form col'>
@@ -52,7 +57,7 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <label>GeoJSON</label>
-            <textarea value={this.state.geofocus.geom || ((this.props.geofocus || {}).geom) || ""} className='form-control' onChange={(evt) => this.update_field(evt, 'geom')}/>
+            <textarea value={geom} className='form-control' onChange={(evt) => this.update_field(evt, 'geom')}/>
             <div className='form-text text-muted'>
               The GeoJSON should be properly formatted and simple features (no feature collections!)
             </div>

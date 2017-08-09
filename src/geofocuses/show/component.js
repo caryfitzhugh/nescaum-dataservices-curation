@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ActionOverlay from '../../action_overlay';
 import { getGeofocus, deleteGeofocus } from './../actions';
 import {Link} from 'react-router-dom';
+import GeofocusMap from '../../geofocus_map';
 import "./component.css";
 
 class Show extends Component {
@@ -40,15 +41,13 @@ class Show extends Component {
           </h2>
           <div className='form-group'>
             <label>Type</label>
-            <span>{this.props.geofocus.type}</span>
+            <span className='form-control'>{this.props.geofocus.type}</span>
           </div>
           <div className='form-group'>
             <label>UID</label>
-            <span>{this.props.geofocus.uid}</span>
+            <span className='form-control'>{this.props.geofocus.uid}</span>
           </div>
-          <pre>
-            {JSON.stringify(this.props.geofocus.geom, null, 2)}
-          </pre>
+          <GeofocusMap geofocuses={[this.props.geofocus.id]} />
         </div>);
     } else if (this.props.error ) {
       return (

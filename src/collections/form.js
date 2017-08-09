@@ -26,7 +26,6 @@ class Form extends Component {
       let resource = Object.assign({}, state.collection);
       resource.resources = new_ids;
       let new_state =  Object.assign({}, state, resource);
-      console.log(new_state, new_ids);
       return new_state;
     });
   }

@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import md from 'marked';
-import {L} from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import gjBounds from 'geojson-bounds';
-import {Map, TileLayer, GeoJSON} from 'react-leaflet';
 import { connect } from 'react-redux';
 import { getResource, deleteResource } from './../actions';
-import {performCompleteIndexSearch} from './../../geofocuses/index/actions';
 import {Link} from 'react-router-dom';
 import "./component.css";
-import {compact} from 'lodash';
 import ShowFacetArray from './show_facet_array';
 import ShowIndexedButton from './show_indexed_button';
+import GeofocusMap from './../../geofocus_map';
 
 class Show extends Component {
   constructor(props) {
@@ -24,8 +19,6 @@ class Show extends Component {
   componentDidMount() {
     // Want to fetch the details
     this.props.performResourceGet(this.props.match.params.id);
-    // Want to fetch all facets
-    this.props.performGeofocusQuery();
   }
   delete_resource (evt) {
     evt.stopPropagation();
@@ -37,14 +30,6 @@ class Show extends Component {
   }
 
   render() {
-    let geofocuses = compact(((this.props.resource || {}).geofocuses || []).map((gfid) => {
-                    return ((this.props || {}).geofocuses || {})[gfid];
-                  }))
-    let bbox = gjBounds.extent({type: "GeometryCollection",
-                                 geometries: geofocuses.map((gf) => gf.geom)});
-
-    let bounds = bbox[0] ? [[bbox[1],bbox[0]],[bbox[3], bbox[2]]] : null;
-
     if (this.props.resource) {
       let img = this.props.resource.image || 'http://placehold.it/300';
       return (
@@ -68,24 +53,7 @@ class Show extends Component {
           <div className='resource-image'>
             <img alt='resource thumbnail' src={img}/>
             <label>{img }</label>
-            { bounds ?
-              <div className='geofocus-map'>
-                <Map boundsOptions={{padding: [50,50]}} bounds={[[bbox[1],bbox[0]],[bbox[3], bbox[2]]]}>
-                  <TileLayer
-                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                      url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'/>
-                  {this.props.resource.geofocuses.map((gfid) => {
-                    let gf = this.props.geofocuses[gfid];
-                    return gf ? <GeoJSON key={gf.id} data={gf.geom} /> : null;
-                  })}
-                </Map>
-                <ul>
-                  {this.props.resource.geofocuses.map((gfid) => {
-                    let gf = this.props.geofocuses[gfid];
-                    return gf ? <li key={gfid}> {gf.name} </li> : null;
-                  })}
-                </ul>
-              </div> : null}
+            <GeofocusMap geofocuses={this.props.resource.geofocuses} />
           </div>
 
           <div dangerouslySetInnerHTML={{__html: md(this.props.resource.content || "")}}></div>
@@ -128,7 +96,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     performResourceGet: (id) => dispatch(getResource(id)),
     performResourceDelete: (id, history) => dispatch(deleteResource(id, history)),
-    performGeofocusQuery: () => dispatch(performCompleteIndexSearch()),
   }
 };
 

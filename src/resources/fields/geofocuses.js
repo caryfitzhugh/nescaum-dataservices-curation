@@ -128,7 +128,6 @@ class GeofocusesField extends Component {
   }
 
   update_pending_type (evt) {
-    console.log(evt.target.value);
     this.setState({pending_type: evt.target.value});
   }
 
