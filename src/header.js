@@ -24,6 +24,9 @@ class Header extends Component {
             <HeaderLink path_prefix='/collections' path='/collections' title='Collections' />
             <HeaderLink path_prefix='/geofocuses' path='/geofocuses' title='Geofocuses' />
             <HeaderLink path_prefix='/history' path='/history' title='History' />
+            <span className='nav-item'>
+              <Link to="/sign_out" className='nav-link'> <span className='fa fa-sign-out'></span> Logout</Link>
+            </span>
           </ul>
         </div>
       </nav>
