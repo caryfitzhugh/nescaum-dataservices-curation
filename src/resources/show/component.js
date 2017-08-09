@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import md from 'marked';
+import {L} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import gjBounds from 'geojson-bounds';
+import {Map, TileLayer, GeoJSON} from 'react-leaflet';
 import { connect } from 'react-redux';
 import { getResource, deleteResource } from './../actions';
+import {performCompleteIndexSearch} from './../../geofocuses/index/actions';
 import {Link} from 'react-router-dom';
 import "./component.css";
+import {compact} from 'lodash';
 import ShowFacetArray from './show_facet_array';
 import ShowIndexedButton from './show_indexed_button';
 
@@ -18,17 +24,27 @@ class Show extends Component {
   componentDidMount() {
     // Want to fetch the details
     this.props.performResourceGet(this.props.match.params.id);
+    // Want to fetch all facets
+    this.props.performGeofocusQuery();
   }
   delete_resource (evt) {
     evt.stopPropagation();
     evt.preventDefault();
     if (window.confirm("Delete Resource?\n\nThis will permanently delete the record!")) {
-      this.props.performResourceDelete(this.props.resource.docid);
+      this.props.performResourceDelete(this.props.resource.id, this.props.history);
       // Send yourself "back" in the browser
     }
   }
 
   render() {
+    let geofocuses = compact(((this.props.resource || {}).geofocuses || []).map((gfid) => {
+                    return ((this.props || {}).geofocuses || {})[gfid];
+                  }))
+    let bbox = gjBounds.extent({type: "GeometryCollection",
+                                 geometries: geofocuses.map((gf) => gf.geom)});
+
+    let bounds = bbox[0] ? [[bbox[1],bbox[0]],[bbox[3], bbox[2]]] : null;
+
     if (this.props.resource) {
       let img = this.props.resource.image || 'http://placehold.it/300';
       return (
@@ -36,11 +52,9 @@ class Show extends Component {
 
           <ShowIndexedButton resource={this.props.resource} />
           <h2>{this.props.resource.title}
-            <Link className='btn btn-secondary' to={'/resources/' + this.props.resource.docid +'/edit'}> Edit Resource </Link>
+            <Link className='btn btn-secondary' to={'/resources/' + this.props.resource.id +'/edit'}> Edit Resource </Link>
             <button onClick={(evt) => this.delete_resource(evt)} className='btn btn-danger'> Delete Resource </button>
           </h2>
-          <hr/>
-
           <h6> {this.props.resource.subtitle}
             <small className='publication'>
               <span>{ this.props.resource.published_on_start}</span>
@@ -49,9 +63,29 @@ class Show extends Component {
             </small>
           </h6>
 
+          <hr/>
+
           <div className='resource-image'>
             <img alt='resource thumbnail' src={img}/>
             <label>{img }</label>
+            { bounds ?
+              <div className='geofocus-map'>
+                <Map boundsOptions={{padding: [50,50]}} bounds={[[bbox[1],bbox[0]],[bbox[3], bbox[2]]]}>
+                  <TileLayer
+                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                      url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'/>
+                  {this.props.resource.geofocuses.map((gfid) => {
+                    let gf = this.props.geofocuses[gfid];
+                    return gf ? <GeoJSON key={gf.id} data={gf.geom} /> : null;
+                  })}
+                </Map>
+                <ul>
+                  {this.props.resource.geofocuses.map((gfid) => {
+                    let gf = this.props.geofocuses[gfid];
+                    return gf ? <li key={gfid}> {gf.name} </li> : null;
+                  })}
+                </ul>
+              </div> : null}
           </div>
 
           <div dangerouslySetInnerHTML={{__html: md(this.props.resource.content || "")}}></div>
@@ -86,13 +120,15 @@ const mapStateToProps = (state, ownProps) => {
   return {
     resource: state.resources[ownProps.match.params.id],
     error: state.resources.errors[ownProps.match.params.id],
+    geofocuses: state.geofocuses_index.geofocuses || {},
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performResourceGet: (docid) => dispatch(getResource(docid)),
-    performResourceDelete: (docid) => dispatch(deleteResource(docid)),
+    performResourceGet: (id) => dispatch(getResource(id)),
+    performResourceDelete: (id, history) => dispatch(deleteResource(id, history)),
+    performGeofocusQuery: () => dispatch(performCompleteIndexSearch()),
   }
 };
 

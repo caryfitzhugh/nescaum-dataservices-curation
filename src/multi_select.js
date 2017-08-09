@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class MultiSelect extends Component {
   constructor(props) {
     super(props);
-    this.state = {index: 0, custom: ""};
+    this.state = {};
   }
 
   current_value () {

@@ -6,17 +6,17 @@ import './resource_search_result.css';
 class ResourceSearchResult extends Component {
   render() {
     var resource = this.props.resource;
-    let skip_docids = this.props.skip_docids || [];
-    let present = skip_docids.includes(resource.docid);
+    let skip_ids = this.props.skip_ids || [];
+    let present = skip_ids.includes(resource.id);
 
       return (
-        <div className='resource-search-result search-result' key={resource.docid}>
+        <div className='resource-search-result search-result' key={resource.id}>
           <h3>
             {this.props.resource.title}
-            <small><em>{this.props.resource.docid}</em></small>
+            <small><em>{this.props.resource.id}</em></small>
           </h3>
 
-          <a onClick={(evt) => { !present && this.props.onAdd(this.props.resource.docid)}}
+          <a onClick={(evt) => { !present && this.props.onAdd(this.props.resource.id)}}
              className={ ('btn btn-sm btn-primary ') + (present ? 'disabled' : '')}> Add To Collection </a>
         </div>
       );

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import md from 'marked';
 import {resetCreateResource, createResource, facetQuery} from './create/actions';
-import {performCompleteIndexSearch} from './../geofocuses/index/actions';
 import { connect } from 'react-redux';
 import EditResourceWeblinks from './fields/edit_resource_weblinks';
 import ContentTypeField from './fields/content_types';
 import ActionsField from './fields/actions';
+import GeofocusesField from './fields/geofocuses';
 import './form.css';
 
 
@@ -18,12 +18,10 @@ class Form extends Component {
   componentDidMount() {
     // Want to fetch all facets
     this.props.performReset();
-    this.props.performGeofocusQuery();
     this.props.performFacetQuery();
   }
 
   update_field(evt_or_val, field) {
-    console.log(evt_or_val, field);
     let val = evt_or_val;
     if (evt_or_val.target) {
       val = evt_or_val.target.value;
@@ -115,14 +113,20 @@ class Form extends Component {
             </div>
           </div>
 
+          <GeofocusesField
+            selected={sresource.geofocuses || presource.geofocuses || []}
+            onChange={(new_data) => this.update_field(new_data, 'geofocuses')} />
+
           <ContentTypeField
             available={this.props.facets.content_types}
             values={sresource.content_types || presource.content_types }
             onChange={(new_data) => this.update_field(new_data, 'content_types')}
             />
+
           <EditResourceWeblinks name="WebLinks"
             links={sresource.external_data_links || presource.external_data_links || []}
             onChange={(new_data) => this.update_field(new_data, 'external_data_links')} />
+
           <ActionsField
             available={this.props.facets.actions}
             values={sresource.actions || presource.actions }
@@ -141,7 +145,6 @@ class Form extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    geofocuses: state.geofocuses || {},
     facets: state.resources_create.facets.available || {},
   }
 };
@@ -149,9 +152,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     performFacetQuery: () => dispatch(facetQuery(["actions", "authors", "climate_changes", "effects", "content_types",  "keywords", "publishers", "sectors", "strategies", "states"])),
-    performGeofocusQuery: () => dispatch(performCompleteIndexSearch()),
     performReset: () => dispatch(resetCreateResource()),
-  }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

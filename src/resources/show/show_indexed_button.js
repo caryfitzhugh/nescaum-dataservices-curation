@@ -4,10 +4,10 @@ import { indexResource } from './../actions';
 
 class ShowIndexedButton extends Component {
   make_public () {
-    this.props.indexResource(this.props.resource.docid, true);
+    this.props.indexResource(this.props.resource.id, true);
   }
   make_private () {
-    this.props.indexResource(this.props.resource.docid, false);
+    this.props.indexResource(this.props.resource.id, false);
   }
   render() {
     if (this.props.resource.indexed) {
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    indexResource: (docid, indexed) => dispatch(indexResource(docid, indexed))
+    indexResource: (id, indexed) => dispatch(indexResource(id, indexed))
   }
 };
 

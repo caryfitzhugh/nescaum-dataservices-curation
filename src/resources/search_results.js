@@ -22,7 +22,7 @@ class SearchResults extends Component {
               <SearchPagination response={this.props.response} onChangePage={(new_page) => this.props.onChangePage(new_page)}/>
               <ul className='results'>
                 {resources.map(resource => {
-                  return <SearchResult key={resource.docid}
+                  return <SearchResult key={resource.id}
                                 resource={resource}/>
                 })}
               </ul>

@@ -22,9 +22,9 @@ class ResourceSearchResults extends Component {
               <SearchPagination response={this.props.response} onChangePage={(new_page) => this.props.onChangePage(new_page)}/>
               <ul className='results'>
                 {resources.map(resource => {
-                  return <ResourceSearchResult key={resource.docid}
-                                skip_docids={this.props.docids}
-                                onAdd={(docid) => {this.props.onAdd(docid)}}
+                  return <ResourceSearchResult key={resource.id}
+                                skip_ids={this.props.ids}
+                                onAdd={(id) => {this.props.onAdd(id)}}
                                 resource={resource}/>
                 })}
               </ul>

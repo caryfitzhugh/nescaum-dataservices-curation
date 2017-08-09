@@ -7,9 +7,9 @@ import "./edit_collection_list.css";
 class EditCollectionList extends Component {
 
   componentWillReceiveProps(nextProps) {
-    (nextProps.docids || []).forEach((docid) => {
-      if (!nextProps.resources[docid]) {
-        nextProps.performResourceGet(docid);
+    (nextProps.ids || []).forEach((id) => {
+      if (!nextProps.resources[id]) {
+        nextProps.performResourceGet(id);
       }
     });
   }
@@ -17,13 +17,13 @@ class EditCollectionList extends Component {
   move (indx, direction) {
     let toIndex = indx + direction;
     let fromIndex = indx;
-    let array = this.props.docids.slice(0);
+    let array = this.props.ids.slice(0);
     array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
     this.props.onChange(array);
   }
 
-  remove_docid(indx) {
-    let array = this.props.docids.slice(0);
+  remove_id(indx) {
+    let array = this.props.ids.slice(0);
     array.splice(indx, 0).concat(array.splice(indx, 1));
     this.props.onChange(array);
   }
@@ -32,12 +32,12 @@ class EditCollectionList extends Component {
     let empty = <div className='empty-collection-list'>No Resources Added</div>;
     return (
       <div>
-        {((this.props.docids || []).length === 0) ? empty : null}
+        {((this.props.ids || []).length === 0) ? empty : null}
         <ul className='edit-collection-resource-list'>
-          {(this.props.docids || []).map((docid, indx) => {
-            let resource = this.props.resources[docid];
+          {(this.props.ids || []).map((id, indx) => {
+            let resource = this.props.resources[id];
             let show_down = indx > 0;
-            let show_up = (indx < (this.props.docids.length - 1));
+            let show_up = (indx < (this.props.ids.length - 1));
             let up = (<span className={'btn btn-sm btn-secondary ' + (show_up ? '' : 'disabled')}
                           onClick={(evt) => { show_up && this.move(indx, 1)}}>
                         <span className={'fa fa-chevron-down '}></span>
@@ -49,22 +49,22 @@ class EditCollectionList extends Component {
 
             if (resource) {
               return <li className='resource'
-                          key={'' + indx + '-' + docid}>
+                          key={'' + indx + '-' + id}>
                           <span className='btn-group'>
                             { up }
                             { down }
                           </span>
                       <label className='resource-title'>
-                        <Link to={'/resources/'+resource.docid}>{resource.title} </Link>
+                        <Link to={'/resources/'+resource.id}>{resource.title} </Link>
                         <small>
                           <em>
-                            {resource.docid}
+                            {resource.id}
                           </em>
                         </small>
                       </label>
 
                       <span className='btn btn-sm btn-danger'
-                          onClick={(evt) => { this.remove_docid(indx)}}>
+                          onClick={(evt) => { this.remove_id(indx)}}>
                         <span className='fa fa-times-circle-o'></span>
                       </span>
                 </li>
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performResourceGet: (docid) => dispatch(getResource(docid)),
+    performResourceGet: (id) => dispatch(getResource(id)),
   }
 };
 

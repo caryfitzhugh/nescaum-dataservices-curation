@@ -28,7 +28,7 @@ function createReducer(state = INITIAL_CREATE_STATE, action) {
       new_state = immutable.set(new_state, ["is_creating"], false);
       new_state = immutable.set(new_state, ["facets", "parameters"], null);
       new_state = immutable.set(new_state, ["facets", "response"], null);
-      new_state = immutable.set(new_state, ["created_docid"], null);
+      new_state = immutable.set(new_state, ["created_id"], null);
       return new_state;
 
     case START_CREATE_RESOURCE:
@@ -41,8 +41,8 @@ function createReducer(state = INITIAL_CREATE_STATE, action) {
     case FINISH_CREATE_RESOURCE:
       new_state = immutable.set(state, ["response"], action.response);
       new_state = immutable.set(new_state, ["is_creating"], false);
-      new_state = immutable.set(new_state, ["resources", action.response.docid], action.response);
-      new_state = immutable.set(new_state, ["created_docid"], action.response.docid);
+      new_state = immutable.set(new_state, ["resources", action.response.id], action.response);
+      new_state = immutable.set(new_state, ["created_id"], action.response.id);
       return new_state;
 
     case ERROR_CREATE_RESOURCE:

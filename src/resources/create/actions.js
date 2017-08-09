@@ -78,7 +78,7 @@ function sendCreateResource(resource) {
             {
               method: "POST",
               body: JSON.stringify({resource: resource}),
-              credentials: 'same-origin'
+              credentials: 'same-origin',
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -117,15 +117,17 @@ export function createResource(resource, history) {
         }
       }).then(function(json) {
         dispatch(finishCreateResource(json));
+        return json;
       })
       .then(function(json) {
         if (history) {
-          history.push("/resources/"+json.docid);
+          history.push("/resources/"+json.id);
         }
       })
       .catch((e) => {
         var decoder = new TextDecoder();
         var body = '';
+        console.warn(e);
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
           dispatch(errorCreateResource(JSON.parse(body).message))

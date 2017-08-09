@@ -5,6 +5,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import ResourcesSearch from './resources/search/component';
 import ResourcesCreate from './resources/create/component';
 import ResourcesShow from   './resources/show/component';
+import ResourcesEdit from   './resources/edit/component';
 import ResourcesUnindexed from   './resources/unindexed/component';
 
 import GeofocusesIndex from './geofocuses/index/component';
@@ -32,6 +33,7 @@ class App extends Component {
           <Route exact path='/' render={() => <Redirect to="/resources" /> }/>
           <Route exact path='/resources/unindexed' component={ResourcesUnindexed}/>
           <Route exact path='/resources/create' component={ResourcesCreate}/>
+          <Route exact path='/resources/:id/edit' component={ResourcesEdit}/>
           <Route exact path='/resources/:id' component={ResourcesShow}/>
           <Route exact path='/resources' component={ResourcesSearch}/>
 

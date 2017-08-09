@@ -8,44 +8,54 @@ export const START_RESOURCE_DELETE = 'start-resource-delete';
 export const FINISH_RESOURCE_DELETE = 'finish-resource-delete';
 export const ERROR_RESOURCE_DELETE = 'error-resource-delete';
 
+export const START_RESOURCE_UPDATE = 'start-resource-update';
+export const FINISH_RESOURCE_UPDATE = 'finish-resource-update';
+export const ERROR_RESOURCE_UPDATE = 'error-resource-update';
+
 export const START_RESOURCE_INDEX = 'start-resource-index';
 export const FINISH_RESOURCE_INDEX = 'finish-resource-index';
 export const ERROR_RESOURCE_INDEX = 'error-resource-index';
 
+export const RESET_RESOURCE_ERRORS = 'reset-geofocus-errors';
+
+export function resetResourceError(resource) {
+  return {type: RESET_RESOURCE_ERRORS,
+          resource: resource};
+}
 /*
  * Fetch against the API, the search parameters are serialized into the query param.
  *
  * returns a promise
  */
-function fetchResource(docid) {
-  return fetch("/resources/" + docid, {
-            credentials: 'same-origin'
+function fetchResource(id) {
+  return fetch("/resources/" + id, {
+            credentials: 'same-origin',
           });
 }
 
 /*
  *  Start a resource request action
  */
-function startResourceGet(docid) {
+function startResourceGet(id) {
   return { type: START_RESOURCE_GET,
-           docid: docid};
+           id: id};
 }
 
 /*
  *  Finish a doc request successfully.
  */
-function finishResourceGet(docid, response) {
+function finishResourceGet(id, response) {
   return { type: FINISH_RESOURCE_GET,
-            docid: docid,
+            id: id,
             response: response};
 }
 
 /*
  *  Finish a resource request with an error.
  */
-function errorResourceGet(docid, error) {
+function errorResourceGet(id, error) {
   return { type: ERROR_RESOURCE_GET,
-    docid: docid,
+    id: id,
     error: error};
 }
 
@@ -53,12 +63,13 @@ function errorResourceGet(docid, error) {
 *   the appropriate actions.
 *   This should be dispatched, and uses redux-thunk to process
 */
-export function getResource(docid) {
+export function getResource(id) {
+  console.log("Get Resuorce: " + id);
   return function (dispatch) {
     // Dispatch that we are starting a search request
-    dispatch(startResourceGet(docid));
+    dispatch(startResourceGet(id));
 
-    return fetchResource(docid).then(
+    return fetchResource(id).then(
       function(response) {
         if (response.ok) {
           return response.json();
@@ -66,7 +77,7 @@ export function getResource(docid) {
           throw response;
         }
       }).then(function(json) {
-        dispatch(finishResourceGet(docid, json));
+        dispatch(finishResourceGet(id, json));
       })
       .catch((e) => {
         var decoder = new TextDecoder();
@@ -74,7 +85,7 @@ export function getResource(docid) {
         console.warn(e);
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
-          dispatch(errorResourceGet(docid, body))
+          dispatch(errorResourceGet(id, body))
         });
       });
   };
@@ -83,11 +94,11 @@ export function getResource(docid) {
 /*
  * returns a promise
  */
-function fetchResourceIndex(docid, indexed) {
-  return fetch("/resources/" + docid + "/index",
+function fetchResourceIndex(id, indexed) {
+  return fetch("/resources/" + id + "/index",
           {
             method: indexed ? "POST" : "DELETE",
-            credentials: 'same-origin'
+            credentials: 'same-origin',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
@@ -98,27 +109,27 @@ function fetchResourceIndex(docid, indexed) {
 /*
  *  Start a resource request action
  */
-function startResourceIndex(docid, indexed) {
+function startResourceIndex(id, indexed) {
   return { type: START_RESOURCE_INDEX,
             indexed: indexed,
-           docid: docid};
+           id: id};
 }
 
 /*
  *  Finish a doc request successfully.
  */
-function finishResourceIndex(docid, response) {
+function finishResourceIndex(id, response) {
   return { type: FINISH_RESOURCE_INDEX,
-            docid: docid,
+            id: id,
             response: response};
 }
 
 /*
  *  Finish a resource request with an error.
  */
-function errorResourceIndex(docid, error) {
+function errorResourceIndex(id, error) {
   return { type: ERROR_RESOURCE_INDEX,
-    docid: docid,
+    id: id,
     error: error};
 }
 
@@ -126,12 +137,12 @@ function errorResourceIndex(docid, error) {
 *   the appropriate actions.
 *   This should be dispatched, and uses redux-thunk to process
 */
-export function indexResource(docid, indexed) {
+export function indexResource(id, indexed) {
   return function (dispatch) {
     // Dispatch that we are starting a search request
-    dispatch(startResourceIndex(docid, indexed));
+    dispatch(startResourceIndex(id, indexed));
 
-    return fetchResourceIndex(docid, indexed).then(
+    return fetchResourceIndex(id, indexed).then(
       function(response) {
         if (response.ok) {
           return response.json();
@@ -139,14 +150,14 @@ export function indexResource(docid, indexed) {
           throw response;
         }
       }).then(function(json) {
-        dispatch(finishResourceIndex(docid, json));
+        dispatch(finishResourceIndex(id, json));
       })
       .catch((e) => {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
-          dispatch(errorResourceIndex(docid, body))
+          dispatch(errorResourceIndex(id, body))
         });
       });
   };
@@ -157,36 +168,36 @@ export function indexResource(docid, indexed) {
  *
  * returns a promise
  */
-function deleteResourceDo(docid) {
-  return fetch("/resources/" + docid,
+function deleteResourceDo(id) {
+  return fetch("/resources/" + id,
           { method: "DELETE",
-            credentials: 'same-origin'
+            credentials: 'same-origin',
            'Accept': 'application/json'});
 }
 
 /*
  *  Start a resource request action
  */
-function startResourceDelete(docid) {
+function startResourceDelete(id) {
   return { type: START_RESOURCE_DELETE,
-           docid: docid};
+           id: id};
 }
 
 /*
  *  Finish a doc request successfully.
  */
-function finishResourceDelete(docid, response) {
+function finishResourceDelete(id, response) {
   return { type: FINISH_RESOURCE_DELETE,
-            docid: docid,
+            id: id,
             response: response};
 }
 
 /*
  *  Finish a resource request with an error.
  */
-function errorResourceDelete(docid, error) {
+function errorResourceDelete(id, error) {
   return { type: ERROR_RESOURCE_DELETE,
-    docid: docid,
+    id: id,
     error: error};
 }
 
@@ -194,12 +205,12 @@ function errorResourceDelete(docid, error) {
 *   the appropriate actions.
 *   This should be dispatched, and uses redux-thunk to process
 */
-export function deleteResource(docid) {
+export function deleteResource(id, history) {
   return function (dispatch) {
     // Dispatch that we are starting a search request
-    dispatch(startResourceDelete(docid));
+    dispatch(startResourceDelete(id));
 
-    return deleteResourceDo(docid).then(
+    return deleteResourceDo(id).then(
       function(response) {
         if (response.ok) {
           return response.json();
@@ -207,14 +218,95 @@ export function deleteResource(docid) {
           throw response;
         }
       }).then(function(json) {
-        dispatch(finishResourceDelete(docid, json));
+        dispatch(finishResourceDelete(id, json));
+        return json;
+      })
+      .then(function(json) {
+        if (history) {
+          history.goBack();
+        }
       })
       .catch((e) => {
         var decoder = new TextDecoder();
         var body = '';
         e.body.getReader().read().then((res) => {
           body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
-          dispatch(errorResourceDelete(docid, body))
+          dispatch(errorResourceDelete(id, body))
+        });
+      });
+  };
+}
+/*
+ * Update against the API
+ *
+ * returns a promise
+ */
+function updateResourceDo(resource) {
+  return fetch("/resources/" + resource.id,
+          { method: "PUT",
+            body: JSON.stringify({resource: resource}),
+            credentials: 'same-origin',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }});
+}
+
+/*
+ *  Start a resource request action
+ */
+function startResourceUpdate(resource) {
+  return { type: START_RESOURCE_UPDATE,
+           resource: resource};
+}
+
+/*
+ *  Finish a doc request successfully.
+ */
+function finishResourceUpdate(resource, response) {
+  return { type: FINISH_RESOURCE_UPDATE,
+            resource: resource};
+}
+
+/*
+*  Finish a resource request with an error.
+*/
+function errorResourceUpdate(resource, error) {
+  return {type: ERROR_RESOURCE_UPDATE,
+    resource: resource,
+    error: error};
+}
+
+/*  This will perform a delete - triggering the fetch, along with dispatching
+*   the appropriate actions.
+*   This should be dispatched, and uses redux-thunk to process
+*/
+export function updateResource(resource, history) {
+  return function (dispatch) {
+    // Dispatch that we are starting a search request
+    dispatch(startResourceUpdate(resource));
+
+    return updateResourceDo(resource).then(
+      function(response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      }).then(function(json) {
+        dispatch(finishResourceUpdate(resource, json));
+        return json;
+      })
+      .then(function() {
+        history.push("/resources/"+resource.id);
+      })
+      .catch((e) => {
+        var decoder = new TextDecoder();
+        var body = '';
+        console.warn(e);
+        e.body.getReader().read().then((res) => {
+          body += decoder.decode(res.value || new Uint8Array(), { stream: !res.done });
+          dispatch(errorResourceUpdate(resource, body))
         });
       });
   };

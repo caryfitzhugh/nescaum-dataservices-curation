@@ -8,9 +8,9 @@ class CollectionList extends Component {
 
   // Only need to run once, b/c things will change, and we'll re-load
   componentDidMount(nextProps) {
-    (this.props.docids || []).forEach((docid) => {
-      if (!this.props.resources[docid]) {
-        this.props.performResourceGet(docid);
+    (this.props.ids || []).forEach((id) => {
+      if (!this.props.resources[id]) {
+        this.props.performResourceGet(id);
       }
     });
   }
@@ -18,16 +18,16 @@ class CollectionList extends Component {
   render() {
     return (
       <ul className='collection-resource-list'>
-        {(this.props.docids || []).map(docid => {
-          let resource = this.props.resources[docid] ;
+        {(this.props.ids || []).map(id => {
+          let resource = this.props.resources[id] ;
           if (resource) {
             return <li className='resource'
-                        key={docid}>
+                        key={id}>
                     <label className='resource-title'>
-                      <Link to={'/resources/'+resource.docid}>{resource.title}</Link>
+                      <Link to={'/resources/'+resource.id}>{resource.title}</Link>
                       <small>
                         <em>
-                          {resource.docid}
+                          {resource.id}
                         </em>
                       </small>
                     </label>
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performResourceGet: (docid) => dispatch(getResource(docid)),
+    performResourceGet: (id) => dispatch(getResource(id)),
   }
 };
 

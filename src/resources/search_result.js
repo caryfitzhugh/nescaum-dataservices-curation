@@ -46,9 +46,9 @@ class SearchResult extends Component {
     }
 
       return (
-        <div className='search-result' key={resource.docid}>
+        <div className='search-result' key={resource.id}>
           <h3>
-            <Link to={"/resources/" + this.props.resource.docid}> {this.props.resource.title} </Link>
+            <Link to={"/resources/" + this.props.resource.id}> {this.props.resource.title} </Link>
           </h3>
           <h5>{this.props.resource.subtitle}</h5>
           {published}

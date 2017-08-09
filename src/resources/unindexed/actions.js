@@ -11,7 +11,7 @@ function fetchResourcesUnindexed(page, per_page) {
 
   return fetch("/resources/unindexed?page="+page+"&per_page="+ per_page,
           {
-            credentials: 'same-origin'
+            credentials: 'same-origin',
             method: "GET",
             headers: {
               'Accept': 'application/json'

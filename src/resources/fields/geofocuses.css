@@ -1,0 +1,31 @@
+.geofocuses-field .autocomplete-root {
+  position: relative;
+}
+.geofocuses-field .autocomplete-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 35px;
+  background: white;
+  border: 1px solid black;
+  border-top: 0;
+  z-index: 10;
+}
+
+.geofocuses-field .autocomplete-results li {
+  display: block;
+
+}
+.geofocuses-field .autocomplete-results li:hover {
+  background: lightblue;
+  color: white;
+  cursor: pointer;
+}
+.geofocuses-field .autocomplete-results li.active {
+  background: blue;
+  color: white;
+}
+
+.geofocuses-field .autocomplete-results li em {
+  margin-right: 0.5em;
+}

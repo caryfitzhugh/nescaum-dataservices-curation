@@ -10,12 +10,14 @@ class Create extends Component {
   submit(data) {
     this.props.performResourceCreate(data, this.props.history);
   }
-
+  performReset() {
+    this.props.resetCreateResource();
+  }
   render() {
     return (
     <div className='container create-component'>
       <ActionOverlay busy={this.props.is_creating}
-          onPerformErrorReset={() => this.props.performReset()}
+          onPerformErrorReset={() => this.performReset()}
           error={this.props.error}/>
       <Form onSubmit={(data) => this.submit(data)}
             resource={ {} }
@@ -29,13 +31,14 @@ class Create extends Component {
 const mapStateToProps = (state) => {
   return {
     is_creating: state.resources_create.is_creating,
-    created_docid: state.resources_create.created_docid,
+    created_id: state.resources_create.created_id,
     error: state.resources_create.error
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    resetCreateResource: () => dispatch(resetCreateResource()),
     performResourceCreate: (resource, history) => dispatch(createResource(resource, history))
   }
 };

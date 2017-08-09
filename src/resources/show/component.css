@@ -12,7 +12,13 @@ h2 .btn {
   display: flex;
   flex-direction: column;
   text-align: center;
+  max-width: 30%;
 }
+.resource-image img {
+  width: 100%;
+  height: auto;
+}
+
 .publication {
   display: inline;
   font-size: 80%;
@@ -27,4 +33,18 @@ h2 .btn {
 label.field-name {
   font-weight: bold;
   font-size: 110%;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 200px;
+}
+.leaflet-container .leaflet-control-container {
+  display: none;
+}
+.geofocus-map ul {
+  text-align: right;
+}
+.geofocus-map ul li {
+  display: block;
 }

@@ -40,7 +40,7 @@ class Show extends Component {
             <Link className='btn btn-secondary' to={'/collections/' + this.props.collection.id +'/edit'}> Edit Collection </Link>
             <button onClick={(evt) => this.delete_collection(evt)} className='btn btn-danger'> Delete Collection </button>
           </h2>
-          <CollectionList docids={this.props.collection.resources} />
+          <CollectionList ids={this.props.collection.resources} />
         </div>);
     } else if (this.props.error ) {
       return (
