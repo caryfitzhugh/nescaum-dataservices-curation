@@ -25,6 +25,21 @@ import ActionsIndex from './actions/index/component';
 import './app.css';
 
 class App extends Component {
+  componentDidMount() {
+    let history = this.props.history;
+    fetch("/logged_in", {
+            credentials: 'same-origin',
+          })
+      .then((resp) => {
+        if (resp.ok) {
+          // All good
+        } else {
+          // Go to sign_in!
+          window.location.href = "/sign_in";
+        }
+      })
+  }
+
   render() {
     return (
       <div className='container'>
