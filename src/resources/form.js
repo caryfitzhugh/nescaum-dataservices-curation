@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import md from 'marked';
 import {resetCreateResource, createResource, facetQuery} from './create/actions';
 import { connect } from 'react-redux';
+import EditResourceFacet from './fields/edit_resource_facet';
 import EditResourceWeblinks from './fields/edit_resource_weblinks';
 import ContentTypeField from './fields/content_types';
 import ActionsField from './fields/actions';
 import GeofocusesField from './fields/geofocuses';
+import StatesField from './fields/states';
+import SectorsField from './fields/sectors';
 import './form.css';
 
 
@@ -113,6 +116,25 @@ class Form extends Component {
             </div>
           </div>
 
+          <SectorsField
+            available={this.props.facets.sectors}
+            values={sresource.sectors || presource.sectors }
+            onChange={(new_data) => this.update_field(new_data, 'sectors')}
+            />
+
+          <StatesField values={sresource.states || presource.states || []}
+            onChange={(new_data) => this.update_field(new_data, 'states')} />
+
+          <EditResourceFacet name='Authors' available={this.props.facets.authors || []}
+            values={sresource.authors || presource.authors || []} onChange={(new_data) => this.update_field(new_data, 'authors')} />
+
+          <EditResourceFacet name='Keywords' available={this.props.facets.keywords|| [] }
+            values={sresource.keywords || presource.keywords || []}
+            onChange={(new_data) => this.update_field(new_data, 'keywords')} />
+          <EditResourceFacet name='Publishers' available={this.props.facets.publishers || []}
+            values={sresource.publishers || presource.publishers || []}
+            onChange={(new_data) => this.update_field(new_data, 'publishers')} />
+
           <GeofocusesField
             selected={sresource.geofocuses || presource.geofocuses || []}
             onChange={(new_data) => this.update_field(new_data, 'geofocuses')} />
@@ -160,12 +182,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 /*
           <EditResourceFacet name='Actions' available={this.props.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
-          <EditResourceFacet name='Authors' available={this.props.facets.authors} facets={this.state.resource.authors} onChange={(new_data) => this.update_facet('authors', new_data)} />
           <EditResourceFacet name='Climate Changes' available={this.props.facets.climate_changes} facets={this.state.resource.climate_changes} onChange={(new_data) => this.update_facet('climate_changes', new_data)} />
           <EditResourceFacet name='Effects' available={this.props.facets.effects} facets={this.state.resource.effects} onChange={(new_data) => this.update_facet('effects', new_data)} />
           <EditResourceFacet name='GeoFocus' available={this.props.facets.geofocuses } facets={this.state.resource.geofocuses} onChange={(new_data) => this.update_facet('geofocuses', new_data)} />
-          <EditResourceFacet name='Keywords' available={this.props.facets.keywords } facets={this.state.resource.keywords} onChange={(new_data) => this.update_facet('keywords', new_data)} />
-          <EditResourceFacet name='Publishers' available={this.props.facets.publishers } facets={this.state.resource.publishers} onChange={(new_data) => this.update_facet('publishers', new_data)} />
           <EditResourceFacet name='Sectors' available={this.props.facets.sectors } facets={this.state.resource.sectors} onChange={(new_data) => this.update_facet('sectors', new_data)} />
           <EditResourceFacet name='Strategies' available={this.props.facets.strategies } facets={this.state.resource.strategies} onChange={(new_data) => this.update_facet('strategies', new_data)} />
           <EditResourceFacet name='States' available={this.props.facets.states } facets={this.state.resource.states} onChange={(new_data) => this.update_facet('states', new_data)} />

@@ -25,7 +25,6 @@ class Edit extends Component {
       <ActionOverlay busy={this.props.is_updating}
           onPerformErrorReset={() => this.performReset()}
           error={this.props.error}/>
-          {JSON.stringify((this.props.resource || {}).geofocuses)}
       <Form onSubmit={(data) => this.submit(data)}
             resource={ this.props.resource }
             submit_name="Edit Resource"
