@@ -17,8 +17,8 @@ const Results = (props) => {
                           </li> : null }
     {values.map ((v) => {
       return <li>
+          <span className='btn btn-primary btn-sm pull-right' onClick={(evt) => props.onAdd(v)}> Add </span>
           {v}
-          <span className='btn btn-primary' onClick={(evt) => props.onAdd(v)}> Add </span>
         </li>
     })}
   </ul>
