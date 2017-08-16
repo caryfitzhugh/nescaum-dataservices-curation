@@ -1,0 +1,28 @@
+/* overrides so bootstrap modal works correctly */
+.in.modal.fade {
+  opacity: 1;
+  display: block;
+  margin-top: 5%;
+}
+div.modal-backdrop.fade {
+    opacity: 0.5;
+}
+
+.modal.fade .modal-dialog {
+  margin-top: 5%;
+}
+
+.modal-dialog li {
+  display: block;
+
+}
+.modal-dialog li input {
+  margin-right: 0.5em;
+}
+
+.field-modal .no-results,
+.field-modal .searching {
+  display: block;
+  padding: 2em;
+  text-align: center;
+}

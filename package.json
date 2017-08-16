@@ -19,6 +19,7 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
+    "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",
     "react-leaflet": "^1.4.1",
     "react-redux": "^5.0.5",

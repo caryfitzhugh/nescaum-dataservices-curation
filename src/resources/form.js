@@ -4,8 +4,6 @@ import {resetCreateResource, createResource, facetQuery} from './create/actions'
 import { connect } from 'react-redux';
 import EditResourceFacet from './fields/edit_resource_facet';
 import EditResourceWeblinks from './fields/edit_resource_weblinks';
-import ContentTypeField from './fields/content_types';
-import ActionsField from './fields/actions';
 import GeofocusesField from './fields/geofocuses';
 import StatesField from './fields/states';
 import SectorsField from './fields/sectors';
@@ -125,35 +123,56 @@ class Form extends Component {
           <StatesField values={sresource.states || presource.states || []}
             onChange={(new_data) => this.update_field(new_data, 'states')} />
 
-          <EditResourceFacet name='Authors' available={this.props.facets.authors || []}
-            values={sresource.authors || presource.authors || []} onChange={(new_data) => this.update_field(new_data, 'authors')} />
+          <EditResourceFacet name='Authors'
+            field_name="authors"
+            allow_custom={true}
+            values={sresource.authors || presource.authors || []}
+            onChange={(new_data) => this.update_field(new_data, 'authors')} />
 
-          <EditResourceFacet name='Keywords' available={this.props.facets.keywords|| [] }
-            values={sresource.keywords || presource.keywords || []}
-            onChange={(new_data) => this.update_field(new_data, 'keywords')} />
-          <EditResourceFacet name='Publishers' available={this.props.facets.publishers || []}
+          <EditResourceFacet name='Publishers'
+            field_name="publishers"
+            allow_custom={true}
             values={sresource.publishers || presource.publishers || []}
             onChange={(new_data) => this.update_field(new_data, 'publishers')} />
+
+          <EditResourceFacet name='Keywords'
+            field_name='keywords'
+            allow_custom={true}
+            values={sresource.keywords || presource.keywords || []}
+            onChange={(new_data) => this.update_field(new_data, 'keywords')} />
 
           <GeofocusesField
             selected={sresource.geofocuses || presource.geofocuses || []}
             onChange={(new_data) => this.update_field(new_data, 'geofocuses')} />
 
-          <ContentTypeField
-            available={this.props.facets.content_types}
-            values={sresource.content_types || presource.content_types }
-            onChange={(new_data) => this.update_field(new_data, 'content_types')}
-            />
+          <EditResourceFacet name='Content Types'
+            field_name="content_types"
+            values={sresource.publishers || presource.publishers || []}
+            onChange={(new_data) => this.update_field(new_data, 'content_types')} />
 
           <EditResourceWeblinks name="WebLinks"
             links={sresource.external_data_links || presource.external_data_links || []}
             onChange={(new_data) => this.update_field(new_data, 'external_data_links')} />
 
-          <ActionsField
-            available={this.props.facets.actions}
-            values={sresource.actions || presource.actions }
-            onChange={(new_data) => this.update_field(new_data, 'actions')}
-            />
+          <EditResourceFacet name='Actions'
+            field_name="actions"
+            values={sresource.actions || presource.actions || []}
+            onChange={(new_data) => this.update_field(new_data, 'actions')} />
+
+          <EditResourceFacet name='Climate Changes'
+            field_name="actions"
+            values={sresource.climate_changes || presource.climate_changes || []}
+            onChange={(new_data) => this.update_field(new_data, 'climate_changes')} />
+
+          <EditResourceFacet name='Effects'
+            field_name="effects"
+            values={sresource.effects || presource.effects || []}
+            onChange={(new_data) => this.update_field(new_data, 'effects')} />
+
+          <EditResourceFacet name='Strategies'
+            field_name="strategies"
+            values={sresource.strategies || presource.strategies || []}
+            onChange={(new_data) => this.update_field(new_data, 'strategies')} />
 
           <hr/>
           <div className="form-group">
