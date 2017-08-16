@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ActionOverlay from '../../action_overlay';
 import Form from './../form';
-import {resetCreateResource, createResource, facetQuery} from './actions';
-import {performCompleteIndexSearch} from './../../geofocuses/index/actions';
+import {resetCreateResource, createResource} from './actions';
 import "./component.css";
 
 class Create extends Component {

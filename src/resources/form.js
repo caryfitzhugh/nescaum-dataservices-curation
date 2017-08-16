@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import md from 'marked';
-import {resetCreateResource, createResource, facetQuery} from './create/actions';
+import {resetCreateResource} from './create/actions';
 import { connect } from 'react-redux';
 import EditResourceFacet from './fields/edit_resource_facet';
 import EditResourceWeblinks from './fields/edit_resource_weblinks';
-import GeofocusesField from './fields/geofocuses';
+import GeofocusesFacet from './fields/edit_geofocuses_facet';
 import StatesField from './fields/states';
 import SectorsField from './fields/sectors';
 import './form.css';
@@ -17,9 +17,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    // Want to fetch all facets
     this.props.performReset();
-    this.props.performFacetQuery();
   }
 
   update_field(evt_or_val, field) {
@@ -44,6 +42,7 @@ class Form extends Component {
   render() {
     let presource = this.props.resource || {};
     let sresource = this.state.resource || {};
+
     return (
       <div className='row'>
         <div className='resources-form form col'>
@@ -115,7 +114,6 @@ class Form extends Component {
           </div>
 
           <SectorsField
-            available={this.props.facets.sectors}
             values={sresource.sectors || presource.sectors }
             onChange={(new_data) => this.update_field(new_data, 'sectors')}
             />
@@ -141,8 +139,8 @@ class Form extends Component {
             values={sresource.keywords || presource.keywords || []}
             onChange={(new_data) => this.update_field(new_data, 'keywords')} />
 
-          <GeofocusesField
-            selected={sresource.geofocuses || presource.geofocuses || []}
+          <GeofocusesFacet
+            values={sresource.geofocuses || presource.geofocuses || []}
             onChange={(new_data) => this.update_field(new_data, 'geofocuses')} />
 
           <EditResourceFacet name='Content Types'
@@ -186,25 +184,13 @@ class Form extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    facets: state.resources_create.facets.available || {},
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performFacetQuery: () => dispatch(facetQuery(["actions", "authors", "climate_changes", "effects", "content_types",  "keywords", "publishers", "sectors", "strategies", "states"])),
     performReset: () => dispatch(resetCreateResource()),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
-
-/*
-          <EditResourceFacet name='Actions' available={this.props.facets.actions} facets={this.state.resource.actions} onChange={(new_data) => this.update_facet('actions', new_data)} />
-          <EditResourceFacet name='Climate Changes' available={this.props.facets.climate_changes} facets={this.state.resource.climate_changes} onChange={(new_data) => this.update_facet('climate_changes', new_data)} />
-          <EditResourceFacet name='Effects' available={this.props.facets.effects} facets={this.state.resource.effects} onChange={(new_data) => this.update_facet('effects', new_data)} />
-          <EditResourceFacet name='GeoFocus' available={this.props.facets.geofocuses } facets={this.state.resource.geofocuses} onChange={(new_data) => this.update_facet('geofocuses', new_data)} />
-          <EditResourceFacet name='Sectors' available={this.props.facets.sectors } facets={this.state.resource.sectors} onChange={(new_data) => this.update_facet('sectors', new_data)} />
-          <EditResourceFacet name='Strategies' available={this.props.facets.strategies } facets={this.state.resource.strategies} onChange={(new_data) => this.update_facet('strategies', new_data)} />
-          <EditResourceFacet name='States' available={this.props.facets.states } facets={this.state.resource.states} onChange={(new_data) => this.update_facet('states', new_data)} />
-*/

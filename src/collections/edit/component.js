@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCollection, updateCollection} from './../actions';
-import { getResource } from './../../resources/actions';
-import {Link} from 'react-router-dom';
 import Form from '../form';
 
 class Edit extends Component {

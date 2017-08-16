@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {L} from 'leaflet';
+import {} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import gjBounds from 'geojson-bounds';
 import {Map, TileLayer, GeoJSON} from 'react-leaflet';
-import {performCompleteIndexSearch} from './geofocuses/index/actions';
 import {getGeofocus } from './geofocuses/actions';
 import {compact} from 'lodash';
 import { connect } from 'react-redux';
@@ -30,12 +29,14 @@ class GeofocusMap extends Component {
 
     let bbox = gjBounds.extent({type: "GeometryCollection",
                                  geometries: geofocuses.map((gf) => gf.geom)});
+    let default_bounds = [[37.0200982014,-81.5625],
+                          [47.989921667,-63.281]];
+    let bounds = bbox[0] ? [[bbox[1],bbox[0]],[bbox[3], bbox[2]]] : (this.props.always_show ? default_bounds : null);
 
-    let bounds = bbox[0] ? [[bbox[1],bbox[0]],[bbox[3], bbox[2]]] : null;
     if (bounds) {
       return (
             <div className='geofocus-map'>
-              <Map boundsOptions={{padding: [50,50]}} bounds={[[bbox[1],bbox[0]],[bbox[3], bbox[2]]]}>
+              <Map boundsOptions={{padding: [5,5]}} bounds={bounds}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'/>

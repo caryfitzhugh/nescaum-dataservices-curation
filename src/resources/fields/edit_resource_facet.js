@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './edit_resource_facet.css';
 import {without, uniq} from 'lodash';
-import MultiSelect from '../../multi_select';
 import FieldModal from './field_modal';
-import fuzzy from 'fuzzy';
 
 class EditResourceFacet extends Component {
   constructor(props) {

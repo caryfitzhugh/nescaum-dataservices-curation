@@ -20,6 +20,10 @@ div.modal-backdrop.fade {
   margin-right: 0.5em;
 }
 
+.modal-dialog .modal-body {
+  max-height: 30vh;
+  overflow: auto;
+}
 .field-modal .no-results,
 .field-modal .searching {
   display: block;

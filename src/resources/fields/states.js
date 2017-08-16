@@ -1,7 +1,6 @@
 import React, { } from 'react';
 import {slugify} from './../../slugify';
 import {includes,without, uniq} from 'lodash';
-import CheckboxSelection from "../../checkbox_selection";
 
 const STATES_PRESETS = [
   "NY",

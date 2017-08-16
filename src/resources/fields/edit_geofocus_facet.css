@@ -1,0 +1,7 @@
+.geofocuses-facet .leaflet-container {
+  width: 100%;
+  height: 200px;
+}
+.geofocuses-facet .leaflet-container .leaflet-control-container {
+  display: none;
+}

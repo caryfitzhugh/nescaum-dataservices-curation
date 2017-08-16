@@ -1,25 +1,21 @@
 import React, {Component}  from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
-import './field_modal.css';
+import './geofocuses_modal.css';
 
 const Results = (props) => {
-  let values = (props.response || {}).values || [];
+  let values = (props.response || {}).geofocuses || [];
   let not_found_search = props.response &&
     values.length === 0 &&
     props.search_str.length > 0;
-  let custom_button = <span className='btn btn-primary' onClick={() => props.onCreate()}>
-                            Add "{props.search_str}"</span>;
 
   return <ul className='results'>
-    {not_found_search ? <li className='no-results'> No results <br/>
-                          {props.allow_custom ? custom_button : null }
-                          </li> : null }
+    {not_found_search ? <li className='no-results'> No results <br/> </li> : null }
     {values.map ((v) => {
-      return <li>
-          {v}
-          <span className='btn btn-primary' onClick={(evt) => props.onAdd(v)}> Add </span>
-        </li>
+      return <li key={v.id} className='geofocus-result'>
+        <span className='pull-right btn btn-primary btn-sm' onClick={(evt) => props.onAdd(v.id)}> Add </span>
+        <span>{v.name}</span>
+      </li>
     })}
   </ul>
 }
@@ -30,7 +26,7 @@ const Searching = (props) => {
   </div>
 }
 
-class FieldModal extends Component {
+class GeofocusesModal extends Component {
  constructor (props) {
     super(props)
     this.state = {showModal: false,
@@ -42,24 +38,20 @@ class FieldModal extends Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
   }
-  create () {
-    this.props.onAdd(this.state.search_str);
-    this.setState({search_str: "", searching: false});
-  }
   perform_search(evt) {
     let pthis = this;
     pthis.setState({searching: true});
 
-    let params = {field_name: this.props.field_name, query: this.state.search_str};
+    let params = {q: this.state.search_str};
     var qparams = '?' + Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(params[k]));return a},[]).join('&')
-    fetch("/resources/fields" + qparams, {
+    fetch("/geofocuses/" + qparams, {
             credentials: 'same-origin',
           })
        .then(function(response) {
           if (response.ok) {
             return response.json();
           } else {
-            throw new Error("Error Performing Field Modal Search");
+            throw new Error("Error Performing Geofocuses Modal Search");
           }
         })
         .then(function(json) {
@@ -72,7 +64,7 @@ class FieldModal extends Component {
   }
 
   update_search_string(evt) {
-    this.setState({response: null, search_str: evt.target.value});
+    this.setState({search_str: evt.target.value});
   }
 
   close() {
@@ -91,10 +83,10 @@ class FieldModal extends Component {
   }
   render() {
     return <div>
-        {this.props.isModal ? '' : <a className='btn btn-sm btn-secondary' onClick={this.open}>Add New {this.props.name} </a>}
+        {this.props.isModal ? '' : <a className='btn btn-sm btn-secondary' onClick={this.open}>Add Geofocuses {this.props.name} </a>}
         <Modal className='field-modal' show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>{this.props.name}</Modal.Title>
+            <Modal.Title>Geofocuses</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className='form'>
@@ -107,7 +99,6 @@ class FieldModal extends Component {
             </div>
             {this.state.searching ?  <Searching /> :
               <Results {... this.state} onAdd={(newv) => this.props.onAdd(newv)}
-                      allow_custom={this.props.allow_custom}
                       onCreate={() => this.create()}/> }
           </Modal.Body>
 
@@ -119,4 +110,4 @@ class FieldModal extends Component {
   }
 }
 
-export default FieldModal;
+export default GeofocusesModal;

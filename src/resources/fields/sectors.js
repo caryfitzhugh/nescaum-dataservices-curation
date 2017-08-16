@@ -1,5 +1,5 @@
 import React, { } from 'react';
-import {includes,without, uniq} from 'lodash';
+import {uniq} from 'lodash';
 import CheckboxSelection from "../../checkbox_selection";
 const SECTORS_PRESETS = [
   "MA::Agriculture Forestry",

@@ -26,7 +26,6 @@ import './app.css';
 
 class App extends Component {
   componentDidMount() {
-    let history = this.props.history;
     fetch("/logged_in", {
             credentials: 'same-origin',
           })
@@ -35,7 +34,9 @@ class App extends Component {
           // All good
         } else {
           // Go to sign_in!
-          window.location.href = "/sign_in";
+          if (window.location.hostname !== 'localhost') {
+            window.location.href = "/sign_in";
+          }
         }
       })
   }
