@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import {cloneDeep} from 'lodash';
 
 export const RESET_CREATE_COLLECTION = 'reset-create-collection';
 export const START_CREATE_COLLECTION = 'start-create-collection';
@@ -6,11 +7,13 @@ export const FINISH_CREATE_COLLECTION = 'finish-create-collection';
 export const ERROR_CREATE_COLLECTION = 'error-create-collection';
 
 function sendCreateCollection(collection) {
+  let fixed_collection = cloneDeep(collection);
+  fixed_collection.resources = fixed_collection.resources.map((res) => res.id);
   return fetch("/collections",
     {
       credentials: 'same-origin',
       method: "POST",
-      body: JSON.stringify({collection: collection}),
+      body: JSON.stringify({collection: fixed_collection}),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

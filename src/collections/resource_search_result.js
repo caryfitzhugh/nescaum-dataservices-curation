@@ -15,7 +15,7 @@ class ResourceSearchResult extends Component {
             <small><em>{this.props.resource.id}</em></small>
           </h3>
 
-          <a onClick={(evt) => { !present && this.props.onAdd(this.props.resource.id)}}
+          <a onClick={(evt) => { !present && this.props.onAdd(this.props.resource)}}
              className={ ('btn btn-sm btn-primary ') + (present ? 'disabled' : '')}> Add To Collection </a>
         </div>
       );

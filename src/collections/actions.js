@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import {cloneDeep } from 'lodash';
 
 export const START_COLLECTION_GET = 'start-collection-get';
 export const FINISH_COLLECTION_GET = 'finish-collection-get';
@@ -163,9 +164,11 @@ export function deleteCollection(collection, history, destination) {
  * returns a promise
  */
 function updateCollectionDo(collection) {
+  let fixed_collection = cloneDeep(collection);
+  fixed_collection.resources = fixed_collection.resources.map((res) => res.id);
   return fetch("/collections/" + collection.id,
           { method: "PUT",
-            body: JSON.stringify({collection: collection}),
+            body: JSON.stringify({collection: fixed_collection}),
             credentials: 'same-origin',
             headers: {
               'Accept': 'application/json',

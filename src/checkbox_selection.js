@@ -11,7 +11,7 @@ const CheckboxSelection = (props) => {
       <label>{props.title}</label>
         <div className='checkbox-selection'>
           {available.map((value) => {
-            let id = `inputfor-${slugify(value)}`;
+            let id = `inputfor-${slugify(value)}-${slugify(props.title)}`;
             return <div key={value} className='form-input'>
               <input type='checkbox'
                 id={id}

@@ -21,10 +21,10 @@ class Form extends Component {
     });
   }
 
-  update_resources(new_ids) {
+  update_resources(new_resources) {
     this.setState((state, props) => {
       let resource = Object.assign({}, state.collection);
-      resource.resources = new_ids;
+      resource.resources = new_resources;
       let new_state =  Object.assign({}, state, resource);
       return new_state;
     });
@@ -55,16 +55,18 @@ class Form extends Component {
           </div>
 
           <h3> Resources </h3>
-          <EditCollectionList ids={resources}
-                              onChange={(new_ids) => this.update_resources(new_ids)} />
+          <EditCollectionList resources={resources}
+                              onChange={(new_resources) => this.update_resources(new_resources)} />
           <hr/>
           <div>
             <h3> Find New Resources To Add </h3>
 
             <SearchBar/>
             <SearchSpinner is_searching={this.props.is_searching}/>
-            <ResourceSearchResults ids={resources} is_searching={this.props.is_searching} response={this.props.response}
-                  onAdd={(id) => { this.update_resources(resources.concat(id))}} />
+            <ResourceSearchResults
+                  resources={resources}
+                  is_searching={this.props.is_searching} response={this.props.response}
+                  onAdd={(resource) => { this.update_resources(resources.concat(resource))}} />
           </div>
 
           <hr/>

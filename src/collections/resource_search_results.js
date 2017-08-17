@@ -6,6 +6,8 @@ import SearchPagination from './../search_pagination';
 class ResourceSearchResults extends Component {
 
   render() {
+    let resources = this.props.resources || [];
+
       if (!this.props.is_searching) {
         if (this.props.response.total === 0) {
          // Searched, found nothing
@@ -15,15 +17,15 @@ class ResourceSearchResults extends Component {
                     </div>
                   </div>);
         } else {
-          var resources = ((this.props.response || {}).resources || []);
+          var response_resources = ((this.props.response || {}).resources || []);
 
           return (
             <div className='search-results'>
               <SearchPagination response={this.props.response} onChangePage={(new_page) => this.props.onChangePage(new_page)}/>
               <ul className='results'>
-                {resources.map(resource => {
+                {response_resources.map(resource => {
                   return <ResourceSearchResult key={resource.id}
-                                skip_ids={this.props.ids}
+                                skip_ids={resources.map((res) => { return res.id })}
                                 onAdd={(id) => {this.props.onAdd(id)}}
                                 resource={resource}/>
                 })}
