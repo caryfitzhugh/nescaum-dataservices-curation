@@ -2,16 +2,16 @@ import React, { } from 'react';
 import {uniq} from 'lodash';
 import CheckboxSelection from "../../checkbox_selection";
 const SECTORS_PRESETS = [
-  "MA::Agriculture Forestry",
-  "MA::Buildings",
+  "MA::Agriculture",
   "MA::Coastal Zones",
   "MA::Economy",
+  "MA::Forestry",
+  "MA::Infrastructure",
   "MA::Local Government",
   "MA::Natural Resources / Habitats",
   "MA::Public Heatlh",
   "MA::Public Safety / Emergency Response",
   "MA::Recreation",
-  "MA::Transportation / Infrastructure",
   "MA::Water Resources",
 
   "NY::Agriculture",

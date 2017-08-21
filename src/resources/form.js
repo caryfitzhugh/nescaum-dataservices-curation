@@ -9,7 +9,6 @@ import StatesField from './fields/states';
 import SectorsField from './fields/sectors';
 import './form.css';
 
-
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -145,7 +144,8 @@ class Form extends Component {
 
           <EditResourceFacet name='Content Types'
             field_name="content_types"
-            values={sresource.publishers || presource.publishers || []}
+            preload={true}
+            values={sresource.content_types || presource.content_types || []}
             onChange={(new_data) => this.update_field(new_data, 'content_types')} />
 
           <EditResourceWeblinks name="WebLinks"
@@ -158,17 +158,20 @@ class Form extends Component {
             onChange={(new_data) => this.update_field(new_data, 'actions')} />
 
           <EditResourceFacet name='Climate Changes'
-            field_name="actions"
+            field_name="climate_changes"
             values={sresource.climate_changes || presource.climate_changes || []}
             onChange={(new_data) => this.update_field(new_data, 'climate_changes')} />
 
           <EditResourceFacet name='Effects'
             field_name="effects"
+            allow_custom={true}
+            preload={true}
             values={sresource.effects || presource.effects || []}
             onChange={(new_data) => this.update_field(new_data, 'effects')} />
 
           <EditResourceFacet name='Strategies'
             field_name="strategies"
+            preload={true}
             values={sresource.strategies || presource.strategies || []}
             onChange={(new_data) => this.update_field(new_data, 'strategies')} />
 

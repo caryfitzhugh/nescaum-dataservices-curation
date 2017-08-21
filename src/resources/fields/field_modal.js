@@ -46,6 +46,11 @@ class FieldModal extends Component {
     this.props.onAdd(this.state.search_str);
     this.setState({search_str: "", searching: false});
   }
+  componentDidMount() {
+    if (this.props.preload) {
+      this.perform_search();
+    }
+  }
   perform_search(evt) {
     let pthis = this;
     pthis.setState({searching: true});
