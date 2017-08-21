@@ -95,7 +95,7 @@ class Form extends Component {
                     <label> Start Date</label>
                   </div>
                   <input type='date'
-                    value={sresource.published_on_start || presource.published_on_start || ""}
+                    value={(sresource.published_on_start || presource.published_on_start || "").split("T")[0]}
                     onChange={(new_data) => this.update_field(new_data, 'published_on_start')}/>
                 </div>
               </div>
@@ -105,7 +105,7 @@ class Form extends Component {
                     <label> End Date</label>
                   </div>
                   <input type='date'
-                    value={sresource.published_on_end || presource.published_on_end || ""}
+                    value={(sresource.published_on_end || presource.published_on_end || "").split("T")[0]}
                     onChange={(new_data) => this.update_field(new_data, 'published_on_end')}/>
                 </div>
               </div>
@@ -153,7 +153,7 @@ class Form extends Component {
             onChange={(new_data) => this.update_field(new_data, 'external_data_links')} />
 
           <EditResourceFacet name='Actions'
-            field_name="actions"
+             field_name="actions"
             values={sresource.actions || presource.actions || []}
             onChange={(new_data) => this.update_field(new_data, 'actions')} />
 
