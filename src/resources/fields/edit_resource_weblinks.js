@@ -7,7 +7,7 @@ class EditResourceWeblinks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      available: ["PDF", "Weblink", "Data", "MetaData"],
+      available: ["PDF", "Weblink", "Data", "MetaData", "Current Webinar", "Archived Webinar", "Description"],
       type: null,
       link: "",
       link_valid: false,
@@ -64,7 +64,7 @@ class EditResourceWeblinks extends Component {
               return <li key={link}>
                 <span className='badge badge-primary'>
                   {link}
-                  <span className='fa fa-times-circle-o' onClick={(evt) => this.remove_link(link)}></span>
+                  <span className='fa fa-times-circle-o' onClick={(evt) => this.remove_weblink(link)}></span>
                 </span>
                 </li>
             })}

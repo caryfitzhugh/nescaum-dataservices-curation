@@ -8,7 +8,7 @@ export const ERROR_CREATE_COLLECTION = 'error-create-collection';
 
 function sendCreateCollection(collection) {
   let fixed_collection = cloneDeep(collection);
-  fixed_collection.resources = fixed_collection.resources.map((res) => res.id);
+  fixed_collection.resources = (fixed_collection.resources || []).map((res) => res.id);
   return fetch("/collections",
     {
       credentials: 'same-origin',

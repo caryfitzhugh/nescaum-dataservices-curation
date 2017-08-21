@@ -43,8 +43,8 @@ class FieldModal extends Component {
     this.open = this.open.bind(this);
   }
   create () {
+    setTimeout(() => {this.setState({search_str: "", searching: false});}, 100);
     this.props.onAdd(this.state.search_str);
-    this.setState({search_str: "", searching: false});
   }
   componentDidMount() {
     if (this.props.preload) {

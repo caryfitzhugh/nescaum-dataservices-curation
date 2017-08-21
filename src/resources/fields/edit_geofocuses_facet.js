@@ -37,8 +37,8 @@ class EditGeofocusesFacet extends Component {
           <ul>
           {values.length === 0 ?
             <li> <em> No Geofocuses</em></li> : null}
-          { geofocuses.map( (geofocus) => {
-              return <li key={geofocus.id}>
+          { geofocuses.map( (geofocus, indx) => {
+              return <li key={geofocus.id + 'i' +indx}>
                 <span className='badge badge-primary'>
                   {geofocus.name}
                   <span className='fa fa-times-circle-o' onClick={(evt) => this.remove_facet(geofocus.id)}></span>
