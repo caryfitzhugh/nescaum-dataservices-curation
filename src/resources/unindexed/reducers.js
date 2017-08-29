@@ -5,7 +5,7 @@ const INITIAL_UNINDEXED_STATE = {
   is_searching: false,
   error: null,
   page: 1,
-  per_page: 10,
+  per_page: 100,
   response: {}
 };
 
