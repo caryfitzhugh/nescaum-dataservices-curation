@@ -5,9 +5,12 @@ import './field_modal.css';
 
 const Results = (props) => {
   let values = (props.response || {}).values || [];
+  let current_values = (props.values || []);
+
   let not_found_search = props.response &&
     values.length === 0 &&
     props.search_str.length > 0;
+
   let custom_button = <span className='btn btn-primary' onClick={() => props.onCreate()}>
                             Add "{props.search_str}"</span>;
 
@@ -15,9 +18,14 @@ const Results = (props) => {
     {not_found_search ? <li className='no-results'> No results <br/>
                           {props.allow_custom ? custom_button : null }
                           </li> : null }
-    {values.map ((v) => {
-      return <li>
-          <span className='btn btn-primary btn-sm pull-right' onClick={(evt) => props.onAdd(v)}> Add </span>
+    {values.map ((v, indx) => {
+      let can_add = !current_values.includes(v);
+      return <li key={indx}>
+          {can_add ?
+            <span className='btn btn-primary btn-sm pull-right' onClick={(evt) => props.onAdd(v)}> Add </span>
+            :
+            <span className='btn btn-primary disabled btn-sm pull-right'> Added </span>
+          }
           {v}
         </li>
     })}
@@ -112,6 +120,7 @@ class FieldModal extends Component {
             </div>
             {this.state.searching ?  <Searching /> :
               <Results {... this.state} onAdd={(newv) => this.props.onAdd(newv)}
+                      values={this.props.values}
                       allow_custom={this.props.allow_custom}
                       onCreate={() => this.create()}/> }
           </Modal.Body>

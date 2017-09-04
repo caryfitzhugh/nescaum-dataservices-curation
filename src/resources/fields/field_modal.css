@@ -21,7 +21,7 @@ div.modal-backdrop.fade {
 }
 
 .modal-dialog .modal-body {
-  max-height: 30vh;
+  max-height: 60vh;
   overflow: auto;
 }
 .field-modal .no-results,
@@ -29,4 +29,7 @@ div.modal-backdrop.fade {
   display: block;
   padding: 2em;
   text-align: center;
+}
+.field-modal {
+  padding-top: 150px;
 }

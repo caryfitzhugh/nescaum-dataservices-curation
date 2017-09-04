@@ -159,6 +159,7 @@ class Form extends Component {
 
           <EditResourceFacet name='Climate Changes'
             field_name="climate_changes"
+            preload={true}
             values={sresource.climate_changes || presource.climate_changes || []}
             onChange={(new_data) => this.update_field(new_data, 'climate_changes')} />
 

@@ -43,6 +43,7 @@ class EditResourceFacet extends Component {
                     field_name={this.props.field_name}
                     preload={this.props.preload}
                     allow_custom={this.props.allow_custom}
+                    values={values}
                     onAdd={(newv) => this.create_new_facet(newv)} />
       </div>
     );
