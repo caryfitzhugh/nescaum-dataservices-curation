@@ -2,27 +2,27 @@ import React, { } from 'react';
 import {uniq} from 'lodash';
 import CheckboxSelection from "../../checkbox_selection";
 const SECTORS_PRESETS = [
-  "MA::Agriculture",
-  "MA::Coastal Zones",
-  "MA::Economy",
-  "MA::Forestry",
-  "MA::Infrastructure",
-  "MA::Local Government",
-  "MA::Natural Resources / Habitats",
-  "MA::Public Heatlh",
-  "MA::Public Safety / Emergency Response",
-  "MA::Recreation",
-  "MA::Water Resources",
+  "ma::agriculture",
+  "ma::coastal zones",
+  "ma::economy",
+  "ma::forestry",
+  "ma::infrastructure",
+  "ma::local government",
+  "ma::natural resources / habitats",
+  "ma::public heatlh",
+  "ma::public safety / emergency response",
+  "ma::recreation",
+  "ma::water resources",
 
-  "NY::Agriculture",
-  "NY::Buildings",
-  "NY::Coastal Zones",
-  "NY::Ecosystems",
-  "NY::Energy",
-  "NY::Public Health",
-  "NY::Telecommunications",
-  "NY::Transportation",
-  "NY::Water Resources",
+  "ny::agriculture",
+  "ny::buildings",
+  "ny::coastal zones",
+  "ny::ecosystems",
+  "ny::energy",
+  "ny::public health",
+  "ny::telecommunications",
+  "ny::transportation",
+  "ny::water resources",
 ];
 
 const filtered_fields = (title, prefix, available, values, onChange) => {
@@ -49,10 +49,10 @@ const SectorsField = (props) => {
   return <div className='form-group'>
     <h3>Sectors</h3>
     <CheckboxSelection
-      { ... filtered_fields('Massachusetts', 'MA::', available, values, props.onChange)}
+      { ... filtered_fields('Massachusetts', 'ma::', available, values, props.onChange)}
       />
     <CheckboxSelection
-      { ... filtered_fields('New York', 'NY::', available, values, props.onChange)}
+      { ... filtered_fields('New York', 'ny::', available, values, props.onChange)}
       />
   </div>
 };
