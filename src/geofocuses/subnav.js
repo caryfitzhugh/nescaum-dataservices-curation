@@ -5,13 +5,14 @@ import SubnavLink from './../subnav_link';
 
 class GeofocusesSubnav extends Component {
  render() {
+  let show_create = !this.props.location.pathname.match('/geofocuses/create');
   return (
     <div className='subnav'>
       <div>
         <SubnavLink path='/geofocuses' title='Index' />
       </div>
       <div>
-        <Link className='btn btn-primary create-btn btn-sm' to="/geofocuses/create">Create Geofocus</Link>
+        {show_create ? <Link className='btn btn-primary create-btn btn-sm' to="/geofocuses/create">Create Geofocus</Link> : null}
       </div>
     </div>
   );

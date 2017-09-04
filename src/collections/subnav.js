@@ -5,13 +5,14 @@ import SubnavLink from './../subnav_link';
 
 class CollectionsSubnav extends Component {
  render() {
+  let show_create = !this.props.location.pathname.match('/collections/create');
   return (
     <div className='subnav'>
       <div>
         <SubnavLink path='/collections' title='Search' />
       </div>
       <div>
-        <Link className='btn btn-primary create-btn btn-sm' to="/collections/create">Create Collection</Link>
+      {show_create ? <Link className='btn btn-primary create-btn btn-sm' to="/collections/create">Create Collection</Link> : null}
       </div>
     </div>
   );

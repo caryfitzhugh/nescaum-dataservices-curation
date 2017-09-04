@@ -5,6 +5,7 @@ import SubnavLink from './../subnav_link';
 
 class ResourcesSubnav extends Component {
  render() {
+  let show_create = !this.props.location.pathname.match('/resources/create');
   return (
     <div className='subnav'>
       <div>
@@ -12,7 +13,7 @@ class ResourcesSubnav extends Component {
         <SubnavLink path='/resources/unindexed' title='Unindexed' />
       </div>
       <div>
-        <Link className='btn btn-primary create-btn btn-sm' to="/resources/create">Create Resource</Link>
+        {show_create ? <Link className='btn btn-primary create-btn btn-sm' to="/resources/create">Create Resource</Link> : null}
       </div>
     </div>
   );
