@@ -5,6 +5,7 @@ const SECTORS_PRESETS = [
   "ma::agriculture",
   "ma::coastal zones",
   "ma::economy",
+  "ma::energy",
   "ma::forestry",
   "ma::infrastructure",
   "ma::local government",
