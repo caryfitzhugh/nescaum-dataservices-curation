@@ -44,7 +44,7 @@ class SearchFacets extends Component {
             <li><SearchFacet type="authors" title="Authors" facets={facets.authors}/></li>
             <li><SearchFacetNested type="climate_changes" title="Climate Changes" facets={facets.climate_changes}/></li>
             <li><SearchFacetNested type="effects" title="Effects" facets={facets.effects}/></li>
-            <li><SearchFacetNested type="formats" title="Formats" facets={facets.formats}/></li>
+            <li><SearchFacetNested type="content_types" title="ContentTypes" facets={facets.content_types}/></li>
             <li><SearchFacetNested type="geofocus" title="GeoFocus" facets={facets.geofocus}/></li>
             <li><SearchFacetNested type="keywords" title="Keywords" no_expansion={true} facets={facets.keywords}/></li>
             <li><SearchFacet type="publishers" title="Publishers" facets={facets.publishers}/></li>
