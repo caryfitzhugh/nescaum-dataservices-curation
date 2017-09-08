@@ -7,7 +7,7 @@ class EditResourceWeblinks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      available: ["PDF", "Weblink", "Data", "MetaData", "Current Webinar", "Archived Webinar", "Description"],
+      available: ["Weblink", "PDF", "Data", "MetaData", "Current Webinar", "Archived Webinar", "Description"],
       type: null,
       link: "",
       link_valid: false,
