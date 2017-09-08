@@ -19,15 +19,23 @@ class EditGeofocusesFacet extends Component {
     this.props.onChange(without(this.props.values, facet))
   }
 
+  componentWillReceiveProps(nextProps) {
+    let values = nextProps.values || [];
+    let geofocuses = compact(
+      values.map((gfid) => {
+                    let gf = ((nextProps || {}).all_geofocuses || {})[gfid];
+                    if (!gf) {
+                      nextProps.performGeofocusRequest(gfid);
+                    }
+                    return gf;
+                  }));
+  }
 
   render() {
     let values = this.props.values || [];
     let geofocuses = compact(
       values.map((gfid) => {
                     let gf = ((this.props || {}).all_geofocuses || {})[gfid];
-                    if (!gf) {
-                      this.props.performGeofocusRequest(gfid);
-                    }
                     return gf;
                   }));
     return (

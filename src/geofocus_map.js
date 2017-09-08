@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import gjBounds from 'geojson-bounds';
 import {Map, TileLayer, GeoJSON} from 'react-leaflet';
 import {getGeofocus } from './geofocuses/actions';
-import {compact} from 'lodash';
+import {uniq, compact} from 'lodash';
 import { connect } from 'react-redux';
 
 class GeofocusMap extends Component {
@@ -15,17 +15,21 @@ class GeofocusMap extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    let geofocuses = uniq(compact((nextProps.geofocuses || []).map((gfid) => {
+                    let gf = ((nextProps).all_geofocuses || {})[gfid];
+                    if (!gf) {
+                      nextProps.performGeofocusRequest(gfid);
+                    }
+                    return gf;
+                  })));
   }
 
   render() {
-    let geofocuses = compact((this.props.geofocuses || []).map((gfid) => {
+    let geofocuses = uniq(compact((this.props.geofocuses || []).map((gfid) => {
                     let gf = ((this.props || {}).all_geofocuses || {})[gfid];
-                    if (!gf) {
-                      this.props.performGeofocusRequest(gfid);
-                    }
                     return gf;
-                  }));
+                  })));
 
     let bbox = gjBounds.extent({type: "GeometryCollection",
                                  geometries: geofocuses.map((gf) => gf.geom)});
@@ -40,13 +44,13 @@ class GeofocusMap extends Component {
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'/>
-                {geofocuses.map((gf) => {
-                  return gf ? <GeoJSON key={gf.id} data={gf.geom} /> : null;
+                {geofocuses.map((gf, indx) => {
+                  return gf.id ? <GeoJSON key={indx} data={gf.geom} /> : null;
                 })}
               </Map>
               <ul>
-                {geofocuses.map((gf) => {
-                  return gf ? <li key={gf.id}> {gf.name} </li> : null;
+                {geofocuses.map((gf, indx) => {
+                  return gf.id ? <li key={indx}> {gf.name} </li> : null;
                 })}
               </ul>
             </div>);

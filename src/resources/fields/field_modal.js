@@ -13,10 +13,17 @@ const Results = (props) => {
 
   let custom_button = <span className='btn btn-primary' onClick={() => props.onCreate()}>
                             Add "{props.search_str}"</span>;
+  let matching_results = values.find((v) => {
+    return v === props.search_str;
+  });
+
+  let show_custom_button = !matching_results
+      && props.response
+      && props.allow_custom
+      && props.search_str.length > 0;
 
   return <ul className='results'>
     {not_found_search ? <li className='no-results'> No results <br/>
-                          {props.allow_custom ? custom_button : null }
                           </li> : null }
     {values.map ((v, indx) => {
       let can_add = !current_values.includes(v);
@@ -29,6 +36,8 @@ const Results = (props) => {
           {v}
         </li>
     })}
+    {show_custom_button ?
+      <li className='no-results'> {custom_button} </li> : null }
   </ul>
 }
 
