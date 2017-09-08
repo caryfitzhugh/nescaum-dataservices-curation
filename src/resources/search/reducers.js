@@ -5,8 +5,8 @@ const INITIAL_SEARCH_STATE = {
   is_searching: false,
   is_error: false,
   request_id: null,
+  per_page: 25,
   parameters: {
-    per_page: 50,
     facets: {},
     page: 0,
     query: null,
@@ -15,7 +15,7 @@ const INITIAL_SEARCH_STATE = {
     query: "",
     facets: {},
     page: 1,
-    per_page: 50,
+    per_page: 25,
   },
   response: {},
 };

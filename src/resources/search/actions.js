@@ -49,6 +49,7 @@ function fetchSearchResults(parameters) {
   if (parameters.published_on_start) {
     params.published_on_start = dateToAPIDate(params.published_on_start);
   }
+
   ["actions", "authors", "climate_changes", "effects", "formats", "geofocus",
     "keywords", "publishers", "sectors", "strategies", "states"].forEach((key) => {
       if (parameters.facets[key]) {

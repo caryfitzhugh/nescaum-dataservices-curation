@@ -22,7 +22,7 @@ class Search extends Component {
           <div className='row'>
             <SearchBar/>
             <SearchSpinner is_searching={this.props.is_searching}/>
-            <SearchResults is_searching={this.props.is_searching} response={this.props.response}/>
+            <SearchResults is_searching={this.props.is_searching} response={this.props.response} />
           </div>
         </div>
       </div>
@@ -42,7 +42,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performBlankSearch: () => dispatch(performSearch({query: "", facets: {}, page: 1, per_page: 10}))
+    performBlankSearch: () => dispatch(performSearch({query: "", facets: {}, page: 1, per_page: 25})),
+    performSearch: (query, facets, page, per_page) => dispatch(performSearch({page:page, }))
   }
 };
 

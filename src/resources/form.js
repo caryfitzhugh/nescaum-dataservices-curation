@@ -66,7 +66,8 @@ class Form extends Component {
           <div className="form-group img-edit">
             <h3>Image</h3>
             <img alt='resource thumbnail' src={sresource.image || presource.image || "http://placehold.it/300&text=no_image"}/>
-            <input className='form-control col-10' onChange={(evt) => this.update_field(evt, 'image')}/>
+            <input className='form-control col-10' value={sresource.image || presource.image || ""}
+                    onChange={(evt) => this.update_field(evt, 'image')}/>
           </div>
 
           <div className="form-group content-split-view">
