@@ -44,7 +44,7 @@ class SearchBar extends Component {
 const mapStateToProps = (state) => {
   return {
     parameters: state.resources_search.parameters,
-    per_page: state.resources_search.parameters.per_page
+    per_page: state.resources_search.per_page
   }
 };
 

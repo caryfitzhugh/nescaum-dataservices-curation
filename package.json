@@ -21,7 +21,7 @@
     "react-addons-transition-group": "^15.5.2",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",
-    "react-leaflet": "^1.4.1",
+    "react-leaflet": "^1.6.6",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
