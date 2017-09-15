@@ -72,7 +72,7 @@ class FieldModal extends Component {
     let pthis = this;
     pthis.setState({searching: true});
 
-    let params = {field_name: this.props.field_name, query: this.state.search_str};
+    let params = {field_name: this.props.field_name, query: this.state.search_str, per_page: 250};
     var qparams = '?' + Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(params[k]));return a},[]).join('&')
     fetch("/resources/fields" + qparams, {
             credentials: 'same-origin',
