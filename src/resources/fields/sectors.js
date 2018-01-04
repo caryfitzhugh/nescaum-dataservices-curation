@@ -10,7 +10,7 @@ const SECTORS_PRESETS = [
   "ma::infrastructure",
   "ma::local government",
   "ma::natural resources / habitats",
-  "ma::public heatlh",
+  "ma::public health",
   "ma::public safety / emergency response",
   "ma::recreation",
   "ma::water resources",
