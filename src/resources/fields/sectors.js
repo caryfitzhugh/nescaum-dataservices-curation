@@ -14,6 +14,7 @@ const SECTORS_PRESETS = [
   "ma::public safety / emergency response",
   "ma::recreation",
   "ma::water resources",
+  "ma::transportation",
 
   "ny::agriculture",
   "ny::buildings",
