@@ -15,6 +15,7 @@ export const TOGGLE_FACET_SEARCH = 'toggle-facet-search';
   actions []
   authors []
   climate_changes []
+  content_types []
   effects []
   formats []
   geofocus []
@@ -50,8 +51,9 @@ function fetchSearchResults(parameters) {
     params.published_on_start = dateToAPIDate(params.published_on_start);
   }
 
-  ["actions", "authors", "climate_changes", "effects", "formats", "geofocus",
-    "keywords", "publishers", "sectors", "strategies", "states"].forEach((key) => {
+  ['actions', 'authors', 'climate_changes', 'effects', 'formats', 'geofocus',
+   'keywords', 'publishers', 'sectors', 'strategies', 'states',
+   'content_types'].forEach((key) => {
       if (parameters.facets[key]) {
         params[key] = parameters.facets[key].join(",");
       }

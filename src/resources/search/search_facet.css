@@ -1,6 +1,10 @@
 .search-facet {
   font-size: 90%;
 }
+.search-facet > ul {
+  max-height: 200px;
+  overflow: auto;
+}
 .search-facet ul {
   display: flex;
   flex-direction: column;

@@ -1,6 +1,14 @@
 .search-facet-nested {
   font-size: 90%;
 }
+.search-facet-nested > ul {
+  max-height: 200px;
+  overflow: auto;
+  margin-top: 2px;
+  border-bottom: 1px solid #efefef;
+  padding: 2px;
+}
+
 .search-facet-nested > label {
   border-bottom: 1px solid black;
 }
