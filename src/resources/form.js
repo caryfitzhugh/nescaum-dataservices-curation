@@ -12,11 +12,22 @@ import './form.css';
 class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = {resource: {}};
+    this.state = {resource: {}, changed: {}};
   }
 
   componentDidMount() {
     this.props.performReset();
+  }
+
+  field_value(attr_name, default_val) {
+    let presource = (this.props.resource || {})[attr_name];
+    let sresource = (this.state.resource || {})[attr_name];
+    let changed = this.state.changed[attr_name];
+    if (changed) {
+      return sresource;
+    } else {
+      return presource || sresource || default_val;
+    }
   }
 
   update_field(evt_or_val, field) {
@@ -26,21 +37,22 @@ class Form extends Component {
     }
 
     this.setState((old) => {
-      var update = Object.assign({}, old.resource);
+      let update = Object.assign({}, old.resource);
       update[field] = val;
-      return Object.assign({}, old, {resource: update});
+      let changed_update = Object.assign({}, old.changed);
+      changed_update[field] = true;
+
+      return Object.assign({}, old, {resource: update}, {changed: changed_update});
     });
   }
 
   submit(evt) {
     evt.preventDefault();
-    var safe_resource = Object.assign({}, this.props.resource, this.state.resource);
+    let safe_resource = Object.assign({}, this.props.resource, this.state.resource);
     this.props.onSubmit(safe_resource);
   }
 
   render() {
-    let presource = this.props.resource || {};
-    let sresource = this.state.resource || {};
 
     return (
       <div className='row'>
@@ -49,7 +61,7 @@ class Form extends Component {
 
           <div className="form-group">
             <h3>Title</h3>
-            <input value={sresource.title || presource.title || ""}
+            <input value={this.field_value('title', '')}
                   className='form-control' onChange={(evt) => this.update_field(evt, 'title')}/>
             <div className='form-text text-muted'>
               The resource's title.
@@ -57,7 +69,7 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <h3>Subtitle</h3>
-            <input value={sresource.subtitle || presource.subtitle || ""}
+            <input value={this.field_value('subtitle')}
                   className='form-control' onChange={(evt) => this.update_field(evt, 'subtitle')}/>
             <div className='form-text text-muted'>
               The resource's sub-title.
@@ -65,9 +77,9 @@ class Form extends Component {
           </div>
           <div className="form-group img-edit">
             <h3>Image</h3>
-            <img alt='resource thumbnail' src={sresource.image || presource.image || "http://placehold.it/300&text=no_image"}/>
-            <input className='form-control col-10' value={sresource.image || presource.image || ""}
-                    onChange={(evt) => this.update_field(evt, 'image')}/>
+            <img alt='resource thumbnail' src={this.field_value('image', 'http://placehold.it/300&text=no_image')}/>
+            <input className='form-control col-10' value={this.field_value('image')}
+                   onChange={(evt) => this.update_field(evt, 'image')}/>
           </div>
 
           <div className="form-group content-split-view">
@@ -77,11 +89,11 @@ class Form extends Component {
                 <div className='col'>
                   <label>Content</label>
                   <textarea className='md-input form-control'
-                    value={sresource.content || presource.content} onChange={(evt) => this.update_field(evt, 'content')}/>
+                    value={this.field_value('content')} onChange={(evt) => this.update_field(evt, 'content')}/>
                 </div>
                 <div className='col' >
                   <label>Output</label>
-                  <div className='md-preview' dangerouslySetInnerHTML={{__html: md(sresource.content || presource.content || "")}}></div>
+                  <div className='md-preview' dangerouslySetInnerHTML={{__html: md(this.field_value('content', ''))}}></div>
                 </div>
               </div>
             </div>
@@ -96,7 +108,7 @@ class Form extends Component {
                     <label> Start Date</label>
                   </div>
                   <input type='date'
-                    value={(sresource.published_on_start || presource.published_on_start || "").split("T")[0]}
+                    value={this.field_value('published_on_start', "").split("T")[0]}
                     onChange={(new_data) => this.update_field(new_data, 'published_on_start')}/>
                 </div>
               </div>
@@ -106,7 +118,7 @@ class Form extends Component {
                     <label> End Date</label>
                   </div>
                   <input type='date'
-                    value={(sresource.published_on_end || presource.published_on_end || "").split("T")[0]}
+                    value={this.field_value('published_on_end',  "").split("T")[0]}
                     onChange={(new_data) => this.update_field(new_data, 'published_on_end')}/>
                 </div>
               </div>
@@ -114,67 +126,67 @@ class Form extends Component {
           </div>
 
           <SectorsField
-            values={sresource.sectors || presource.sectors }
+            values={this.field_value('sectors', [])}
             onChange={(new_data) => this.update_field(new_data, 'sectors')}
             />
 
-          <StatesField values={sresource.states || presource.states || []}
+          <StatesField values={this.field_value('states', [])}
             onChange={(new_data) => this.update_field(new_data, 'states')} />
 
           <EditResourceFacet name='Authors'
             field_name="authors"
             allow_custom={true}
-            values={sresource.authors || presource.authors || []}
+            values={this.field_value('authors', [])}
             onChange={(new_data) => this.update_field(new_data, 'authors')} />
 
           <EditResourceFacet name='Publishers'
             field_name="publishers"
             allow_custom={true}
-            values={sresource.publishers || presource.publishers || []}
+            values={this.field_value('publishers', [])}
             onChange={(new_data) => this.update_field(new_data, 'publishers')} />
 
           <EditResourceFacet name='Keywords'
             field_name='keywords'
             allow_custom={true}
-            values={sresource.keywords || presource.keywords || []}
+            values={this.field_value('keywords', [])}
             onChange={(new_data) => this.update_field(new_data, 'keywords')} />
 
           <GeofocusesFacet
-            values={sresource.geofocuses || presource.geofocuses || []}
+            values={this.field_value('geofocuses', [])}
             onChange={(new_data) => this.update_field(new_data, 'geofocuses')} />
 
           <EditResourceFacet name='Content Types'
             field_name="content_types"
             preload={true}
-            values={sresource.content_types || presource.content_types || []}
+            values={this.field_value('content_types', [])}
             onChange={(new_data) => this.update_field(new_data, 'content_types')} />
 
           <EditResourceWeblinks name="WebLinks"
-            links={sresource.external_data_links || presource.external_data_links || []}
+            links={this.field_value('external_data_links', [])}
             onChange={(new_data) => this.update_field(new_data, 'external_data_links')} />
 
           <EditResourceFacet name='Actions'
              field_name="actions"
-            values={sresource.actions || presource.actions || []}
+            values={this.field_value('actions', [])}
             onChange={(new_data) => this.update_field(new_data, 'actions')} />
 
           <EditResourceFacet name='Climate Changes'
             field_name="climate_changes"
             preload={true}
-            values={sresource.climate_changes || presource.climate_changes || []}
+            values={this.field_value('climate_changes', [])}
             onChange={(new_data) => this.update_field(new_data, 'climate_changes')} />
 
           <EditResourceFacet name='Effects'
             field_name="effects"
             allow_custom={true}
             preload={true}
-            values={sresource.effects || presource.effects || []}
+            values={this.field_value('effects', [])}
             onChange={(new_data) => this.update_field(new_data, 'effects')} />
 
           <EditResourceFacet name='Strategies'
             field_name="strategies"
             preload={true}
-            values={sresource.strategies || presource.strategies || []}
+            values={this.field_value('strategies', [])}
             onChange={(new_data) => this.update_field(new_data, 'strategies')} />
 
           <hr/>
