@@ -31,14 +31,18 @@ class EditCollectionList extends Component {
         {(resources.length === 0) ? empty : null}
         <ul className='edit-collection-resource-list'>
           {resources.map((resource, indx) => {
-            let show_down = indx > 0;
-            let show_up = (indx < (resources.length - 1));
-            let up = (<span className={'btn btn-sm btn-secondary ' + (show_up ? '' : 'disabled')}
-                          onClick={(evt) => { show_up && this.move(indx, 1)}}>
+            let show_up = indx > 0;
+            let show_down = (indx < (resources.length - 1));
+            let up = (<span className={'btn btn-sm btn-secondary ' + (show_down ? '' : 'disabled')}
+                          onClick={(evt) => { show_down && this.move(indx, 1)}}>
                         <span className={'fa fa-chevron-down '}></span>
                       </span>);
-            let down = ( <span className={'btn btn-sm btn-secondary ' + (show_down ? '' : 'disabled')}
-                          onClick={(evt) => { show_down && this.move(indx, -1)}}>
+            let totop = (<span className={'btn btn-sm btn-secondary ' + ((show_up && indx > 0) ? '' : 'disabled')}
+                          onClick={(evt) => { show_up && this.move(indx, -1 * indx)}}>
+                        <span className={'fa fa-arrow-up'}></span>
+                      </span>);
+            let down = ( <span className={'btn btn-sm btn-secondary ' + (show_up ? '' : 'disabled')}
+                          onClick={(evt) => { show_up && this.move(indx, -1)}}>
                           <span className={'fa fa-chevron-up '}></span>
                         </span>);
 
@@ -46,6 +50,7 @@ class EditCollectionList extends Component {
               return <li className='resource'
                           key={'' + indx + '-' + resource.id}>
                           <span className='btn-group'>
+                            { totop }
                             { up }
                             { down }
                           </span>
